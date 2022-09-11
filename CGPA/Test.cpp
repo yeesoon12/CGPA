@@ -1,4 +1,3 @@
 #include <Windows.h>
 
-void main() {
-	123123123
+void Main(){}
