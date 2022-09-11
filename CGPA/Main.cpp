@@ -1,4 +1,6 @@
 #include "Header.h"
+#include "Game.h"
+#include "Level1.h"
 
 //Window's Global
 HWND g_hWnd = NULL;
@@ -12,6 +14,7 @@ LPDIRECTINPUTDEVICE8 dInputMouseDevice;
 DIMOUSESTATE mouseState;
 LPD3DXSPRITE sprite = NULL;
 
+Level1* level1 = new Level1();
 
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -157,12 +160,12 @@ int main() {
 	CreateMy3D();
 	CreateMyDirectInput();
 	InitializeLevel();
-
-
+	
 
 	while (IfMyWindowIsRunning())
 	{
 
+		level1->Render();
 
 	}
 	CleanUpMyDirectInput();
