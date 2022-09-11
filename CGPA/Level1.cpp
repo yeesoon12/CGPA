@@ -6,6 +6,7 @@ Level1::~Level1() {
 void Level1::Initialize()
 {
 	player = new Player();
+	enemy = new Enemy();
 }
 
 void Level1::Update() {
@@ -20,7 +21,7 @@ void Level1::Render() {
 
 	// render game objects
 	player->Render();
-	
+	enemy->Render();
 
 	sprite->End();
 

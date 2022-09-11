@@ -4,11 +4,13 @@
 #include "Header.h"
 #include "Game.h"
 #include "Player.h"
+#include "Enemy.h"
 
 class Level1 : public Game
 {
 protected:
 	Player* player;
+	Enemy* enemy;
 
 	
 

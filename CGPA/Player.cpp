@@ -17,8 +17,8 @@ void Player::Initialize()
 	velocity = D3DXVECTOR2(0, 0);
 	speed = 2.f;
 
-	textureWidth = 308;
-	textureHeight = 512;
+	textureWidth = 512;
+	textureHeight = 308;
 
 	spriteRow = 3;
 	spriteCol = 8;

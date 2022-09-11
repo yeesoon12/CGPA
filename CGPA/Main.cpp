@@ -1,7 +1,6 @@
 #include "Header.h"
 #include "Game.h"
 #include "Level1.h"
-
 //Window's Global
 HWND g_hWnd = NULL;
 WNDCLASS wndClass;
@@ -96,7 +95,7 @@ void InitializeLevel() {
 
 	srand(time(0));
 
-
+	level1->Initialize();
 	if (FAILED(hr)) {
 		cout << "Failed to create player texture." << endl;
 	}
