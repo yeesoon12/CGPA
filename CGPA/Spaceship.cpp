@@ -49,9 +49,7 @@ void Spaceship::Initialize()
 
 void Spaceship::Render()
 {
-	if (health <= 0) {
-		return;
-	}
+	
 
 
 	D3DXMATRIX mat;
@@ -72,24 +70,24 @@ void Spaceship::Input() {
 
 	// shoot update
 	if (diKeys[DIK_SPACE] & 0x80) {
-		spacePressed = true;
+		spaceKeyPressed = true;
 	}
 
 	// movement
 	if (diKeys[DIK_W] & 0x80) {
-		upPressed = true;
+		upKeyPressed = true;
 	}
 
 	if (diKeys[DIK_S] & 0x80) {
-		downPressed = true;
+		downKeyPressed = true;
 	}
 
 	if (diKeys[DIK_A] & 0x80) {
-		leftPressed = true;
+		leftKeyPressed = true;
 	}
 
 	if (diKeys[DIK_D] & 0x80) {
-		rightPressed = true;
+		rightKeyPressed = true;
 	}
 }
 
@@ -97,43 +95,43 @@ void Spaceship::Input() {
 
 void Spaceship::CheckBoundary() { // TODO: fix this shit
 	if (position.x - speed < 0) {
-		leftPressed = false;
+		leftKeyPressed = false;
 	}
 
 	if (position.x + spriteWidth + speed > MyWindowWidth) {
-		rightPressed = false;
+		rightKeyPressed = false;
 	}
 
 	if (position.y - speed < 0) {
-		upPressed = false;
+		upKeyPressed = false;
 	}
 
 	if (position.y + spriteHeight + speed > MyWindowHeight) {
-		downPressed = false;
+		downKeyPressed = false;
 	}
 }
 
 void Spaceship::Move() {
 	CheckBoundary();
 
-	if (upPressed) {
+	if (upKeyPressed) {
 		position.y -= speed;
-		upPressed = false;
+		upKeyPressed = false;
 	}
 
-	if (downPressed) {
+	if (downKeyPressed) {
 		position.y += speed;
-		downPressed = false;
+		downKeyPressed = false;
 	}
 
-	if (leftPressed) {
+	if (leftKeyPressed) {
 		position.x -= speed;
-		leftPressed = false;
+		leftKeyPressed = false;
 	}
 
-	if (rightPressed) {
+	if (rightKeyPressed) {
 		position.x += speed;
-		rightPressed = false;
+		rightKeyPressed = false;
 	}
 
 
