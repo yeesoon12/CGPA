@@ -133,25 +133,47 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Catalysts.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBall.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="EnemyBulletCombination.cpp" />
+    <ClCompile Include="EnemyKnife.cpp" />
+    <ClCompile Include="EnemySmallKnife.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="MagicBack.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerShoot.cpp" />
+    <ClCompile Include="PowerUp.cpp" />
     <ClCompile Include="Spaceship.cpp" />
+    <ClCompile Include="Ultimate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Catalysts.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBall.h" />
+    <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="EnemyBulletCombination.h" />
+    <ClInclude Include="EnemyKnife.h" />
+    <ClInclude Include="EnemySmallKnife.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="MagicBack.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerShoot.h" />
+    <ClInclude Include="PowerUp.h" />
     <ClInclude Include="Spaceship.h" />
+    <ClInclude Include="Ultimate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\source\repos\CGP Practical 1\CGP Practical 1\fmod.dll" />
