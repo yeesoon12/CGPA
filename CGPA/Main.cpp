@@ -1,6 +1,7 @@
 #include "Header.h"
 #include "Game.h"
 #include "Level1.h"
+
 //Window's Global
 HWND g_hWnd = NULL;
 WNDCLASS wndClass;
@@ -163,7 +164,8 @@ int main() {
 
 	while (IfMyWindowIsRunning())
 	{
-
+		level1->Input();
+		level1->Update();
 		level1->Render();
 
 	}

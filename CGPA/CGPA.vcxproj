@@ -133,21 +133,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FrameTimer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Spaceship.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FrameTimer.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Spaceship.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\source\repos\CGP Practical 1\CGP Practical 1\fmod.dll" />
