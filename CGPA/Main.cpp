@@ -1,7 +1,7 @@
 #include "Header.h"
 #include "Game.h"
 #include "Level1.h"
-
+#include <stack>
 //Window's Global
 HWND g_hWnd = NULL;
 WNDCLASS wndClass;
@@ -17,7 +17,7 @@ int counter;
 int gameFPS;
 Level1* level1 = new Level1();
 FrameTimer* timer = new FrameTimer();
-
+stack<Game*> game;
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
@@ -97,8 +97,6 @@ void CreateMyDirectInput() {
 void InitializeLevel() {
 
 	srand(time(0));
-	counter = 0;
-	gameFPS = 90;
 	level1->Initialize();
 	if (FAILED(hr)) {
 		cout << "Failed to create player texture." << endl;
@@ -157,30 +155,25 @@ void CleanUpMyDirectInput() {
 	dInput = NULL;
 
 }
-void Update(int frameToUpdate) {
-	for (int i = 0; i < frameToUpdate; i++)
-	{
-		counter++;
-		if (counter % (timer->GetFPS() / gameFPS) == 0) {
-			level1->Update();
-		}
-		
-	}
+void Update() {
+
 		
 
 }
+
 int main() {
 	CreateMyWindow();
 	CreateMy3D();
 	CreateMyDirectInput();
 	InitializeLevel();
 	
-	timer->Init(90);
+	game.push(level1);
+	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{
-		level1->Input();
-		Update(timer->FramesToUpdate());
-		level1->Render();
+		game.top()->Input();
+		game.top()->Update(timer->FramesToUpdate());
+		game.top()->Render();
 
 	}
 	CleanUpMyDirectInput();

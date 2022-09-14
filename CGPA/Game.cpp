@@ -47,7 +47,7 @@ void Game::CleanUp()
 	texture = NULL;
 }
 
-void Game::Update() {
+void Game::Update(int FrameToUpdate) {
 
 }
 

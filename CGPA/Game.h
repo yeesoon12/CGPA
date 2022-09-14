@@ -36,7 +36,7 @@ public:
 	virtual void Initialize();
 	virtual void Render();
 	virtual void CleanUp();
-	virtual void Update();
+	virtual void Update(int FrameToUpdate);
 	virtual void Input();
 };
 

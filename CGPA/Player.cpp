@@ -29,7 +29,7 @@ void Player::Initialize()
 	cPressed = false;
 	isUlti = false;
 	velocity = D3DXVECTOR2(0, 0);
-	speed = 2.0f;
+	speed = 5.0f;
 	bulletAmount = 1;
 	textureWidth = 512;
 	textureHeight = 280;
@@ -101,12 +101,12 @@ void Player::Update() {
 
 	}
 	if (!zPressed) {
-		speed = 2.0f;
+		speed = 5.0f;
 
 	}
 
 	if (zPressed) {
-		speed = 1.0f;
+		speed = 2.5f;
 		zPressed = false;
 		
 	}
@@ -159,7 +159,7 @@ void Player::Update() {
 		shoot->Initialization(position, bulletAmount,focus);
 		bullet.push_back(shoot);
 		spacePressed = false;
-		cd = 15;
+		cd = 6;
 		}
 		
 	}

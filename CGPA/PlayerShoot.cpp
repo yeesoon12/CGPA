@@ -7,11 +7,11 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int f
 	if (FAILED(hr)) {
 		cout << "Failed to load texture" << endl;
 	}
-	speed = { 0,-7 };
-	speed2 = { 1,-7 };
-	speed3 = { -1,-7 };
-	speed4 = { 2,-7 };
-	speed5 = { -2,-7 };
+	speed = { 0,-17.5 };
+	speed2 = { 2.5,-17.5 };
+	speed3 = { -2.5,-17.5 };
+	speed4 = { 5,-17.5 };
+	speed5 = { -5,-17.5 };
 	textureWidth = 16;
 	textureHeight = 16;
 	
@@ -46,10 +46,10 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int f
 
 void PlayerShoot::Update() {
 	if (fokus == 1) {
-		speed2.x = 0.4f;
-		speed3.x = -0.4f;
-		speed4.x = 0.8f;
-		speed5.x = -0.8f;
+		speed2.x = 1.f;
+		speed3.x = -1.f;
+		speed4.x = 2.f;
+		speed5.x = -2.f;
 	}
 	position += speed;
 	position2 += speed2;

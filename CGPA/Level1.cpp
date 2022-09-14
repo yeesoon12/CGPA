@@ -9,7 +9,7 @@ void Level1::Initialize()
 	player = new Player();
 	player -> Initialize();
 	powerUp = new PowerUp();
-	powerUp->Initialization();
+	powerUp -> Initialization();
 	enemy = new Enemy();
 	direction2 = 2.f;
 	i = 0;
@@ -26,10 +26,12 @@ void Level1::Initialize()
 	audioManager->PlayLevel1BGM();
 }
 
-void Level1::Update() {
+void Level1::Update(int FrameToUpdate) {
+	for (int i = 0; i < FrameToUpdate; i++)
+	{
 	if(j<50){
 		
-	if (i == 40) {
+	if (i == 16) {
 	
 		skill = new EnemyBulletCombination();
 	
@@ -47,6 +49,7 @@ void Level1::Update() {
 		direction2 -=2.9f;
 	}
 	}
+
 	for (int i = 0; i < bulletcombo1.size(); i++) {
 
 		currentPattern = bulletcombo1[i];
@@ -70,7 +73,9 @@ void Level1::Update() {
 		clearBullet();
 	}
 	i++;
-}     
+	}
+} 
+
 void Level1::clearBullet() {
 	bulletcombo1.clear();
 }

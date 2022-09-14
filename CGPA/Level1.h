@@ -29,7 +29,7 @@ public:
 
 	void clearBullet();
 	void Initialize();
-	void Update();
+	void Update(int FrameToUpdate);
 	void Render();
 	void Input();
 	bool CollisionDetection(RECT A, RECT B);

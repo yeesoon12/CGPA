@@ -8,7 +8,7 @@ void PowerUp::Initialization() {
 	powerUpNum = 1;
 	textureWidth = 14;
 	textureHeight = 14;
-	speed = 2.0f;
+	speed = 5.0f;
 	spriteRow = 1;
 	spriteCol = 1;
 	position = { 400,200 };

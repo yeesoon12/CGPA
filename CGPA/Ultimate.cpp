@@ -32,7 +32,7 @@ void Ultimate::Initialization(D3DXVECTOR2 playerPosition) {
 
 void Ultimate::Update() {
 	
-	scaling+= D3DXVECTOR2(2, 2);
+	scaling+= D3DXVECTOR2(5,5);
 	
 }
 void Ultimate::Render() {

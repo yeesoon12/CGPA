@@ -36,7 +36,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 void EnemySmallKnife::Update() {
 
 	if (InBoundary(position)) {
-		speed = 2;
+		speed = 5;
 
 		position.x += sin(direction) * speed;
 		position.y += -cos(direction) * speed;
