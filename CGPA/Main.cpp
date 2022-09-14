@@ -13,8 +13,8 @@ BYTE diKeys[256];
 LPDIRECTINPUTDEVICE8 dInputMouseDevice;
 DIMOUSESTATE mouseState;
 LPD3DXSPRITE sprite = NULL;
-
 Level1* level1 = new Level1();
+FrameTimer* timer = new FrameTimer();
 
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -95,7 +95,6 @@ void CreateMyDirectInput() {
 void InitializeLevel() {
 
 	srand(time(0));
-
 	level1->Initialize();
 	if (FAILED(hr)) {
 		cout << "Failed to create player texture." << endl;
@@ -154,18 +153,25 @@ void CleanUpMyDirectInput() {
 	dInput = NULL;
 
 }
+void Update(int frameToUpdate) {
+	for (int i = 0; i < frameToUpdate; i++)
+	{
+		level1->Update();
+	}
+	
 
+}
 int main() {
 	CreateMyWindow();
 	CreateMy3D();
 	CreateMyDirectInput();
 	InitializeLevel();
 	
-
+	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{
 		level1->Input();
-		level1->Update();
+		Update(timer->FramesToUpdate());
 		level1->Render();
 
 	}

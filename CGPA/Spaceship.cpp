@@ -139,6 +139,10 @@ void Spaceship::Move() {
 
 }
 
+void Spaceship::Shoot()
+{
+}
+
 
 Spaceship::~Spaceship() {
 }
