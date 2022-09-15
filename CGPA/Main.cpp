@@ -14,6 +14,7 @@ BYTE diKeys[256];
 LPDIRECTINPUTDEVICE8 dInputMouseDevice;
 DIMOUSESTATE mouseState;
 LPD3DXSPRITE sprite = NULL;
+LPD3DXLINE line = NULL;
 int counter;
 int gameFPS;
 FrameTimer* timer = new FrameTimer();
@@ -70,7 +71,7 @@ int CreateMy3D() {
 
 	hr = D3DXCreateSprite(d3dDevice, &sprite);
 
-	//	Create sprite. Study the documentation. 
+	hr = D3DXCreateLine(d3dDevice, &line);
 
 
 	if (FAILED(hr)) {
@@ -142,6 +143,9 @@ void CleanUpMyDirectX() {
 
 	d3dDevice->Release();
 	d3dDevice = NULL;
+
+	line->Release();
+	line = NULL;
 }
 
 void CleanUpMyDirectInput() {

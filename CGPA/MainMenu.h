@@ -6,8 +6,25 @@
 
 class MainMenu : public Game
 {
-protected:
-	
+private:
+	// Font Type
+	LPD3DXFONT font;
+	LPD3DXFONT font2;
+
+	// Line
+	LPD3DXLINE line;
+
+	// Text Settings
+	int textWidth;
+	int textHeight;
+	D3DXVECTOR2 text1Position;
+	D3DXVECTOR2 text2Position;
+	D3DXVECTOR2 text3Position;
+	D3DXVECTOR2 text4Position;
+	RECT text1Rect;
+	RECT text2Rect;
+	RECT text3Rect;
+	RECT text4Rect;
 
 public:
 	MainMenu() : Game()
