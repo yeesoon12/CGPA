@@ -1,5 +1,6 @@
 #include "Header.h"
 #include "Game.h"
+#include "MainMenu.h"
 #include "Level1.h"
 #include <stack>
 //Window's Global
@@ -15,9 +16,10 @@ DIMOUSESTATE mouseState;
 LPD3DXSPRITE sprite = NULL;
 int counter;
 int gameFPS;
-Level1* level1 = new Level1();
 FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
+MainMenu* mainMenu = new MainMenu();
+Level1* level1 = new Level1();
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 

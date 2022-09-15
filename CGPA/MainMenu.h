@@ -20,6 +20,7 @@ public:
 	void Update();
 	void Render();
 	void Input();
+	bool CollisionDetection(RECT A, RECT B);
 };
 
 #endif

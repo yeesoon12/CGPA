@@ -30,3 +30,17 @@ void MainMenu::Render()
 void MainMenu::Input() {
 	// cursor->Input();
 }
+
+bool MainMenu::CollisionDetection(RECT A, RECT B)
+{
+	if (A.top > B.bottom)
+		return false;
+	if (A.bottom < B.top)
+		return false;
+	if (A.left > B.right)
+		return false;
+	if (A.right < B.left)
+		return false;
+
+	return true;
+}
