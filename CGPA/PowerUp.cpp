@@ -1,6 +1,6 @@
 #include "PowerUp.h"
 
-void PowerUp::Initialization() {
+void PowerUp::Initialization(D3DXVECTOR2 position) {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/PowerUp.png", &texture);
 	if (FAILED(hr)) {
 		cout << "Failed to load texture" << endl;
@@ -11,7 +11,7 @@ void PowerUp::Initialization() {
 	speed = 5.0f;
 	spriteRow = 1;
 	spriteCol = 1;
-	position = { 400,200 };
+	this->position = position;
 	spriteWidth = textureWidth / spriteCol;
 	spriteHeight = textureHeight / spriteRow;
 
@@ -30,17 +30,21 @@ void PowerUp::Initialization() {
 }
 
 void PowerUp::Update() {
+	if(powerUpNum> 0){
 	position.y += speed;
-	colRect.top = position.y;
-	colRect.bottom = colRect.top + spriteHeight;
-	colRect.left = position.x;
-	colRect.right = colRect.left + spriteWidth;
-
-
+	colRect.top = position.y-10;
+	colRect.bottom = colRect.top + spriteHeight+20;
+	colRect.left = position.x-10;
+	colRect.right = colRect.left + spriteWidth+20;
+	
+	}
+	else if (powerUpNum = 0) {
+		colRect = { 0,0,0,0 };
+	}
 }
 void PowerUp::Render() {
 
-	if(powerUpNum==1){
+	if (powerUpNum > 0) {
 	D3DXMATRIX mat;
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, 0, &position);
 	sprite->SetTransform(&mat);

@@ -9,7 +9,6 @@
 class Player : public Game {
 private:
 	PlayerShoot* shoot;
-
 	Catalysts* catalysts;
 	AudioManager* audioManager;
 	AudioManager* audioManager2;
@@ -52,10 +51,12 @@ public:
 	void Update();
 	void Render();
 	void Input();
+	void minusHealth();
 	boolean IsUlti();
 	void addBullet(int bulletAmounts);
-	vector<PlayerShoot*>* getBullet();
+	vector<PlayerShoot*> getBullet();
 	RECT getColRect();
+	
 	
 };
 

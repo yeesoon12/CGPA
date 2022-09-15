@@ -17,6 +17,7 @@
 #include <d3dx9.h>
 #include <dinput.h>
 #include <vector>
+#include <stack>
 
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
@@ -26,6 +27,7 @@
 
 #include "AudioManager.h"
 #include "FrameTimer.h"
+
 
 using namespace std;
 extern LPD3DXSPRITE sprite;

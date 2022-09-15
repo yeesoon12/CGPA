@@ -17,3 +17,7 @@ BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 	
 	return true;
 }
+
+RECT EnemyBullet::GetColRect() {
+	return colRect;
+}

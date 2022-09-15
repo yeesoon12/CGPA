@@ -22,7 +22,7 @@ void EnemyBall::Initialization(float Direction, D3DXVECTOR2 position) {
 	animRect.right = 32;
 	scaling = D3DXVECTOR2(1.0f, 1.0f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
-	fps = 15;
+	fps = 6;
 	speed = 0;
 	direction = Direction;
 	this->position = position;
@@ -58,6 +58,10 @@ void EnemyBall::Update() {
 	}
 	count++;
 
+	colRect.top = position.y;
+	colRect.bottom = colRect.top + spriteHeight;
+	colRect.left = position.x;
+	colRect.right = colRect.left + spriteWidth;
 	
 }
 

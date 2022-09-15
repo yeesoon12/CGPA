@@ -8,77 +8,67 @@ void Level1::Initialize()
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/BackGround.png", &texture);
 	player = new Player();
 	player -> Initialize();
-	powerUp = new PowerUp();
-	powerUp -> Initialization();
 	enemy = new Enemy();
 	direction2 = 2.f;
-	i = 0;
+	bulletCD = 0;
 	j = 0;
-	skill = new EnemyBulletCombination();
 
+	
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
 	position = D3DXVECTOR2(0,0);
+	audioManager2 = new AudioManager();
+	audioManager2->InitializeAudio();
+	audioManager2->LoadSounds();
 	AudioManager* audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
 	audioManager->PlayLevel1BGM();
+
+
 }
 
-void Level1::Update(int FrameToUpdate) {
-	for (int i = 0; i < FrameToUpdate; i++)
-	{
-	if(j<50){
-		
-	if (i == 16) {
-	
-		skill = new EnemyBulletCombination();
-	
-		skill->Initialization((float) rand(),D3DXVECTOR2{ MyWindowWidth / 2,200 },1);
-		bulletcombo1.push_back(skill->getBulletPattern1());
-		for(int i=0; i<3;i++){
-		skill = new EnemyBulletCombination();
-		skill->Initialization(direction2, D3DXVECTOR2{ MyWindowWidth / 2,200 },3);
-		bulletcombo1.push_back(skill->getBulletPattern3());
-		direction2 += 1;
+void Level1::Update() {
+
+		bullets = player->getBullet();
+		for (int w = 0; w < bullets.size(); w++) {
+			bullet = bullets[w];
+			if (CollisionDetection(bullet->GetColRect(), enemy->GetCollisionRect())) {
+				enemy->minusHealth();
+				bullet->SetIsHit();
+			}
 		}
-		i = 0;
-	
-		j++;
-		direction2 -=2.9f;
+
+	if (CollisionDetection(player->getColRect(), enemy->powerUp->getColRect())) {
+		if(enemy->powerUp->getPowerUpNum()>0){
+			player->addBullet(2);
+		enemy->powerUp->setPowerUpNum(0);
+		
+		}
 	}
-	}
 
-	for (int i = 0; i < bulletcombo1.size(); i++) {
-
-		currentPattern = bulletcombo1[i];
-		for (int i = 0; i < currentPattern.size(); i++)
-		currentPattern[i]->Update();
-
+	enemyBullets = enemy->getBullet();
+	for (int i = 0; i < enemyBullets.size(); i++) {
+		if (CollisionDetection(player->getColRect(), enemyBullets[i]->GetColRect())) {
+			if(j<0){
+			audioManager2->PlayDeathSound();
+			player->minusHealth();
+			j = 999;
+			}
+		}
 	}
 	player->Update();
-	powerUp->Update();
 	enemy->Update();
-	skill->Update();
-	if(powerUp->getPowerUpNum()==1){
-	if (CollisionDetection(player->getColRect(), powerUp->getColRect()))
-	{
-		player->addBullet(2);
-		powerUp->setPowerUpNum(0);
-		
-	}
-	}
-	if (player->IsUlti()) {
-		clearBullet();
-	}
-	i++;
-	}
-} 
 
-void Level1::clearBullet() {
-	bulletcombo1.clear();
+	if (player->IsUlti()) {
+		enemy->clearBullet();
+	}
+
+	bulletCD++;
+	j--;
 }
+   
 
 void Level1::Render() {
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
@@ -90,15 +80,7 @@ void Level1::Render() {
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, 0, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 
-	for (int i = 0; i < bulletcombo1.size(); i++) {
-
-		currentPattern = bulletcombo1[i];
-		for (int i = 0; i < currentPattern.size(); i++)
-			currentPattern[i]->Render();
-		
-
-	}
-	powerUp->Render();
+	
 	player->Render();
 	enemy->Render();
 
@@ -108,8 +90,9 @@ void Level1::Render() {
 	d3dDevice->Present(NULL, NULL, NULL, NULL);
 }
 
-void Level1::Input() {
+void Level1::Input(){
 	player->Input();
+	
 }
 
 bool Level1::CollisionDetection(RECT A, RECT B)

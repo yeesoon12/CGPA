@@ -10,8 +10,9 @@ public:
 
 
 	void Initialize(D3DXVECTOR2);
-	void Update(D3DXVECTOR2);
+	void Update(D3DXVECTOR2, int);
 	void Render();
 private:
+	int red;
 };
 

@@ -18,7 +18,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 	animRect.bottom = 16;
 	animRect.left = 0;
 	animRect.right = 16;
-	scaling = D3DXVECTOR2(1.0f, 1.0f);
+	scaling = D3DXVECTOR2(1.5f, 1.5f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 
 	speed = 0;
@@ -27,10 +27,10 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 
 
 
-	colRect.top = position.y;
-	colRect.bottom = colRect.top + spriteHeight;
-	colRect.left = position.x;
-	colRect.right = colRect.left + spriteWidth;
+	colRect.top = position.y+10;
+	colRect.bottom = colRect.top + spriteHeight-20;
+	colRect.left = position.x+10;
+	colRect.right = colRect.left + spriteWidth-20;
 }
 
 void EnemySmallKnife::Update() {
@@ -43,6 +43,10 @@ void EnemySmallKnife::Update() {
 
 
 	}
+	colRect.top = position.y + 5;
+	colRect.bottom = colRect.top + spriteHeight - 10;
+	colRect.left = position.x + 5;
+	colRect.right = colRect.left + spriteWidth - 10;
 	
 	
 

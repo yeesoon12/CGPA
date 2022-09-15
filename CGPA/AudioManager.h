@@ -5,7 +5,7 @@ class AudioManager
 
 public:
 	FMOD::System* system;
-	FMOD::Sound* Level1BGM, * GunShoot, * UltiSound;
+	FMOD::Sound* Level1BGM, * GunShoot, * UltiSound, * deathSound;
 	FMOD::Channel* channel = 0;
 	FMOD_RESULT result;
 	void* extraDriverData = 0;
@@ -14,6 +14,7 @@ public:
 	void PlayLevel1BGM();
 	void PlayGunShoot();
 	void PlayUltiSound();
+	void PlayDeathSound();
 	void LoadSounds();
 	void UpdateSound();
 

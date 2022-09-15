@@ -20,8 +20,6 @@ void MainMenu::Render()
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	// Render objects
-
 
 	sprite->End();
 

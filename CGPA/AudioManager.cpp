@@ -22,6 +22,12 @@ void AudioManager::PlayUltiSound()
 
 }
 
+void AudioManager::PlayDeathSound()
+{
+    result = system->playSound(deathSound, 0, false, & channel);
+
+}
+
 void AudioManager::LoadSounds()
 {
     result = system->createSound("Asset/Level1BGM.mp3", FMOD_DEFAULT, 0, &Level1BGM);
@@ -33,6 +39,9 @@ void AudioManager::LoadSounds()
 
     result = system->createStream("Asset/UltiSound.mp3", FMOD_DEFAULT, 0, &UltiSound);
     result = UltiSound->setMode(FMOD_DEFAULT);
+
+    result = system->createStream("Asset/death.mp3", FMOD_DEFAULT, 0, &deathSound);
+    result = deathSound->setMode(FMOD_DEFAULT);
 }
 
 void AudioManager::UpdateSound()

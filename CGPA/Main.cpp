@@ -17,7 +17,7 @@ int counter;
 int gameFPS;
 Level1* level1 = new Level1();
 FrameTimer* timer = new FrameTimer();
-stack<Game*> game;
+vector<Game*> game;
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 
@@ -155,9 +155,11 @@ void CleanUpMyDirectInput() {
 	dInput = NULL;
 
 }
-void Update() {
-
-		
+void Update(int FrameToUpdate) {
+	for (int i = 0; i < FrameToUpdate; i++) {
+		game.front()->Update();
+	}
+	
 
 }
 
@@ -167,13 +169,13 @@ int main() {
 	CreateMyDirectInput();
 	InitializeLevel();
 	
-	game.push(level1);
+	game.push_back(level1);
 	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{
-		game.top()->Input();
-		game.top()->Update(timer->FramesToUpdate());
-		game.top()->Render();
+		game.front()->Input();
+		Update(timer->FramesToUpdate());
+		game.front()->Render();
 
 	}
 	CleanUpMyDirectInput();

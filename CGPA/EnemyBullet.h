@@ -17,6 +17,7 @@ public:
 	void Initialization();
 	void Update();
 	void Render();
+	RECT GetColRect();
 	BOOLEAN InBoundary(D3DXVECTOR2 position);
 
 };

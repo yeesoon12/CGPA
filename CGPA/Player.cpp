@@ -155,9 +155,39 @@ void Player::Update() {
 	if (spacePressed) {
 		if(cd<0&&health>0){
 		audioManager->PlayGunShoot();
+		if(bulletAmount==1){
 		shoot = new PlayerShoot();
-		shoot->Initialization(position, bulletAmount,focus);
+		shoot->Initialization(position, 0,focus);
 		bullet.push_back(shoot);
+		}
+		else if (bulletAmount == 3) {
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, 0, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, 0.15, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, -0.15, focus);
+			bullet.push_back(shoot);
+		}
+		else if (bulletAmount == 5) {
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, 0, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, 0.3, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, 0.15, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, -0.15, focus);
+			bullet.push_back(shoot);
+			shoot = new PlayerShoot();
+			shoot->Initialization(position, -0.3, focus);
+			bullet.push_back(shoot);
+		}
 		spacePressed = false;
 		cd = 6;
 		}
@@ -183,8 +213,8 @@ void Player::Update() {
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
 	
-	colRect.top = position.y+10;
-	colRect.bottom = colRect.top + spriteHeight-20;
+	colRect.top = position.y+40;
+	colRect.bottom = colRect.top + spriteHeight-80;
 	colRect.left = position.x+10;
 	colRect.right = colRect.left + spriteWidth-40;
 	spacePressed = false;
@@ -203,6 +233,9 @@ void Player::Update() {
 	ultiCD--;
 }
 
+void Player::minusHealth() {
+	health--;
+}
 void Player::Input() {
 	dInputKeyboardDevice->Acquire();
 	dInputKeyboardDevice->GetDeviceState(256, diKeys);
@@ -239,9 +272,9 @@ void Player::Input() {
 		cPressed = true;
 	}
 }
-vector<PlayerShoot*>* Player::getBullet()
+vector<PlayerShoot*> Player::getBullet()
 {
-	return &bullet;
+	return bullet;
 }
 
 void Player::addBullet(int bulletAmounts) {
@@ -250,6 +283,7 @@ void Player::addBullet(int bulletAmounts) {
 RECT Player::getColRect() {
 	return colRect;
 }
+
 boolean Player::IsUlti() {
 	if (isUlti2 == true)
 		return true;

@@ -7,17 +7,9 @@
 class PlayerShoot : public Game
 {
 private:
-	D3DXVECTOR2 speed;
-	D3DXVECTOR2 speed2;
-	D3DXVECTOR2 speed3;
-	D3DXVECTOR2 speed4;
-	D3DXVECTOR2 speed5;
-	int bulletAmount;
+	float speed;
 	int fokus;
-	D3DXVECTOR2 position2;
-	D3DXVECTOR2 position3;
-	D3DXVECTOR2 position4;
-	D3DXVECTOR2 position5;
+	boolean isHit;
 
 public:
 
@@ -26,9 +18,11 @@ public:
 	}
 	~PlayerShoot();
 
-	void Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int focus);
+	void Initialization(D3DXVECTOR2 bulletPosition, float,int focus);
 	void Update();
 	void Render();
+	RECT GetColRect();
+	void SetIsHit();
 		
 };
 

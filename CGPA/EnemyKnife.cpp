@@ -41,7 +41,11 @@ void EnemyKnife::Update() {
 		position.y += -cos(direction) * speed;
 
 	}
-	
+
+	colRect.top = position.y;
+	colRect.bottom = colRect.top + spriteHeight;
+	colRect.left = position.x;
+	colRect.right = colRect.left + spriteWidth;
 
 }
 

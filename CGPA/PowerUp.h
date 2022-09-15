@@ -16,7 +16,7 @@ public:
 	}
 	~PowerUp(); 
 	void setPowerUpNum(int num);
-	void Initialization();
+	void Initialization(D3DXVECTOR2);
 	void Update();
 	void Render();
 	int getPowerUpNum();

@@ -1,20 +1,16 @@
 #include "PlayerShoot.h"
 #include "Header.h"
-void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int focus)
+void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, float direction,int focus)
 {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/PlayerBullet.png", &texture);
 
 	if (FAILED(hr)) {
 		cout << "Failed to load texture" << endl;
 	}
-	speed = { 0,-17.5 };
-	speed2 = { 2.5,-17.5 };
-	speed3 = { -2.5,-17.5 };
-	speed4 = { 5,-17.5 };
-	speed5 = { -5,-17.5 };
+	speed = 20;
 	textureWidth = 16;
 	textureHeight = 16;
-	
+	isHit = false;
 	fokus = focus;
 	spriteRow = 1;
 	spriteCol = 1;
@@ -28,13 +24,9 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int f
 
 	scaling = D3DXVECTOR2(2, 2);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
-	direction = 0;
+	this->direction=direction;
 	position = bulletPosition;
-	position2 = bulletPosition;
-	position3 = bulletPosition;
-	position4 = bulletPosition;
-	position5 = bulletPosition;
-	bulletAmount = bulletNum;
+
 
 	colRect.top = position.y;
 	colRect.bottom = colRect.top + spriteHeight;
@@ -45,65 +37,37 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, int bulletNum,int f
 }
 
 void PlayerShoot::Update() {
-	if (fokus == 1) {
-		speed2.x = 1.f;
-		speed3.x = -1.f;
-		speed4.x = 2.f;
-		speed5.x = -2.f;
+	if (isHit) {
+		colRect = { 0,0,0,0 };
 	}
-	position += speed;
-	position2 += speed2;
-	position3 += speed3;
-	position4 += speed4;
-	position5 += speed5;
-
+	if(!isHit){
+	if (fokus == 1) {
+		direction *= 0.95;
+	}
+	position.x += sin(direction) * speed;
+	position.y += -cos(direction) * speed;
+	colRect.top = position.y;
+	colRect.bottom = colRect.top + spriteHeight;
+	colRect.left = position.x;
+	colRect.right = colRect.left + spriteWidth;
+	}
 }
 void PlayerShoot::Render() {
-	D3DXMATRIX mat;
+	if (!isHit) {
 	
 	if(position.y>-10){
 	
-		if(bulletAmount==1){
-		
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
-			sprite->SetTransform(&mat);
+	D3DXMATRIX mat;
+	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
+	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 		}
-		else if (bulletAmount == 3) {
-			
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-			
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position2);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-			
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position3);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-		}
-		else if (bulletAmount == 5) {
-			
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+    }
+}
 
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position2);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position3);
-			sprite->SetTransform(&mat);
-
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position4);
-			sprite->SetTransform(&mat);
-
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-			D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position5);
-			sprite->SetTransform(&mat);
-			sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-		}
-	}
+RECT PlayerShoot::GetColRect() {
+	return colRect;
+}
+void PlayerShoot::SetIsHit() {
+	isHit = true;
 }

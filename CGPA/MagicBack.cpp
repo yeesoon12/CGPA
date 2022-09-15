@@ -17,17 +17,19 @@ void MagicBack::Initialize(D3DXVECTOR2 magicBackPosition)
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction=0;
 	position = magicBackPosition;
-
+	red = 0;
 	animRect.top = currentFrame * spriteHeight;
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
 }
 
-void MagicBack::Update(D3DXVECTOR2 playerPosition)
+void MagicBack::Update(D3DXVECTOR2 playerPosition,int stage)
 {
 	position = playerPosition + D3DXVECTOR2(-32,-15);
-	direction += 0.025f;
+	direction += 0.05f;
+	red = stage * 85;
+
 }
 
 void MagicBack::Render()
@@ -35,5 +37,5 @@ void MagicBack::Render()
 	D3DXMATRIX mat;
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
-	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(60, 255, 255));
+	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(red, 255, 255));
 }

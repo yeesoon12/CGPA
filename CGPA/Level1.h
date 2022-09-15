@@ -6,19 +6,18 @@
 #include "Player.h"
 #include "PowerUp.h"
 #include "Enemy.h"
-#include "EnemyBulletCombination.h"
 class Level1 : public Game
 {
 protected:
 	Player* player;
-	PowerUp* powerUp;
 	Enemy* enemy;
-	EnemyBulletCombination* skill;
-	vector<vector<EnemyBullet*>> bulletcombo1;
-	vector<EnemyBullet*> currentPattern;
-	int i;
+	vector<PlayerShoot*> bullets;
+	PlayerShoot* bullet;
+	int bulletCD;
 	int j;
 	float direction2;
+	vector<EnemyBullet*> enemyBullets;
+	AudioManager* audioManager2;
 	
 
 public:
@@ -26,10 +25,8 @@ public:
 		
 	}
 	~Level1();
-
-	void clearBullet();
 	void Initialize();
-	void Update(int FrameToUpdate);
+	void Update();
 	void Render();
 	void Input();
 	bool CollisionDetection(RECT A, RECT B);

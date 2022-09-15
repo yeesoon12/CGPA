@@ -80,6 +80,9 @@ void HealthBar::Render()
 	case 1:
 		font->DrawText(sprite, "x1", 2, &textRect, 0, D3DCOLOR_XRGB(255, 0, 0));
 		break;
+	case 0:
+		font->DrawText(sprite, "x0", 2, &textRect, 0, D3DCOLOR_XRGB(255,255, 0));
+		break;
 
 	}
 }
