@@ -102,7 +102,7 @@ void CreateMyDirectInput() {
 void InitializeLevel() {
 
 	srand(time(0));
-	levelEx->Initialize();
+	mainMenu->Initialize();
 	if (FAILED(hr)) {
 		cout << "Failed to create player texture." << endl;
 	}
@@ -177,7 +177,7 @@ int main() {
 	CreateMyDirectInput();
 	InitializeLevel();
 	
-	game.push_back(levelEx);
+	game.push_back(mainMenu);
 	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{

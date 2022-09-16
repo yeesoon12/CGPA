@@ -7,6 +7,10 @@
 class MainMenu : public Game
 {
 private:
+
+	HRESULT hr;
+	D3DXMATRIX mat;
+
 	// Font Type
 	LPD3DXFONT font;
 	LPD3DXFONT font2;
@@ -17,6 +21,7 @@ private:
 	// Text Settings
 	int textWidth;
 	int textHeight;
+	int textBorder;
 	D3DXVECTOR2 text1Position;
 	D3DXVECTOR2 text2Position;
 	D3DXVECTOR2 text3Position;
@@ -25,6 +30,10 @@ private:
 	RECT text2Rect;
 	RECT text3Rect;
 	RECT text4Rect;
+	RECT text1ColRect;
+	RECT text2ColRect;
+	RECT text3ColRect;
+	RECT text4ColRect;
 
 public:
 	MainMenu() : Game()

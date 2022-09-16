@@ -44,6 +44,9 @@ public:
 	void Update();
 	void Render();
 	void Input();
+	RECT getColRect();
+	D3DXVECTOR2 getPosition();
+	D3DXVECTOR2 getCentre();
 };
 
 #endif

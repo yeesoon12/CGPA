@@ -49,5 +49,20 @@ void Spaceship::Input()
 	
 }
 
+RECT Spaceship::getColRect()
+{
+	return colRect;
+}
+
+D3DXVECTOR2 Spaceship::getPosition()
+{
+	return position;
+}
+
+D3DXVECTOR2 Spaceship::getCentre()
+{
+	return centre;
+}
+
 Spaceship::~Spaceship() {
 }

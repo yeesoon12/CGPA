@@ -1,6 +1,20 @@
 #include "MainMenu.h"
 
-D3DXVECTOR2 lineVertices[2];
+D3DXVECTOR2 lineVertices[] = { 
+	D3DXVECTOR2(30, 695), 
+	D3DXVECTOR2(115, 695),
+	D3DXVECTOR2(115, 725),
+	D3DXVECTOR2(30, 725),
+	D3DXVECTOR2(30, 695)
+};
+
+D3DXVECTOR2 lineVertices2[] = {
+	D3DXVECTOR2(29, 694),
+	D3DXVECTOR2(116, 694),
+	D3DXVECTOR2(116, 726),
+	D3DXVECTOR2(29, 726),
+	D3DXVECTOR2(29, 694)
+};
 
 MainMenu::~MainMenu() {
 }
@@ -8,7 +22,7 @@ MainMenu::~MainMenu() {
 void MainMenu::Initialize()
 {
 	// Background Image
-	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.jpg", &texture);
+	hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.jpg", &texture);
 
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
@@ -17,9 +31,6 @@ void MainMenu::Initialize()
 
 	// Line
 	hr = D3DXCreateLine(d3dDevice, &line);
-	lineVertices[0] = D3DXVECTOR2(200, 200);
-	lineVertices[1] = D3DXVECTOR2(400, 400);
-
 
 	// Text
 	hr = D3DXCreateFont(d3dDevice, 30, 0, FW_BOLD, 1, false,
@@ -31,6 +42,7 @@ void MainMenu::Initialize()
 
 	textWidth = 200;
 	textHeight = 30;
+	textBorder = 5;
 
 	text1Position = D3DXVECTOR2(400, 280);
 	text2Position = D3DXVECTOR2(400, 320);
@@ -56,6 +68,26 @@ void MainMenu::Initialize()
 	text4Rect.bottom = text4Rect.top + textHeight;
 	text4Rect.left = text4Position.x;
 	text4Rect.right = text4Rect.left + textWidth;
+
+	text1ColRect.top = text1Position.y - textBorder;
+	text1ColRect.bottom = text1Rect.top + textHeight + textBorder;
+	text1ColRect.left = text1Position.x - textBorder;
+	text1ColRect.right = text1Rect.left + textWidth + textBorder;
+
+	text2ColRect.top = text2Position.y - textBorder;
+	text2ColRect.bottom = text2Rect.top + textHeight + textBorder;
+	text2ColRect.left = text2Position.x - textBorder;
+	text2ColRect.right = text2Rect.left + textWidth + textBorder;
+
+	text3ColRect.top = text3Position.y - textBorder;
+	text3ColRect.bottom = text3Rect.top + textHeight + textBorder;
+	text3ColRect.left = text3Position.x - textBorder;
+	text3ColRect.right = text3Rect.left + textWidth + textBorder;
+
+	text4ColRect.top = 694;
+	text4ColRect.bottom = 726;
+	text4ColRect.left = 29;
+	text4ColRect.right = 116;
 }
 
 void MainMenu::Update()
@@ -71,7 +103,6 @@ void MainMenu::Render()
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	D3DXMATRIX mat;
 	// Draw Background
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
@@ -83,11 +114,13 @@ void MainMenu::Render()
 	font->DrawText(sprite, "Quit Game", 9, &text3Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font2->DrawText(sprite, "Extra Game", 10, &text4Rect, 0, D3DCOLOR_XRGB(0, 0, 0));
 
-	line->Begin();
-	line->Draw(lineVertices, 2, D3DCOLOR_XRGB(255, 255, 255));
-	line->End();
-
 	sprite->End();
+
+	line->Begin();
+	// Draw two times to make the frame thicker
+	line->Draw(lineVertices, 5, D3DCOLOR_XRGB(0, 0, 0));
+	line->Draw(lineVertices2, 5, D3DCOLOR_XRGB(0, 0, 0));
+	line->End();
 
 	d3dDevice->EndScene();
 	d3dDevice->Present(NULL, NULL, NULL, NULL);

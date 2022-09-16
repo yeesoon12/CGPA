@@ -25,7 +25,8 @@ void LevelEx::Initialize()
 void LevelEx::Update()
 {
 	// Player collide each other
-	if (CircleCollisionDetection(spriteWidth / 2, spriteWidth / 2, position + centre, position + centre))
+	if (CircleCollisionDetection(16, 16, 
+		spaceship1->getPosition() + spaceship1->getCentre(), spaceship2->getPosition() + spaceship2->getCentre()))
 	{
 		cout << "Player Collided" << endl;
 	}
