@@ -52,69 +52,65 @@ void Spaceship1::Render()
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 }
 
-void Spaceship1::Update(int frameToUpdate)
+void Spaceship1::Update()
 {
-	for (int i = 0; i < frameToUpdate; i++)
+	// Key Press
+	if (leftKeyPressed)
 	{
-		// Key Press
-		if (leftKeyPressed)
-		{
-			direction -= rotationSpeed;
-		}
-		if (rightKeyPressed)
-		{
-			direction += rotationSpeed;
-		}
-		if (upKeyPressed)
-		{
-			acceleration.x = sin(direction) * enginePower / mass;
-			acceleration.y = -cos(direction) * enginePower / mass;
-			cout << velocity.x << ", " << velocity.y << endl;
-		}
-		if (downKeyPressed)
-		{
-			acceleration.x = -sin(direction) * enginePower / mass;
-			acceleration.y = cos(direction) * enginePower / mass;
-		}
+		direction -= rotationSpeed;
+	}
+	if (rightKeyPressed)
+	{
+		direction += rotationSpeed;
+	}
+	if (upKeyPressed)
+	{
+		acceleration.x = sin(direction) * enginePower / mass;
+		acceleration.y = -cos(direction) * enginePower / mass;
+	}
+	if (downKeyPressed)
+	{
+		acceleration.x = -sin(direction) * enginePower / mass;
+		acceleration.y = cos(direction) * enginePower / mass;
+	}
 
-		velocity += acceleration;
-		velocity *= 1 - friction;
-		position += velocity;
+	velocity += acceleration;
+	velocity *= 1 - friction;
+	position += velocity;
 
+	currentFrame++;
+	if (currentFrame > maxFrame)
+	{
+		currentFrame = 0;
+	}
+
+	animRect.top = currentFrame * spriteHeight;
+	animRect.bottom = animRect.top + spriteHeight;
+	animRect.left = 0;
+	animRect.right = animRect.left + spriteWidth;
+
+	colRect.top = position.y;
+	colRect.bottom = colRect.top + spriteHeight;
+	colRect.left = position.x;
+	colRect.right = colRect.left + spriteWidth;
+
+	CheckBoundary();
+
+	//  Animation Loop
+	counter++;
+	if (counter % spriteFPS == 0)
+	{
 		currentFrame++;
 		if (currentFrame > maxFrame)
-		{
 			currentFrame = 0;
-		}
-
-		animRect.top = currentFrame * spriteHeight;
-		animRect.bottom = animRect.top + spriteHeight;
-		animRect.left = 0;
-		animRect.right = animRect.left + spriteWidth;
-
-		colRect.top = position.y;
-		colRect.bottom = colRect.top + spriteHeight;
-		colRect.left = position.x;
-		colRect.right = colRect.left + spriteWidth;
-
-		CheckBoundary();
-
-		//  Animation Loop
-		counter++;
-		if (counter % spriteFPS == 0)
-		{
-			currentFrame++;
-			if (currentFrame > maxFrame)
-				currentFrame = 0;
-		}
-
-		upKeyPressed = false;
-		downKeyPressed = false;
-		leftKeyPressed = false;
-		rightKeyPressed = false;
-
-		acceleration = D3DXVECTOR2(0, 0);
 	}
+
+	upKeyPressed = false;
+	downKeyPressed = false;
+	leftKeyPressed = false;
+	rightKeyPressed = false;
+
+	acceleration = D3DXVECTOR2(0, 0);
 }
 
 void Spaceship1::Input()

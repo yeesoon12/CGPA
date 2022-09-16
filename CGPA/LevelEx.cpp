@@ -30,8 +30,8 @@ void LevelEx::Update()
 		cout << "Player Collided" << endl;
 	}
 
-	spaceship1->Update(60);
-	spaceship2->Update(60);
+	spaceship1->Update();
+	spaceship2->Update();
 }
 
 

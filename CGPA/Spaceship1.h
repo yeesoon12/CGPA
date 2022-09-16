@@ -11,7 +11,7 @@ public:
 	~Spaceship1();
 
 	void Initialize();
-	void Update(int frameToUpdate);
+	void Update();
 	void Render();
 	void Input();
 	void CheckBoundary();
