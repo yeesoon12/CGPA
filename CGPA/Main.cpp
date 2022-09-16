@@ -1,6 +1,7 @@
 #include "Header.h"
 #include "Game.h"
 #include "MainMenu.h"
+#include "LevelEx.h"
 #include "Level1.h"
 #include <stack>
 //Window's Global
@@ -20,6 +21,7 @@ int gameFPS;
 FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
 MainMenu* mainMenu = new MainMenu();
+LevelEx* levelEx = new LevelEx();
 Level1* level1 = new Level1();
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -100,7 +102,7 @@ void CreateMyDirectInput() {
 void InitializeLevel() {
 
 	srand(time(0));
-	mainMenu->Initialize();
+	levelEx->Initialize();
 	if (FAILED(hr)) {
 		cout << "Failed to create player texture." << endl;
 	}
@@ -175,7 +177,7 @@ int main() {
 	CreateMyDirectInput();
 	InitializeLevel();
 	
-	game.push_back(mainMenu);
+	game.push_back(levelEx);
 	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{

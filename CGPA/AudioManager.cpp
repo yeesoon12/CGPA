@@ -5,6 +5,12 @@ void AudioManager::InitializeAudio()
     result = system->init(32, FMOD_INIT_NORMAL, extraDriverData);
 }
 
+void AudioManager::PlayLevelExBGM()
+{
+    result = system->playSound(levelExBGM, 0, false, &channel);
+    channel->setVolume(0.6);
+}
+
 void AudioManager::PlayLevel1BGM()
 {
     result = system->playSound(Level1BGM, 0, false, &channel);
@@ -30,6 +36,9 @@ void AudioManager::PlayDeathSound()
 
 void AudioManager::LoadSounds()
 {
+    result = system->createSound("Asset/levelExBGM.mp3", FMOD_DEFAULT, 0, &levelExBGM);
+    result = levelExBGM->setMode(FMOD_LOOP_NORMAL);
+
     result = system->createSound("Asset/Level1BGM.mp3", FMOD_DEFAULT, 0, &Level1BGM);
     result = Level1BGM->setMode(FMOD_LOOP_NORMAL);
 

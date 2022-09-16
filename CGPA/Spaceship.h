@@ -7,8 +7,7 @@
 
 class Spaceship : public Game
 {
-private:
-
+protected:
 	boolean upKeyPressed;
 	boolean downKeyPressed;
 	boolean leftKeyPressed;
@@ -20,12 +19,20 @@ private:
 	boolean dKeyPressed;
 
 	D3DXVECTOR2 velocity;
-	float speed;
+	D3DXVECTOR2 acceleration;
 
-	void Move();
-	void Shoot();
-	void CheckBoundary();
+	int spriteFPS;
 
+	float rotationSpeed;
+	float mass;
+	float enginePower;
+
+	float gravity;
+	float friction;
+	int currentMovement;
+	int movementSpeed;
+
+	int counter;
 
 public:
 	Spaceship() : Game() {
