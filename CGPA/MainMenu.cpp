@@ -1,7 +1,12 @@
 #include "MainMenu.h"
 
+<<<<<<< Updated upstream
 D3DXVECTOR2 lineVertices[] = { 
 	D3DXVECTOR2(30, 695), 
+=======
+D3DXVECTOR2 lineVertices[] = {
+	D3DXVECTOR2(30, 695),
+>>>>>>> Stashed changes
 	D3DXVECTOR2(115, 695),
 	D3DXVECTOR2(115, 725),
 	D3DXVECTOR2(30, 725),
@@ -22,16 +27,31 @@ MainMenu::~MainMenu() {
 void MainMenu::Initialize()
 {
 	// Background Image
+<<<<<<< Updated upstream
 	hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.jpg", &texture);
 
+=======
+	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.png", &texture);
+	
+>>>>>>> Stashed changes
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
 	position = D3DXVECTOR2(0, 0);
+<<<<<<< Updated upstream
 
 	// Line
 	hr = D3DXCreateLine(d3dDevice, &line);
 
+=======
+	// Line
+	textBorder = 5;
+	hr = D3DXCreateLine(d3dDevice, &line);
+
+	//Mouse
+	cursor = new Cursor();
+	cursor->Initialize();
+>>>>>>> Stashed changes
 	// Text
 	hr = D3DXCreateFont(d3dDevice, 30, 0, FW_BOLD, 1, false,
 		DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
@@ -42,10 +62,15 @@ void MainMenu::Initialize()
 
 	textWidth = 200;
 	textHeight = 30;
+<<<<<<< Updated upstream
 	textBorder = 5;
 
 	text1Position = D3DXVECTOR2(400, 280);
 	text2Position = D3DXVECTOR2(400, 320);
+=======
+
+	text1Position = D3DXVECTOR2(400, 280);
+>>>>>>> Stashed changes
 	text3Position = D3DXVECTOR2(400, 360);
 	text4Position = D3DXVECTOR2(40, 700);
 
@@ -54,11 +79,14 @@ void MainMenu::Initialize()
 	text1Rect.left = text1Position.x;
 	text1Rect.right = text1Rect.left + textWidth;
 
+<<<<<<< Updated upstream
 	text2Rect.top = text2Position.y;
 	text2Rect.bottom = text2Rect.top + textHeight;
 	text2Rect.left = text2Position.x;
 	text2Rect.right = text2Rect.left + textWidth;
 
+=======
+>>>>>>> Stashed changes
 	text3Rect.top = text3Position.y;
 	text3Rect.bottom = text3Rect.top + textHeight;
 	text3Rect.left = text3Position.x;
@@ -74,11 +102,14 @@ void MainMenu::Initialize()
 	text1ColRect.left = text1Position.x - textBorder;
 	text1ColRect.right = text1Rect.left + textWidth + textBorder;
 
+<<<<<<< Updated upstream
 	text2ColRect.top = text2Position.y - textBorder;
 	text2ColRect.bottom = text2Rect.top + textHeight + textBorder;
 	text2ColRect.left = text2Position.x - textBorder;
 	text2ColRect.right = text2Rect.left + textWidth + textBorder;
 
+=======
+>>>>>>> Stashed changes
 	text3ColRect.top = text3Position.y - textBorder;
 	text3ColRect.bottom = text3Rect.top + textHeight + textBorder;
 	text3ColRect.left = text3Position.x - textBorder;
@@ -90,9 +121,41 @@ void MainMenu::Initialize()
 	text4ColRect.right = 116;
 }
 
-void MainMenu::Update()
+void MainMenu::Update(vector<Game*>* game)
 {
+	cursor->Update();
 
+	if (CollisionDetection(text1ColRect, cursor->GetCollision()))
+	{
+		cursor->isColl = true;
+		
+		cout << "Collied!   1" << endl;
+		if (cursor->mouseLeftClick) {
+			level1 = new Level1();
+			level1->Initialize();
+			game->push_back(level1);
+		}
+	}
+
+	if (CollisionDetection(text3ColRect, cursor->GetCollision()))
+	{
+		cursor->isColl = true;
+		cout << "Collied!  2" << endl;
+		if (cursor->mouseLeftClick) {
+			exit(0);
+		}
+	}
+	
+	if (CollisionDetection(text4ColRect, cursor->GetCollision()))
+	{
+		cursor->isColl = true;
+		cout << "Collied!  3" << endl;
+		if (cursor->mouseLeftClick) {
+			levelEx = new LevelEx();
+			levelEx->Initialize();
+			game->push_back(levelEx);
+		}
+	}
 }
 
 void MainMenu::Render()
@@ -101,19 +164,44 @@ void MainMenu::Render()
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3dDevice->BeginScene();
 
+
+
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
+<<<<<<< Updated upstream
+=======
+	D3DXMATRIX mat;
+>>>>>>> Stashed changes
 	// Draw Background
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, 0, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+<<<<<<< Updated upstream
 	
 	// Draw Text
 	font->DrawText(sprite, "Start Game", 10, &text1Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font->DrawText(sprite, "Settings", 8, &text2Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font->DrawText(sprite, "Quit Game", 9, &text3Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font2->DrawText(sprite, "Extra Game", 10, &text4Rect, 0, D3DCOLOR_XRGB(0, 0, 0));
+=======
 
+>>>>>>> Stashed changes
+
+	// Draw Text
+	font->DrawText(sprite, "Start Game", 10, &text1Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
+	font->DrawText(sprite, "Quit Game", 9, &text3Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
+	font2->DrawText(sprite, "Extra Game", 10, &text4Rect, 0, D3DCOLOR_XRGB(0, 0, 0));
+	sprite->End();
+
+
+	line->Begin();
+	line->Draw(lineVertices, 5, D3DCOLOR_XRGB(0, 0, 0));
+	line->Draw(lineVertices2, 5, D3DCOLOR_XRGB(0, 0, 0));
+	line->End();
+
+
+	sprite->Begin(D3DXSPRITE_ALPHABLEND);
+	cursor->Render();
 	sprite->End();
 
 	line->Begin();
@@ -127,7 +215,7 @@ void MainMenu::Render()
 }
 
 void MainMenu::Input() {
-	// cursor->Input();
+	cursor->Input();
 }
 
 bool MainMenu::CollisionDetection(RECT A, RECT B)

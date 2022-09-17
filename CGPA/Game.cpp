@@ -19,12 +19,12 @@ void Game::CleanUp()
 	texture = NULL;
 }
 
-void Game::Update() {
+void Game::Update(vector<Game*>*) {
 
 }
 
 void Game::Input() {
-
+	
 }
 
 Game::~Game() {

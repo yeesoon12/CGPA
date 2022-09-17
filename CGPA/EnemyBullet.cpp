@@ -3,7 +3,9 @@
 void EnemyBullet::Initialization() {
 
 }
-void EnemyBullet::Update(){}
+void EnemyBullet::Update(){
+	
+}
 void EnemyBullet::Render(){}
 BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 	if (position.x < -250)
@@ -16,6 +18,19 @@ BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 		return false;
 	
 	return true;
+}
+boolean EnemyBullet::Reflection(D3DXVECTOR2 position){
+	
+	if (position.x < -20)
+		return  true;
+	if (position.x > MyWindowWidth)
+		return  true;
+	if (position.y < -20)
+		return  true;
+	if (position.y > MyWindowHeight)
+		return  true;
+
+	return false;
 }
 
 RECT EnemyBullet::GetColRect() {

@@ -42,7 +42,7 @@ void PlayerShoot::Update() {
 	}
 	if(!isHit){
 	if (fokus == 1) {
-		direction *= 0.95;
+		direction *= 0.90;
 	}
 	position.x += sin(direction) * speed;
 	position.y += -cos(direction) * speed;

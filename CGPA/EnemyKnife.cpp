@@ -1,6 +1,7 @@
 #include "EnemyKnife.h"
 
-void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position) {
+
+void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position, int speed, int reflectionTime) {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/EnemyBullet7.png", &texture);
 	if (FAILED(hr)) {
 		cout << "Failed to load texture" << endl;
@@ -14,18 +15,19 @@ void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 	spriteWidth = textureWidth / spriteCol;
 	spriteHeight = textureHeight / spriteRow;
 
+	
 	animRect.top = 0;
 	animRect.bottom = 32;
 	animRect.left = 0;
 	animRect.right = 32;
-	scaling = D3DXVECTOR2(1.0f, 1.0f);
+	scaling = D3DXVECTOR2(1.f, 1.f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 
-	speed = 0; 
+	this->speed = speed;
 	direction = Direction;
 	this->position = position;
-
 	
+	isReflection = reflectionTime;
 	
 	colRect.top = position.y;
 	colRect.bottom = colRect.top + spriteHeight;
@@ -34,19 +36,23 @@ void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 }
 
 void EnemyKnife::Update() {
-	
 	if (InBoundary(position)) {
-		speed = 5;
-		position.x += sin(direction) * speed;
-		position.y += -cos(direction) * speed;
+	position.x += sin(direction) * speed;
+	position.y += -cos(direction) * speed;
 
+	colRect.top = position.y+5;
+	colRect.bottom = colRect.top + 3;
+	colRect.left = position.x+20;
+	colRect.right = colRect.left + 3;
 	}
-
-	colRect.top = position.y;
-	colRect.bottom = colRect.top + spriteHeight;
-	colRect.left = position.x;
-	colRect.right = colRect.left + spriteWidth;
-
+	if(isReflection>0){
+	if (Reflection(position)) {
+		randomNumber = rand()%1571 + 4713;
+		direction += (randomNumber % 1000);
+		isReflection--;
+	}
+	
+	}
 }
 
 
@@ -57,4 +63,8 @@ void EnemyKnife::Render() {
 		sprite->SetTransform(&mat);
 		sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 	}
+}
+
+EnemyKnife::~EnemyKnife()
+{
 }

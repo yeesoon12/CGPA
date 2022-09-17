@@ -25,24 +25,37 @@ public:
 	void clearBullet();
 	PowerUp* powerUp;
 	vector<EnemyBullet*> getBullet();
+	void Input();
+	int GetHealthTime();
 private:
 	EnemyBulletCombination* bulletCom;
 	vector<EnemyBullet*> enemyBullets;
+	AudioManager* audioManager;
+	AudioManager* audioManager2;
+	AudioManager* audioManager3;
 	int fps;
 	Ultimate* ulti;
 	boolean isUlti;
+	boolean F3Pressed;
+	boolean F4Pressed;
 	int counters;
 	int stage;
+	int speed;
 	int checkMove;
 	float direction2;
 	float bossHealth;
 	int bossDamage;
 	int counter;
+	int counter2;
 	int count;
 	int abc;
-	int bulletDirection;
+	int randomPosition;
+	float smallKnifeDirection;
+	float knifeDirection;
 	int bulletCD;
+	int bulletCD2;
 	int attackPattern;
+	int pattern1Counter;
 
 	LPD3DXLINE line;
 

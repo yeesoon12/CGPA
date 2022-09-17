@@ -11,14 +11,24 @@ void Spaceship1::Initialize()
 	wKeyPressed = false;
 	aKeyPressed = false;
 	sKeyPressed = false;
+<<<<<<< Updated upstream
 	dKeyPressed = false;	
+=======
+	dKeyPressed = false;
+>>>>>>> Stashed changes
 
 	currentFrame = 0;
 	maxFrame = 1;
 
+<<<<<<< Updated upstream
 	position = D3DXVECTOR2(100, 300);
 	
 	direction = 0.0f;
+=======
+	position = D3DXVECTOR2(284, 284);
+
+	direction = 3.142f;
+>>>>>>> Stashed changes
 	spriteFPS = 10;
 
 	velocity = D3DXVECTOR2(0, 0);
@@ -159,3 +169,7 @@ void Spaceship1::CheckBoundary()
 }
 
 Spaceship1::~Spaceship1() {}
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes

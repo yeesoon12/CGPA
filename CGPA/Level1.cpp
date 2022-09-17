@@ -12,8 +12,14 @@ void Level1::Initialize()
 	direction2 = 2.f;
 	bulletCD = 0;
 	j = 0;
-
-	
+	counter = 0;
+	F1Pressed = false;
+	F2Pressed = false; 
+	F3Pressed = false;
+	F4Pressed = false;
+	isEnd = false;
+	isDie = false;
+	isWin = false;
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
@@ -21,16 +27,33 @@ void Level1::Initialize()
 	audioManager2 = new AudioManager();
 	audioManager2->InitializeAudio();
 	audioManager2->LoadSounds();
-	AudioManager* audioManager = new AudioManager();
-	audioManager->InitializeAudio();
-	audioManager->LoadSounds();
-	audioManager->PlayLevel1BGM();
 
+	bgm = 1;
+
+	endCounter = 100;
 
 }
 
-void Level1::Update() {
+void Level1::Update(vector<Game*>* game){
 
+	if(bgm==1)
+	{
+		audioManager2->PlayLevel1BGM();
+		bgm--;
+	}
+	if (isEnd ) {
+		endCounter--;
+		if (endCounter == 0 and isWin) {
+			winScene = new WinScene();
+			winScene->Initialize();
+			game->push_back(winScene);
+		}
+		else if (endCounter == 0 and isDie) {
+			endScene = new EndScene();
+			endScene->Initialize();
+			game->push_back(endScene);
+		}
+	}
 		bullets = player->getBullet();
 		for (int w = 0; w < bullets.size(); w++) {
 			bullet = bullets[w];
@@ -44,6 +67,7 @@ void Level1::Update() {
 		if(enemy->powerUp->getPowerUpNum()>0){
 			player->addBullet(2);
 		enemy->powerUp->setPowerUpNum(0);
+		audioManager2->PlayPowerUp();
 		
 		}
 	}
@@ -54,19 +78,66 @@ void Level1::Update() {
 			if(j<0){
 			audioManager2->PlayDeathSound();
 			player->minusHealth();
-			j = 999;
+			isEnd = true;
+			isDie = true;
+			j = 9999;
 			}
 		}
 	}
+	if (F1Pressed) {
+		if (counter <= 0) {
+			
+			audioManager2->editBGM(0.1);
+			counter = 5;
+			F1Pressed = false;
+		}
+
+	}
+	if (F2Pressed) {
+		if (counter <= 0) {
+			
+			audioManager2->editBGM(-0.1);
+			counter = 5;
+			F2Pressed = false;
+		}
+
+	}
+	if (F3Pressed) {
+		if (counter <= 0) {
+			audioManager2->editSoundEffect(0.1);
+		
+			counter = 5;
+			F3Pressed = false;
+		}
+
+	}
+	if (F4Pressed) {
+		if (counter <= 0) {
+			audioManager2->editSoundEffect(-0.1);
+			
+			counter = 5;
+			F4Pressed = false;
+		}
+
+	}
 	player->Update();
 	enemy->Update();
-
+	audioManager2->UpdateSound();
 	if (player->IsUlti()) {
 		enemy->clearBullet();
 	}
-
+	bossHealth = enemy->GetHealthTime();
+	if (bossHealth == 0)
+	{
+		audioManager->~AudioManager();
+		audioManager2->~AudioManager();
+		isEnd = true;
+		isWin = true;
+	
+	}
 	bulletCD++;
 	j--;
+	counter--;
 }
    
 
@@ -91,8 +162,24 @@ void Level1::Render() {
 }
 
 void Level1::Input(){
+	enemy->Input();
 	player->Input();
-	
+	dInputKeyboardDevice->Acquire();
+	dInputKeyboardDevice->GetDeviceState(256, diKeys);
+	if (diKeys[DIK_F1] & 0x80) {
+		F1Pressed = true;
+		cout << "abc" << endl;
+	}
+	if (diKeys[DIK_F2] & 0x80) {
+		F2Pressed = true;
+	}
+	if (diKeys[DIK_F3] & 0x80) {
+		F3Pressed = true;
+		cout << "abc" << endl;
+	}
+	if (diKeys[DIK_F4] & 0x80) {
+		F4Pressed = true;
+	}
 }
 
 bool Level1::CollisionDetection(RECT A, RECT B)

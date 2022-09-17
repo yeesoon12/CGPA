@@ -28,13 +28,15 @@ void Player::Initialize()
 	xPressed = false;
 	cPressed = false;
 	isUlti = false;
+	F3Pressed = false;
+	F4Pressed = false;
 	velocity = D3DXVECTOR2(0, 0);
-	speed = 5.0f;
+	speed = 7.0f;
 	bulletAmount = 1;
 	textureWidth = 512;
 	textureHeight = 280;
 	counter = 0;
-
+	counter2 = 0;
 	spriteRow = 3;
 	spriteCol = 8;
 	spriteWidth = textureWidth / spriteCol;
@@ -101,7 +103,7 @@ void Player::Update() {
 
 	}
 	if (!zPressed) {
-		speed = 5.0f;
+		speed = 7.0f;
 
 	}
 
@@ -111,7 +113,7 @@ void Player::Update() {
 		
 	}
 	if (xPressed) {
-		if (ultiCD < 0){
+		if (ultiCD < 0 and health>0){
 		
 			ulti = new Ultimate();
 		ulti->Initialization(position);
@@ -151,6 +153,25 @@ void Player::Update() {
 		position.x += speed;
 		rightPressed = false;
 		move = RIGHT;
+	}
+
+	if (F3Pressed) {
+		if (counter2 <= 0) {
+			audioManager->editSoundEffect(0.1);
+			audioManager2->editSoundEffect(0.1);
+			counter2 = 5;
+			F3Pressed = false;
+		}
+			
+	}
+	if (F4Pressed) {
+		if (counter2 <= 0) {
+			audioManager->editSoundEffect(-0.1);
+			audioManager2->editSoundEffect(-0.1);
+			counter2 = 5;
+			F4Pressed = false;
+		}
+
 	}
 	if (spacePressed) {
 		if(cd<0&&health>0){
@@ -213,10 +234,10 @@ void Player::Update() {
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
 	
-	colRect.top = position.y+40;
-	colRect.bottom = colRect.top + spriteHeight-80;
+	colRect.top = position.y;
+	colRect.bottom = colRect.top + 2;
 	colRect.left = position.x+10;
-	colRect.right = colRect.left + spriteWidth-40;
+	colRect.right = colRect.left +10;
 	spacePressed = false;
 	if (isUlti)
 		ulti->Update();
@@ -230,6 +251,7 @@ void Player::Update() {
 	counter = 0;
 	}
 	cd--;
+	counter2--;
 	ultiCD--;
 }
 
@@ -270,6 +292,13 @@ void Player::Input() {
 	}
 	if (diKeys[DIK_C] & 0x80) {
 		cPressed = true;
+		
+	}
+	if (diKeys[DIK_F3] & 0x80) {
+		F3Pressed = true;
+	}
+	if (diKeys[DIK_F4] & 0x80) {
+		F4Pressed = true;
 	}
 }
 vector<PlayerShoot*> Player::getBullet()

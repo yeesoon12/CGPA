@@ -8,17 +8,19 @@ protected:
 	int speed;
 	D3DXMATRIX mat;
 	D3DXVECTOR2 acceleration;
-	
+	int isReflection;
+	int randomNumber;
 
 
 public:
 
 
 	void Initialization();
-	void Update();
+	virtual void Update();
 	void Render();
 	RECT GetColRect();
 	BOOLEAN InBoundary(D3DXVECTOR2 position);
+	BOOLEAN Reflection(D3DXVECTOR2 position);
 
 };
 

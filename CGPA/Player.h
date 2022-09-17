@@ -21,6 +21,8 @@ private:
 	boolean zPressed;
 	boolean xPressed;
 	boolean cPressed;
+	boolean F3Pressed;
+	boolean F4Pressed;
 	boolean isUlti;
 	boolean isUlti2;
 	int ultiCD;
@@ -32,6 +34,7 @@ private:
 	int health;
 	int move;
 	int bulletAmount;
+	int counter2;
 	vector<PlayerShoot*> bullet;
 
 	enum Movement {

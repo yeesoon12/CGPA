@@ -33,9 +33,9 @@ void PowerUp::Update() {
 	if(powerUpNum> 0){
 	position.y += speed;
 	colRect.top = position.y-10;
-	colRect.bottom = colRect.top + spriteHeight+20;
+	colRect.bottom = colRect.top + spriteHeight+30;
 	colRect.left = position.x-10;
-	colRect.right = colRect.left + spriteWidth+20;
+	colRect.right = colRect.left + spriteWidth+30;
 	
 	}
 	else if (powerUpNum = 0) {

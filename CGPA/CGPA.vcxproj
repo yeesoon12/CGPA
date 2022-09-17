@@ -134,6 +134,8 @@
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Catalysts.cpp" />
+    <ClCompile Include="Cursor.cpp" />
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBall.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
@@ -145,6 +147,10 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="LevelEx.cpp" />
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="LevelExBall.cpp" />
+>>>>>>> Stashed changes
     <ClCompile Include="MagicBack.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -155,10 +161,13 @@
     <ClCompile Include="Spaceship1.cpp" />
     <ClCompile Include="Spaceship2.cpp" />
     <ClCompile Include="Ultimate.cpp" />
+    <ClCompile Include="WinScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Catalysts.h" />
+    <ClInclude Include="Cursor.h" />
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBall.h" />
     <ClInclude Include="EnemyBullet.h" />
@@ -171,6 +180,10 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="LevelEx.h" />
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="LevelExBall.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="MagicBack.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
@@ -180,6 +193,7 @@
     <ClInclude Include="Spaceship1.h" />
     <ClInclude Include="Spaceship2.h" />
     <ClInclude Include="Ultimate.h" />
+    <ClInclude Include="WinScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\source\repos\CGP Practical 1\CGP Practical 1\fmod.dll" />

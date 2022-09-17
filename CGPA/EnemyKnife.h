@@ -5,7 +5,11 @@ class EnemyKnife : public EnemyBullet
 {
 
 public:
-	void Initialization(float Direction,D3DXVECTOR2 position);
+	EnemyKnife() : EnemyBullet() {
+		this->Initialize();
+	}
+	~EnemyKnife();
+	void Initialization(float Direction,D3DXVECTOR2 position, int speed,int);
 	void Update();
 	void Render();
 };

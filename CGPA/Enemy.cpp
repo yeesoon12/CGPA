@@ -9,14 +9,25 @@ void Enemy::Initialize()
 	if (FAILED(hr)) {
 		cout << "Failed to load texture123456789" << endl;
 	}
+	audioManager = new AudioManager();
+	audioManager->InitializeAudio();
+	audioManager->LoadSounds();
+	audioManager2 = new AudioManager();
+	audioManager2->InitializeAudio();
+	audioManager2->LoadSounds();
+	audioManager3 = new AudioManager();
+	audioManager3->InitializeAudio();
+	audioManager3->LoadSounds();
 	powerUp = new PowerUp();
 	magicBack = new MagicBack();
 	healthBar = new HealthBar();
 	bulletCom = new EnemyBulletCombination();
-	attackPattern = 1;
+	attackPattern = 0;
 	isUlti = false;
 	line = NULL;
-
+	//EnemyBulletInitialize
+	smallKnifeDirection = 0;
+	knifeDirection = 0;
 	
 	magicBack->Initialize(position);
 	healthBar->Initialize(bossHealth, bossHealthTime);
@@ -24,7 +35,7 @@ void Enemy::Initialize()
 	bossHealth = 100;
 	stage = 1;
 	bossDamage = 100;
-	counter = 500;
+	counter = 150;
 	textureWidth = 256;
 	textureHeight = 160;
 	bossHealthTime = 3;
@@ -32,10 +43,14 @@ void Enemy::Initialize()
 	direction2 = 0;
 	spriteCol = 4;
 	count = 10;
+	counter2 = 0;
+	F3Pressed = false;
+	F4Pressed = false;
 	isPower = false;
 	spriteWidth = textureWidth / spriteCol;
 	spriteHeight = textureHeight / spriteRow;
 	counters=0;
+	speed = 0;
 	fps = 12;
 	bulletCD = 15;
 	drop = true;
@@ -46,11 +61,11 @@ void Enemy::Initialize()
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
-
+	bulletCD2=15;
 	scaling = D3DXVECTOR2(1.0f, 1.2f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
-	bulletDirection = 0;
+	pattern1Counter = 0;
 	velocity = D3DXVECTOR2(0, 0);
 	position = D3DXVECTOR2((MyWindowWidth- spriteWidth) /2, -230);
 	colRect.top = position.y;
@@ -60,28 +75,157 @@ void Enemy::Initialize()
 	maxAttackPosition = 8;
 	maxFrame = 3;
 	abc = 0;
+	
 }
 
 void Enemy::Update()
-{	switch(attackPattern){
-	case 1:if(bulletCD==0){
-		bulletDirection++;
-		for (int i = 0; i < 3; i++) {
-			bulletCom->smallKnife = new EnemySmallKnife();
-			bulletCom->smallKnife->Initialization(bulletDirection, position + centre - D3DXVECTOR2{ 10,0 });
-			enemyBullets.push_back(bulletCom->smallKnife);
-			bulletDirection += 0.2f;
+{   
+	switch (attackPattern) {
+	case 1: {
+		if(bossHealthTime==3){
+		if (bulletCD <= 0) {
+			smallKnifeDirection = (rand()%1700+2000);
+			smallKnifeDirection /= 1000;
+			knifeDirection = rand();
+			
+			cout << smallKnifeDirection << endl;
+			
+			for (int i = 0; i < 4; i++) {
+				bulletCom->smallKnife = new EnemySmallKnife();
+				bulletCom->smallKnife->Initialization(smallKnifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 7,0);
+				enemyBullets.push_back(bulletCom->smallKnife);
+				smallKnifeDirection += 0.08f;
+				
+				audioManager3->PlayEnemyBulletShoot2();
+				bulletCD = 20;
+			}
 		}
-	bulletCD = 15;
+		if (bulletCD2 <= 0) {
+			for (int i = 0; i < 40; i++) {
+				bulletCom->knife = new EnemyKnife();
+				bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 10, 0);
+				enemyBullets.push_back(bulletCom->knife);
+				knifeDirection += 0.1571;
+				bulletCD2 = 20;
+				audioManager2->PlayEnemyBulletShoot1();;
+
+			}
+		}
+	
+	}
+		else if (bossHealthTime == 2) {
+		
+			float positionX2 = (rand() % 50) +180;
+			if (bulletCD <= 0) {
+				for (int i = 0; i < 11; i++) {
+					bulletCom->smallKnife = new EnemySmallKnife();
+					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 7,0);
+					enemyBullets.push_back(bulletCom->smallKnife);
+					audioManager2->PlayEnemyBulletShoot2();
+					smallKnifeDirection += 0.08f;
+
+					bulletCD = 30;
+					positionX2 -=40;
+				}
+			}
+		}
+		else if (bossHealthTime == 1) {
+
+			float positionX2 = (rand() % 50) + 180;
+			if (bulletCD <= 0) {
+				for (int i = 0; i < 11; i++) {
+					float directionInc = rand() % 60+(- 30);
+					directionInc /= 1000;
+					bulletCom->smallKnife = new EnemySmallKnife();
+					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 10,directionInc);
+					enemyBullets.push_back(bulletCom->smallKnife);
+					audioManager2->PlayEnemyBulletShoot2();
+					smallKnifeDirection += 0.08f;
+
+					bulletCD = 20;
+					positionX2 -= 40;
+				}
+			}
+		}
+		break;
+	}
+	case 2: {
+		if (bossHealthTime == 3){
+
+			if (bulletCD2 == 0) {
+
+				for (int i = 0; i < 6; i++) {
+					knifeDirection = (rand() % 2200 + 2000);
+
+					knifeDirection /= 1000;
+					bulletCom->knife = new EnemyKnife();
+					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 0);
+					cout << rand() % 8 + 6 << endl;
+					enemyBullets.push_back(bulletCom->knife);
+					audioManager2->PlayEnemyBulletShoot1();
+					bulletCD2 = 5;
+
+				}
+			}
+	}
+		else if (bossHealthTime == 2) {
+			if (bulletCD2 <= 0) {
+				for (int i = 0; i < 15; i++) {
+					bulletCom->knife = new EnemyKnife();
+					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 8, 2);
+					enemyBullets.push_back(bulletCom->knife);
+					knifeDirection += 0.419;
+					audioManager2->PlayEnemyBulletShoot1();
+					bulletCD2 = 20;
+
+				}
+			}
+		}
+		else if (bossHealthTime == 1) {
+			float positionX2 = (rand() % 50) + 180;
+			if (bulletCD <= 0) {
+				for (int i = 0; i < 11; i++) {
+					float directionInc = rand() % 60 + (-30);
+					directionInc /= 1000;
+					bulletCom->smallKnife = new EnemySmallKnife();
+					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 10, directionInc);
+					enemyBullets.push_back(bulletCom->smallKnife);
+					audioManager2->PlayEnemyBulletShoot2();
+					smallKnifeDirection += 0.08f;
+
+					bulletCD = 20;
+					positionX2 -= 40;
+				}
+			}
+			if (bulletCD2 <= 0) {
+
+				for (int i = 0; i < 6; i++) {
+					knifeDirection = (rand() % 6148);
+
+					knifeDirection /= 1000;
+					bulletCom->knife = new EnemyKnife();
+					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 2);
+					cout << rand() % 8 + 6 << endl;
+					enemyBullets.push_back(bulletCom->knife);
+					audioManager2->PlayEnemyBulletShoot1();
+					bulletCD2 = 5;
+
+				}
+			}
+		}
+		break;
 	}
 	default: {
 
 	}
-}
+	}
+	
 	for (int i = 0; i < enemyBullets.size(); i++)
 	{
 		enemyBullets[i]->Update();
 	}
+
+
 
 
 	counter--;
@@ -100,20 +244,25 @@ void Enemy::Update()
 			if (bossHealth == 0&& bossHealthTime==3) {
 				bossHealthTime--;
 				bossHealth = 200;
+				attackPattern = 1;
 				ulti = new Ultimate();
 				ulti->Initialization(position + centre);
+				audioManager->PlayExploSound();
 				
 				isUlti = true;
 				drop = true;
 				ulti = new Ultimate();
 				ulti->Initialization(position + centre);
 				enemyBullets.clear();
+				attackPattern = 1;
 			}
 			else if(bossHealth == 0 && bossHealthTime == 2) {
 				bossHealthTime--;
 				bossHealth = 400;
 				drop = true;
 				ulti = new Ultimate();
+				attackPattern = 1;
+				audioManager->PlayExploSound();
 				ulti->Initialization(position + centre);
 				enemyBullets.clear();
 			}
@@ -121,9 +270,12 @@ void Enemy::Update()
 			if (bossHealth == 0 && bossHealthTime==1) {
 				bossHealthTime--;
 				bossHealth = 0;
+				attackPattern = 0;
 				ulti = new Ultimate();
+				audioManager->PlayExploSound();
 				ulti->Initialization(position + centre);
 				enemyBullets.clear();
+				this->~Enemy();
 			}
 		}
 		
@@ -134,6 +286,7 @@ void Enemy::Update()
 		}
 		if (bossHealthTime == 2) {
 			healthBar->Update(bossHealth/2, bossHealthTime);
+			
 			stage = 2;
 		}
 		if (bossHealthTime == 1) {
@@ -153,6 +306,8 @@ void Enemy::Update()
 	if (bossHealthTime==3&&bossHealth <= 60&&drop) {
 			
 			powerUp->Initialization(position);
+			attackPattern = 2;
+			audioManager->PlayEvoSound();
 			isPower = true;
 			drop = false;
 		
@@ -161,6 +316,8 @@ void Enemy::Update()
 
 		powerUp->Initialization(position);
 		isPower = true;
+		attackPattern = 2;
+		audioManager->PlayEvoSound();
 		drop = false;
 
 	}
@@ -168,6 +325,8 @@ void Enemy::Update()
 			
 			powerUp->Initialization(position);
 			isPower = true;
+			attackPattern = 2;
+			audioManager->PlayEvoSound();
 			drop = false;
 		
 	}
@@ -175,173 +334,221 @@ void Enemy::Update()
 		if (position.y < 120) {
 			velocity.y = 3.0f;
 			position += velocity;
-			
+			speed = 3;
+
 		}
 		if (position.y > 120) {
 			position.y = 120;
-			velocity = D3DXVECTOR2(0, 0);
+			speed = 0;
 		}
 	}
-	if (velocity != D3DXVECTOR2(0, 0)) {
+	if (speed != 0) {
 		checkMove = MOVE;
 	}
 
-	if (velocity == D3DXVECTOR2(0, 0)){
+	if (speed == 0) {
 		checkMove = STAND;
 	}
-	
+	if (checkMove == 1 && currentFrame == 0)
+	{
+		currentFrame = 2;
+	}
 	animRect.top = checkMove * spriteHeight;
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
 	colRect.top = position.y;
 	colRect.bottom = colRect.top + spriteHeight;
-	colRect.left = position.x-10;
-	colRect.right = colRect.left + spriteWidth+20;
+	colRect.left = position.x - 10;
+	colRect.right = colRect.left + spriteWidth + 20;
 	
-	
-	if (counter == 0) {
-		counter = 500;
-		if (attackPosition == maxAttackPosition) {
-			attackPosition=0;
+	if (F3Pressed) {
+		if (counter2 <= 0) {
+			audioManager->editSoundEffect(0.1);
+			audioManager2->editSoundEffect(0.1);
+			audioManager3->editSoundEffect(0.1);
+			counter2 = 5;
+			F3Pressed = false;
 		}
-		attackPosition++;
-	}
-	
-	if (attackPosition == 1) {
-		int speed = 3;
 
-		if(abc==0){
+	}
+	if (F4Pressed) {
+		if (counter2 <= 0) {
+			audioManager->editSoundEffect(-0.1);
+			audioManager2->editSoundEffect(-0.1);
+			audioManager3->editSoundEffect(-0.1);
+			counter2 = 5;
+			F4Pressed = false;
+		}
+
+	}
+	if (attackPosition == 0 and counter == 0) {
+		attackPattern = 1;
+	}
+	if (counter == 0) {
+		;
+		counter = 500;
+		attackPosition = rand() % 4 + 1;
+		direction2 = 0;
+		abc = 0;
+		if (position.y > 180) {
+			attackPosition = rand() % 2 + 3;
+		}
+
+		if (attackPosition == 3 || attackPosition == 4) {
+			counter = 430;
+		}
+	}
+	if (attackPosition == 1) {
+		speed == 0;
+		if (abc == 0) {
+			speed = 3;
 			if (direction2 <= 3.142)
 				direction2 += 0.05;
 			else
 				abc++;
 		}
-		else if(abc==1)
-			{
-				if (direction2 >= -3.142)
-					direction2 -= 0.05;
-				else
-					abc--;
-			}
+		else if (abc == 1)
+		{
+			speed = 3;
+			if (direction2 >= -3.142)
+				direction2 -= 0.05;
+			else
+				abc--;
+		}
+
 		position.x += sin(direction2) * speed;
 		position.y += -cos(direction2) * speed;
-		/*if (position.x > 50 ) {
-			velocity.x = enemySpeedVertical;
-			velocity.y = -enemySpeedHorizotal;
-			position -= velocity;
-		}
-		if (position.x < 50) {
-			position.x = 50;
-			velocity = D3DXVECTOR2(0, 0);
-		}*/
+
 	}
+
 	if (attackPosition == 2) {
+		speed == 0;
 
-
-		if (position.x < (MyWindowWidth - spriteWidth)/2) {
-			velocity.x = -enemySpeedVertical;
-			velocity.y = enemySpeedHorizotal;
-			position -= velocity;
+		if (abc == 0) {
+			speed = 3;
+			if (direction2 >= -3.142)
+				direction2 -= 0.05;
+			else
+				abc++;
 		}
-		if (position.x > (MyWindowWidth - spriteWidth) / 2) {
-			position.x = (MyWindowWidth - spriteWidth) / 2;
-			velocity = D3DXVECTOR2(0, 0);
+		else if (abc == 1)
+		{
+			speed = 3;
+			if (direction2 <= 3.142)
+				direction2 += 0.05;
+			else
+				abc--;
 		}
+		position.x += sin(direction2) * speed;
+		position.y += -cos(direction2) * speed;
 	}
-
 	if (attackPosition == 3) {
-		if (position.x < (MyWindowWidth - spriteWidth) - 50) {
-			velocity.x = -enemySpeedVertical;
-			velocity.y = -enemySpeedHorizotal;
-			position -= velocity;
+		if (abc == 0) {
+			speed = 3;
+			if (direction2 <= 4.713) {
+				direction2 += 0.05;
+				position.x += sin(direction2) * speed;
+				position.y += -cos(direction2) * speed;
+			}
+			else
+				abc++;
 		}
-		if (position.x > (MyWindowWidth - spriteWidth) - 50) {
-			velocity = D3DXVECTOR2(0, 0);
-			position.x = (MyWindowWidth - spriteWidth) - 50;
+		if (abc == 1) {
+
+			if (position.x > 70) {
+				speed = 3;
+				position.x -= speed / 1.5;
+				if (position.x < 70) {
+					position.x = 70;
+					direction2 = 0;
+					abc++;
+				}
+			}
+
+		}
+		if (abc == 2) {
+			speed = 3;
+			if (direction2 <= 1.571)
+				direction2 += 0.05;
+			position.x += sin(direction2) * speed / 1.5;
+			position.y += -cos(direction2) * speed / 1.5;
+			if (position.x > (MyWindowWidth - spriteWidth) / 2) {
+				speed = 3;
+				position.x = (MyWindowWidth - spriteWidth) / 2;
+				if (position.y > 120) {
+					position.y -= speed / 1.5;
+					if (position.y < 120) {
+						position.y = 120;
+						speed = 0;
+					}
+				}
+				if (position.y < 120) {
+					position.y += speed / 1.5;
+					if (position.y > 120) {
+						position.y = 120;
+						speed = 0;
+					}
+				}
+			}
 		}
 	}
 	if (attackPosition == 4) {
-		if (position.x > (MyWindowWidth - spriteWidth) / 2) {
-			velocity.x = enemySpeedVertical;
-			velocity.y = enemySpeedHorizotal;
-			position -= velocity;
+		speed = 0;
+		if (abc == 0) {
+			if (direction2 >= -4.713) {
+				speed = 3;
+				direction2 -= 0.05;
+				position.x += sin(direction2) * speed;
+				position.y += -cos(direction2) * speed;
+			}
+			else
+				abc++;
 		}
-		if (position.x < (MyWindowWidth - spriteWidth) / 2) {
-			velocity = D3DXVECTOR2(0, 0);
-			position.x = (MyWindowWidth - spriteWidth) / 2;
-		}
-	}
+		if (abc == 1) {
+			speed = 3;
+			if (position.x < 500) {
+				position.x += speed / 1.5;
+				if (position.x > 500) {
+					position.x = 500;
+					direction2 = 0;
+					abc++;
+				}
+			}
 
-	if (attackPosition == 5) {
-		if (position.x <  (MyWindowWidth-spriteWidth)-40 || position.y >30) {
-			velocity.x = enemySpeedVertical;
-			velocity.y = -enemySpeedHorizotal;
-			position += velocity;
-			if (position.x > (MyWindowWidth - spriteWidth) - 40) {
-				position.x =  (MyWindowWidth - spriteWidth) - 40;
-				velocity= D3DXVECTOR2(0, 0);
-			}
-			if (position.y < 30) {
-				position.y =  30;
-				velocity = D3DXVECTOR2(0, 0);
-			}
 		}
-		
-	}
-	if (attackPosition == 6) {
-		if (position.x > (MyWindowWidth - spriteWidth)/2 || position.y < 120) {
-			velocity.x = -enemySpeedVertical;
-			velocity.y = enemySpeedHorizotal;
-			position += velocity;
+		if (abc == 2) {
+			speed = 3;
+			if (direction2 >= -1.571)
+				direction2 -= 0.05;
+			position.x += sin(direction2) * speed / 1.5;
+			position.y += -cos(direction2) * speed / 1.5;
 			if (position.x < (MyWindowWidth - spriteWidth) / 2) {
-				velocity = D3DXVECTOR2(0, 0);
 				position.x = (MyWindowWidth - spriteWidth) / 2;
-			}
-			if (position.y > 120) {
-				velocity = D3DXVECTOR2(0, 0);
-				position.y = 120;
-			}
-		}
-
-	}
-	if (attackPosition == 7) {
-		if (position.x > 50 || position.y > 30) {
-			velocity.x = enemySpeedVertical;
-			velocity.y = enemySpeedHorizotal;
-			position -= velocity;
-			if (position.x < 50) {
-				position.x = 50;
-				velocity = D3DXVECTOR2(0, 0);
-			}
-			if (position.y < 30) {
-				position.y = 30;
-				velocity = D3DXVECTOR2(0, 0);
+				if (position.y > 120) {
+					position.y -= speed / 1.5;
+					if (position.y < 120) {
+						position.y = 120;
+						speed = 0;
+					}
+				}
+				if (position.y < 120) {
+					position.y += speed / 1.5;
+					if (position.y > 120) {
+						position.y = 120;
+						speed = 0;
+					}
+				}
 			}
 		}
-
-	}
-	if (attackPosition == 8) {
-		if (position.x < (MyWindowWidth - spriteWidth) / 2 || position.y < 120) {
-			velocity.x = enemySpeedVertical;
-			velocity.y = enemySpeedHorizotal;
-			position += velocity;
-			if (position.x > (MyWindowWidth - spriteWidth) / 2) {
-				velocity = D3DXVECTOR2(0, 0);
-				position.x = (MyWindowWidth - spriteWidth) / 2;
-			}
-			if (position.y > 120) {
-				velocity = D3DXVECTOR2(0, 0);
-				position.y = 120;
-			}
-		}
-
 	}
 	if (isPower) {
 		powerUp->Update();
 	}
 	magicBack->Update(position,stage);
 	bulletCD--;
+	bulletCD2--;
+	counter2--;
 }
 
 void Enemy::Render()
@@ -369,7 +576,7 @@ RECT Enemy::GetCollisionRect() {
 	return colRect;
 }
 void Enemy::minusHealth() {
-	bossHealth -= 0.3;
+	bossHealth -= 100;
 }
 void Enemy::clearBullet() {
 	enemyBullets.clear();
@@ -380,4 +587,19 @@ Enemy::~Enemy()
 
 vector<EnemyBullet*> Enemy::getBullet() {
 	return enemyBullets;
+}
+void Enemy::Input() {
+	dInputKeyboardDevice->Acquire();
+	dInputKeyboardDevice->GetDeviceState(256, diKeys);
+	if (diKeys[DIK_F3] & 0x80) {
+		F3Pressed = true;
+		cout << "abc" << endl;
+	}
+	if (diKeys[DIK_F4] & 0x80) {
+		F4Pressed = true;
+	}
+}
+
+int Enemy::GetHealthTime() {
+	return bossHealthTime;
 }

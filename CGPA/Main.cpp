@@ -165,7 +165,7 @@ void CleanUpMyDirectInput() {
 }
 void Update(int FrameToUpdate) {
 	for (int i = 0; i < FrameToUpdate; i++) {
-		game.front()->Update();
+		game.back()->Update(&game);
 	}
 	
 
@@ -181,9 +181,9 @@ int main() {
 	timer->Init(60);
 	while (IfMyWindowIsRunning())
 	{
-		game.front()->Input();
+		game.back()->Input();
 		Update(timer->FramesToUpdate());
-		game.front()->Render();
+		game.back()->Render();
 
 	}
 	CleanUpMyDirectInput();

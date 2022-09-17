@@ -1,6 +1,6 @@
 #include "EnemySmallKnife.h"
 
-void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
+void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position, int speed, float directionInc) {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/EnemyBullet8.png", &texture);
 	if (FAILED(hr)) {
 		cout << "Failed to load texture" << endl;
@@ -8,7 +8,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 
 	textureWidth = 16;
 	textureHeight = 16;
-
+	increaseDir = directionInc;
 	spriteRow = 1;
 	spriteCol = 1;
 	spriteWidth = textureWidth / spriteCol;
@@ -18,10 +18,10 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 	animRect.bottom = 16;
 	animRect.left = 0;
 	animRect.right = 16;
-	scaling = D3DXVECTOR2(1.5f, 1.5f);
+	scaling = D3DXVECTOR2(1.f, 1.f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 
-	speed = 0;
+	this->speed = speed;
 	direction = Direction;
 	this->position = position;
 
@@ -36,18 +36,20 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position) {
 void EnemySmallKnife::Update() {
 
 	if (InBoundary(position)) {
-		speed = 5;
+
 
 		position.x += sin(direction) * speed;
 		position.y += -cos(direction) * speed;
 
 
-	}
-	colRect.top = position.y + 5;
-	colRect.bottom = colRect.top + spriteHeight - 10;
-	colRect.left = position.x + 5;
-	colRect.right = colRect.left + spriteWidth - 10;
 	
+	colRect.top = position.y -10;
+	colRect.bottom = colRect.top+5;
+	colRect.left = position.x + 5;
+	colRect.right = colRect.left + 5;
+	direction += increaseDir;
+	
+}
 	
 
 }
@@ -60,4 +62,7 @@ void EnemySmallKnife::Render() {
 		sprite->SetTransform(&mat);
 		sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 	}
+}
+EnemySmallKnife::~EnemySmallKnife()
+{
 }

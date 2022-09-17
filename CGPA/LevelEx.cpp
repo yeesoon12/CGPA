@@ -1,25 +1,74 @@
 #include "LevelEx.h"
 
+<<<<<<< Updated upstream
+=======
+D3DXVECTOR2 lineVertices3[] = {
+	D3DXVECTOR2(251, 0),
+	D3DXVECTOR2(350, 0),
+	D3DXVECTOR2(350, 1),
+	D3DXVECTOR2(251, 1),
+	D3DXVECTOR2(251, 0)
+};
+
+D3DXVECTOR2 lineVertices4[] = {
+	D3DXVECTOR2(251, 799),
+	D3DXVECTOR2(350, 799),
+	D3DXVECTOR2(350, 800),
+	D3DXVECTOR2(251, 800),
+	D3DXVECTOR2(251, 799)
+};
+
+>>>>>>> Stashed changes
 LevelEx::~LevelEx() {
 }
 
 void LevelEx::Initialize()
 {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/levelExBG.png", &texture);
+<<<<<<< Updated upstream
 	spaceship1 = new Spaceship1();
 	spaceship2 = new Spaceship2();
 	spaceship1->Initialize();
 	spaceship2->Initialize();
+=======
+	hr = D3DXCreateLine(d3dDevice, &line);
+	hr = D3DXCreateFont(d3dDevice, 40, 0, FW_BOLD, 1, false,
+		DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
+		DEFAULT_PITCH | FF_DONTCARE, "MV Boli", &font);
+>>>>>>> Stashed changes
 
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
 	position = D3DXVECTOR2(0, 0);
 
+<<<<<<< Updated upstream
+=======
+	spaceship1 = new Spaceship1();
+	spaceship2 = new Spaceship2();
+	ball = new LevelExBall();
+
+	spaceship1->Initialize();
+	spaceship2->Initialize();
+	ball->Initialize();
+
+	box1.top = 0;
+	box1.bottom = 1;
+	box1.left = 251;
+	box1.right = 350;
+	counter = 300;
+	box2.top = 799;
+	box2.bottom = 800;
+	box2.left = 251;
+	box2.right = 350;
+
+	isEnd = false;
+>>>>>>> Stashed changes
 	AudioManager* audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
 	// audioManager->PlayLevelExBGM();
+<<<<<<< Updated upstream
 }
 
 void LevelEx::Update()
@@ -35,6 +84,45 @@ void LevelEx::Update()
 	spaceship2->Update();
 }
 
+=======
+
+	winner = 0;
+	textPosition = D3DXVECTOR2(201, 370);
+
+	textWidth = 220;
+	textHeight = 40;
+
+	textRect.top = textPosition.y;
+	textRect.bottom = textRect.top + textHeight;
+	textRect.left = textPosition.x;
+	textRect.right = textRect.left + textWidth;
+}
+
+void LevelEx::Update(vector<Game*>* game)
+{
+	spaceship1->Update();
+	spaceship2->Update();
+	ball->Update();
+
+	CheckPlayerCollide();
+	CheckPlayerCollideWithBall();
+	CheckWinner();
+
+	if (winner == 1)
+	{
+		textString = "Player 1 Win!";
+	}
+	else if (winner == 2)
+	{
+		textString = "Player 2 Win!";
+	}
+	if (isEnd) {
+		counter--;
+		if (counter == 0)
+			game->pop_back();
+	}
+}
+>>>>>>> Stashed changes
 
 void LevelEx::Render() {
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
@@ -48,9 +136,25 @@ void LevelEx::Render() {
 
 	spaceship1->Render();
 	spaceship2->Render();
+<<<<<<< Updated upstream
 
 	sprite->End();
 
+=======
+	ball->Render();
+
+	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
+	sprite->SetTransform(&mat);
+	font->DrawText(sprite, textString, 13, &textRect, 0, D3DCOLOR_XRGB(255, 255, 255));
+
+	sprite->End();
+
+	line->Begin();
+	line->Draw(lineVertices3, 5, D3DCOLOR_XRGB(255, 165, 0));
+	line->Draw(lineVertices4, 5, D3DCOLOR_XRGB(255, 165, 0));
+	line->End();
+
+>>>>>>> Stashed changes
 	d3dDevice->EndScene();
 	d3dDevice->Present(NULL, NULL, NULL, NULL);
 }
@@ -77,6 +181,7 @@ bool LevelEx::CollisionDetection(RECT A, RECT B)
 bool LevelEx::CircleCollisionDetection(float radiusA, float radiusB, D3DXVECTOR2 positionA, D3DXVECTOR2 positionB)
 {
 	D3DXVECTOR2 distanceAB = positionA - positionB;
+<<<<<<< Updated upstream
 	if (pow(radiusA + radiusB, 2) > D3DXVec2LengthSq(&distanceAB))
 	{
 		return true;
@@ -84,5 +189,99 @@ bool LevelEx::CircleCollisionDetection(float radiusA, float radiusB, D3DXVECTOR2
 	else
 	{
 		return false;
+=======
+	if (pow(radiusA + radiusB, 2) > D3DXVec2LengthSq(&distanceAB)) return true; else return false;
+}
+
+void LevelEx::CheckPlayerCollide()
+{
+	/*
+	* Website Reference:
+	* https://gamedevelopment.tutsplus.com/tutorials/when-worlds-collide-simulating-circle-circle-collisions--gamedev-769
+	*/
+
+	if (CircleCollisionDetection(spaceship1->getRadius(), spaceship2->getRadius(),
+		spaceship1->getPosition() + spaceship1->getCentre(), spaceship2->getPosition() + spaceship2->getCentre()))
+	{
+		/*
+		// Calculate the collision point
+		D3DXVECTOR2 colPoint;
+		colPoint.x = ((spaceship1->getPosition().x * spaceship2->getRadius()) + (spaceship2->getPosition().x * spaceship1->getRadius()))
+			/ (spaceship1->getRadius() + spaceship1->getRadius());
+		colPoint.y = ((spaceship1->getPosition().y * spaceship2->getRadius()) + (spaceship2->getPosition().y * spaceship1->getRadius()))
+			/ (spaceship1->getRadius() + spaceship1->getRadius());
+
+		// Used to show collision point
+		// cout << "Collision point: " << colPoint.x << ", " << colPoint.y << endl;
+		*/
+
+		// Calculate new velocity
+		float newVelX1 = (spaceship1->getVelocity().x * (spaceship1->getMass() - spaceship2->getMass()) +
+			(2 * spaceship2->getMass() * spaceship2->getVelocity().x)) / (spaceship1->getMass() + spaceship2->getMass());
+		float newVelY1 = (spaceship1->getVelocity().y * (spaceship1->getMass() - spaceship2->getMass()) +
+			(2 * spaceship2->getMass() * spaceship2->getVelocity().y)) / (spaceship1->getMass() + spaceship2->getMass());
+		float newVelX2 = (spaceship2->getVelocity().x * (spaceship2->getMass() - spaceship1->getMass()) +
+			(2 * spaceship1->getMass() * spaceship1->getVelocity().x)) / (spaceship1->getMass() + spaceship2->getMass());
+		float newVelY2 = (spaceship2->getVelocity().y * (spaceship2->getMass() - spaceship1->getMass()) +
+			(2 * spaceship1->getMass() * spaceship1->getVelocity().y)) / (spaceship1->getMass() + spaceship2->getMass());
+
+		// Set the velocity
+		spaceship1->setVelocity(D3DXVECTOR2(newVelX1, newVelY1));
+		spaceship2->setVelocity(D3DXVECTOR2(newVelX2, newVelY2));
+	}
+}
+
+void LevelEx::CheckPlayerCollideWithBall()
+{
+	if (CircleCollisionDetection(spaceship1->getRadius(), ball->getRadius(),
+		spaceship1->getPosition() + spaceship1->getCentre(), ball->getPosition() + ball->getCentre()))
+	{
+		// Calculate new velocity
+		float newVelX1 = (spaceship1->getVelocity().x * (spaceship1->getMass() - ball->getMass()) +
+			(2 * ball->getMass() * ball->getVelocity().x)) / (spaceship1->getMass() + ball->getMass());
+		float newVelY1 = (spaceship1->getVelocity().y * (spaceship1->getMass() - ball->getMass()) +
+			(2 * ball->getMass() * ball->getVelocity().y)) / (spaceship1->getMass() + ball->getMass());
+		float newVelX2 = (ball->getVelocity().x * (ball->getMass() - spaceship1->getMass()) +
+			(2 * spaceship1->getMass() * spaceship1->getVelocity().x)) / (spaceship1->getMass() + ball->getMass());
+		float newVelY2 = (ball->getVelocity().y * (ball->getMass() - spaceship1->getMass()) +
+			(2 * spaceship1->getMass() * spaceship1->getVelocity().y)) / (spaceship1->getMass() + ball->getMass());
+
+		// Set the velocity
+		spaceship1->setVelocity(D3DXVECTOR2(newVelX1, newVelY1));
+		ball->setVelocity(D3DXVECTOR2(newVelX2, newVelY2));
+	}
+
+	if (CircleCollisionDetection(spaceship2->getRadius(), ball->getRadius(),
+		spaceship2->getPosition() + spaceship2->getCentre(), ball->getPosition() + ball->getCentre()))
+	{
+		// Calculate new velocity
+		float newVelX1 = (spaceship2->getVelocity().x * (spaceship2->getMass() - ball->getMass()) +
+			(2 * ball->getMass() * ball->getVelocity().x)) / (spaceship2->getMass() + ball->getMass());
+		float newVelY1 = (spaceship2->getVelocity().y * (spaceship2->getMass() - ball->getMass()) +
+			(2 * ball->getMass() * ball->getVelocity().y)) / (spaceship2->getMass() + ball->getMass());
+		float newVelX2 = (ball->getVelocity().x * (ball->getMass() - spaceship2->getMass()) +
+			(2 * spaceship2->getMass() * spaceship2->getVelocity().x)) / (spaceship2->getMass() + ball->getMass());
+		float newVelY2 = (ball->getVelocity().y * (ball->getMass() - spaceship2->getMass()) +
+			(2 * spaceship2->getMass() * spaceship2->getVelocity().y)) / (spaceship2->getMass() + ball->getMass());
+
+		// Set the velocity
+		spaceship2->setVelocity(D3DXVECTOR2(newVelX1, newVelY1));
+		ball->setVelocity(D3DXVECTOR2(newVelX2, newVelY2));
+	}
+}
+
+void LevelEx::CheckWinner()
+{
+	if (CollisionDetection(ball->getColRect(), box1))
+	{
+		winner = 1;
+		isEnd = true;
+	}
+
+	if (CollisionDetection(ball->getColRect(), box2))
+	{
+		winner = 2;
+		isEnd = true;
+>>>>>>> Stashed changes
 	}
 }

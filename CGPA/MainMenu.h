@@ -3,14 +3,20 @@
 #define MAINMENU_H
 #include "Header.h"
 #include "Game.h"
+#include "Cursor.h"
+#include "Level1.h"
+#include "LevelEx.h"
 
 class MainMenu : public Game
 {
 private:
+<<<<<<< Updated upstream
 
 	HRESULT hr;
 	D3DXMATRIX mat;
 
+=======
+>>>>>>> Stashed changes
 	// Font Type
 	LPD3DXFONT font;
 	LPD3DXFONT font2;
@@ -26,6 +32,10 @@ private:
 	D3DXVECTOR2 text2Position;
 	D3DXVECTOR2 text3Position;
 	D3DXVECTOR2 text4Position;
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 	RECT text1Rect;
 	RECT text2Rect;
 	RECT text3Rect;
@@ -34,6 +44,12 @@ private:
 	RECT text2ColRect;
 	RECT text3ColRect;
 	RECT text4ColRect;
+<<<<<<< Updated upstream
+=======
+	Level1* level1;
+	LevelEx* levelEx;
+	Cursor* cursor;
+>>>>>>> Stashed changes
 
 public:
 	MainMenu() : Game()
@@ -43,7 +59,7 @@ public:
 	~MainMenu();
 
 	void Initialize();
-	void Update();
+	void Update(vector<Game*>*);
 	void Render();
 	void Input();
 	bool CollisionDetection(RECT A, RECT B);

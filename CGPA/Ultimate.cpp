@@ -39,7 +39,7 @@ void Ultimate::Render() {
 	D3DXMATRIX mat;
 	D3DXMatrixTransformation2D(&mat, &centre, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
-	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
+	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(100, 100, 100));
 
 
 
