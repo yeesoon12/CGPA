@@ -8,10 +8,6 @@ void Spaceship1::Initialize()
 	leftKeyPressed = false;
 	rightKeyPressed = false;
 	spaceKeyPressed = false;
-	wKeyPressed = false;
-	aKeyPressed = false;
-	sKeyPressed = false;
-	dKeyPressed = false;	
 
 	currentFrame = 0;
 	maxFrame = 1;

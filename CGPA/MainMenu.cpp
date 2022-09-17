@@ -111,7 +111,6 @@ void MainMenu::Update(vector<Game*>* game)
 	{
 		cursor->isColl = true;
 		
-		cout << "Collied!   1" << endl;
 		if (cursor->mouseLeftClick) {
 			level1 = new Level1();
 			level1->Initialize();
@@ -122,7 +121,7 @@ void MainMenu::Update(vector<Game*>* game)
 	if (CollisionDetection(text3ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		cout << "Collied!  2" << endl;
+
 		if (cursor->mouseLeftClick) {
 			exit(0);
 		}
@@ -131,7 +130,7 @@ void MainMenu::Update(vector<Game*>* game)
 	if (CollisionDetection(text4ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		cout << "Collied!  3" << endl;
+
 		if (cursor->mouseLeftClick) {
 			levelEx = new LevelEx();
 			levelEx->Initialize();

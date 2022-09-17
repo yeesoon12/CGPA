@@ -5,7 +5,6 @@
 class Spaceship1 : public Spaceship
 {
 public:
-<<<<<<< Updated upstream
 	Spaceship1() : Spaceship() {
 		this->Initialize();
 	}
@@ -17,16 +16,3 @@ public:
 	void Input();
 	void CheckBoundary();
 };
-=======
-    Spaceship1() : Spaceship() {
-        this->Initialize();
-    }
-    ~Spaceship1();
-
-    void Initialize();
-    void Update();
-    void Render();
-    void Input();
-    void CheckBoundary();
-};
->>>>>>> Stashed changes

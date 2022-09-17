@@ -44,12 +44,13 @@ void LevelEx::Initialize()
 	box1.bottom = 1;
 	box1.left = 251;
 	box1.right = 350;
-	counter = 300;
+	
 	box2.top = 799;
 	box2.bottom = 800;
 	box2.left = 251;
 	box2.right = 350;
 
+	counter = 300;
 	isEnd = false;
 
 	AudioManager* audioManager = new AudioManager();

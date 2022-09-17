@@ -9,11 +9,7 @@ private:
 
 public:
 	FMOD::System* system;
-<<<<<<< Updated upstream
-	FMOD::Sound* levelExBGM, * Level1BGM, * GunShoot, * UltiSound, * deathSound;
-=======
-	FMOD::Sound* Level1BGM, * GunShoot, * UltiSound, * deathSound,*exploSound, * enemyBulletShoot1,* enemyBulletShoot2, *PowerUpSound,*EvoSound;
->>>>>>> Stashed changes
+	FMOD::Sound* levelExBGM, * Level1BGM, * GunShoot, * UltiSound, * deathSound, * exploSound, * enemyBulletShoot1, * enemyBulletShoot2, * PowerUpSound, * EvoSound;
 	FMOD::Channel* channel = 0;
 	FMOD_RESULT result;
 	void* extraDriverData = 0;

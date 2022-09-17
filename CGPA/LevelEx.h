@@ -28,8 +28,10 @@ protected:
 	// Win Box
 	RECT box1;
 	RECT box2;
-	boolean isEnd;
+
 	int winner;
+	int counter;
+	boolean isEnd;
 
 public:
 	LevelEx() : Game() {
