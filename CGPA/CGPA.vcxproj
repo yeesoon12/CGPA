@@ -147,10 +147,7 @@
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="LevelEx.cpp" />
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="LevelExBall.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="MagicBack.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -180,10 +177,7 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="LevelEx.h" />
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="LevelExBall.h" />
->>>>>>> Stashed changes
     <ClInclude Include="MagicBack.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />

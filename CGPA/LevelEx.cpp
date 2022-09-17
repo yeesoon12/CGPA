@@ -1,7 +1,5 @@
 #include "LevelEx.h"
 
-<<<<<<< Updated upstream
-=======
 D3DXVECTOR2 lineVertices3[] = {
 	D3DXVECTOR2(251, 0),
 	D3DXVECTOR2(350, 0),
@@ -18,32 +16,22 @@ D3DXVECTOR2 lineVertices4[] = {
 	D3DXVECTOR2(251, 799)
 };
 
->>>>>>> Stashed changes
 LevelEx::~LevelEx() {
 }
 
 void LevelEx::Initialize()
 {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/levelExBG.png", &texture);
-<<<<<<< Updated upstream
-	spaceship1 = new Spaceship1();
-	spaceship2 = new Spaceship2();
-	spaceship1->Initialize();
-	spaceship2->Initialize();
-=======
 	hr = D3DXCreateLine(d3dDevice, &line);
 	hr = D3DXCreateFont(d3dDevice, 40, 0, FW_BOLD, 1, false,
 		DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, "MV Boli", &font);
->>>>>>> Stashed changes
 
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
 	position = D3DXVECTOR2(0, 0);
 
-<<<<<<< Updated upstream
-=======
 	spaceship1 = new Spaceship1();
 	spaceship2 = new Spaceship2();
 	ball = new LevelExBall();
@@ -51,7 +39,7 @@ void LevelEx::Initialize()
 	spaceship1->Initialize();
 	spaceship2->Initialize();
 	ball->Initialize();
-
+	
 	box1.top = 0;
 	box1.bottom = 1;
 	box1.left = 251;
@@ -63,39 +51,11 @@ void LevelEx::Initialize()
 	box2.right = 350;
 
 	isEnd = false;
->>>>>>> Stashed changes
+
 	AudioManager* audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
-	// audioManager->PlayLevelExBGM();
-<<<<<<< Updated upstream
-}
-
-void LevelEx::Update()
-{
-	// Player collide each other
-	if (CircleCollisionDetection(16, 16, 
-		spaceship1->getPosition() + spaceship1->getCentre(), spaceship2->getPosition() + spaceship2->getCentre()))
-	{
-		cout << "Player Collided" << endl;
-	}
-
-	spaceship1->Update();
-	spaceship2->Update();
-}
-
-=======
-
-	winner = 0;
-	textPosition = D3DXVECTOR2(201, 370);
-
-	textWidth = 220;
-	textHeight = 40;
-
-	textRect.top = textPosition.y;
-	textRect.bottom = textRect.top + textHeight;
-	textRect.left = textPosition.x;
-	textRect.right = textRect.left + textWidth;
+	audioManager->PlayLevelExBGM();
 }
 
 void LevelEx::Update(vector<Game*>* game)
@@ -108,6 +68,17 @@ void LevelEx::Update(vector<Game*>* game)
 	CheckPlayerCollideWithBall();
 	CheckWinner();
 
+	winner = 0;
+	textPosition = D3DXVECTOR2(201, 370);
+
+	textWidth = 220;
+	textHeight = 40;
+
+	textRect.top = textPosition.y;
+	textRect.bottom = textRect.top + textHeight;
+	textRect.left = textPosition.x;
+	textRect.right = textRect.left + textWidth;
+
 	if (winner == 1)
 	{
 		textString = "Player 1 Win!";
@@ -116,13 +87,13 @@ void LevelEx::Update(vector<Game*>* game)
 	{
 		textString = "Player 2 Win!";
 	}
+
 	if (isEnd) {
 		counter--;
 		if (counter == 0)
 			game->pop_back();
 	}
 }
->>>>>>> Stashed changes
 
 void LevelEx::Render() {
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
@@ -136,11 +107,6 @@ void LevelEx::Render() {
 
 	spaceship1->Render();
 	spaceship2->Render();
-<<<<<<< Updated upstream
-
-	sprite->End();
-
-=======
 	ball->Render();
 
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
@@ -154,7 +120,6 @@ void LevelEx::Render() {
 	line->Draw(lineVertices4, 5, D3DCOLOR_XRGB(255, 165, 0));
 	line->End();
 
->>>>>>> Stashed changes
 	d3dDevice->EndScene();
 	d3dDevice->Present(NULL, NULL, NULL, NULL);
 }
@@ -181,15 +146,6 @@ bool LevelEx::CollisionDetection(RECT A, RECT B)
 bool LevelEx::CircleCollisionDetection(float radiusA, float radiusB, D3DXVECTOR2 positionA, D3DXVECTOR2 positionB)
 {
 	D3DXVECTOR2 distanceAB = positionA - positionB;
-<<<<<<< Updated upstream
-	if (pow(radiusA + radiusB, 2) > D3DXVec2LengthSq(&distanceAB))
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-=======
 	if (pow(radiusA + radiusB, 2) > D3DXVec2LengthSq(&distanceAB)) return true; else return false;
 }
 
@@ -282,6 +238,5 @@ void LevelEx::CheckWinner()
 	{
 		winner = 2;
 		isEnd = true;
->>>>>>> Stashed changes
 	}
 }

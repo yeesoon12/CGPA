@@ -16,11 +16,7 @@ void Spaceship2::Initialize()
 	currentFrame = 0;
 	maxFrame = 1;
 
-<<<<<<< Updated upstream
-	position = D3DXVECTOR2(300, 300);
-=======
 	position = D3DXVECTOR2(284, 484);
->>>>>>> Stashed changes
 
 	direction = 0.0f;
 	spriteFPS = 10;
@@ -162,8 +158,4 @@ void Spaceship2::CheckBoundary()
 	}
 }
 
-<<<<<<< Updated upstream
 Spaceship2::~Spaceship2() {}
-=======
-Spaceship2::~Spaceship2() {}
->>>>>>> Stashed changes

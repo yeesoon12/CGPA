@@ -39,9 +39,6 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Spaceship1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Catalysts.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
     <ClCompile Include="MagicBack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-    <ClCompile Include="LevelEx.cpp">
-=======
     <ClCompile Include="Cursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -87,21 +81,19 @@
     <ClCompile Include="WinScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+	<ClCompile Include="Spaceship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Spaceship1.cpp">
->>>>>>> Stashed changes
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Spaceship2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
-    <ClCompile Include="Spaceship.cpp">
-=======
     <ClCompile Include="LevelEx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LevelExBall.cpp">
->>>>>>> Stashed changes
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +120,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainMenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Spaceship1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Catalysts.h">
@@ -166,9 +155,6 @@
     <ClInclude Include="Ultimate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="LevelEx.h">
-=======
     <ClInclude Include="Cursor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -178,21 +164,19 @@
     <ClInclude Include="WinScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+	<ClInclude Include="Spaceship.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Spaceship1.h">
->>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Spaceship2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-<<<<<<< Updated upstream
-    <ClInclude Include="Spaceship.h">
-=======
     <ClInclude Include="LevelEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LevelExBall.h">
->>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
