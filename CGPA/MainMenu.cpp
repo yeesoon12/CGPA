@@ -22,7 +22,7 @@ MainMenu::~MainMenu() {
 void MainMenu::Initialize()
 {
 	// Background Image
-	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.jpg", &texture);
+	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.png", &texture);
 
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);

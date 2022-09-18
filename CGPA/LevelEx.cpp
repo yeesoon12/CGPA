@@ -53,6 +53,8 @@ void LevelEx::Initialize()
 	counter = 300;
 	isEnd = false;
 
+	winner = 0;
+
 	AudioManager* audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
@@ -69,7 +71,6 @@ void LevelEx::Update(vector<Game*>* game)
 	CheckPlayerCollideWithBall();
 	CheckWinner();
 
-	winner = 0;
 	textPosition = D3DXVECTOR2(201, 370);
 
 	textWidth = 220;
@@ -231,13 +232,13 @@ void LevelEx::CheckWinner()
 {
 	if (CollisionDetection(ball->getColRect(), box1))
 	{
-		winner = 1;
+		winner = 2;
 		isEnd = true;
 	}
 
 	if (CollisionDetection(ball->getColRect(), box2))
 	{
-		winner = 2;
+		winner = 1;
 		isEnd = true;
 	}
 }
