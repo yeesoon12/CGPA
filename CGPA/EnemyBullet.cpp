@@ -7,6 +7,8 @@ void EnemyBullet::Update(){
 	
 }
 void EnemyBullet::Render(){}
+
+//check the enemyBullet is in boudary or not
 BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 	if (position.x < -250)
 		return false;
@@ -19,6 +21,8 @@ BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 	
 	return true;
 }
+
+// set the relection boudary of the bullet
 boolean EnemyBullet::Reflection(D3DXVECTOR2 position){
 
 	if (position.x < -20)

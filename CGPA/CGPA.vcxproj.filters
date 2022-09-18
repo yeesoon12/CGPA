@@ -45,9 +45,6 @@
     <ClCompile Include="EnemyBullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBulletCombination.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyKnife.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

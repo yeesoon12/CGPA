@@ -138,6 +138,7 @@ AudioManager::AudioManager() {
 AudioManager::~AudioManager() {
 
 }
+// The value of sound volume should not be more than 1 and less than 0
 float AudioManager::CheckSoundVolume(float soundVolume) {
     if (soundVolume <= 0)
         return 0;

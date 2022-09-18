@@ -138,7 +138,6 @@
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
-    <ClCompile Include="EnemyBulletCombination.cpp" />
     <ClCompile Include="EnemyKnife.cpp" />
     <ClCompile Include="EnemySmallKnife.cpp" />
     <ClCompile Include="FrameTimer.cpp" />

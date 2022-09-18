@@ -23,11 +23,11 @@ void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position, int speed
 	scaling = D3DXVECTOR2(1.f, 1.f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 
-	this->speed = speed;
+	this->speed = speed;       // Set the bullet with the given speed, direction and position
 	direction = Direction;
 	this->position = position;
 	
-	isReflection = reflectionTime;
+	isReflection = reflectionTime; // set how many time the bullet can reflect with boudary
 	
 	colRect.top = position.y;
 	colRect.bottom = colRect.top + spriteHeight;
@@ -36,6 +36,7 @@ void EnemyKnife::Initialization(float Direction, D3DXVECTOR2 position, int speed
 }
 
 void EnemyKnife::Update() {
+	// if bullet is in boudary, update it
 	if (InBoundary(position)) {
 	position.x += sin(direction) * speed;
 	position.y += -cos(direction) * speed;
@@ -45,11 +46,11 @@ void EnemyKnife::Update() {
 	colRect.left = position.x+20;
 	colRect.right = colRect.left + 3;
 	}
-	if(isReflection>0){
-	if (Reflection(position)) {
+	if(isReflection>0){//check the remain bullet reflect time
+	if (Reflection(position)) { // if bullet touch the reflect boudary
 		randomNumber = rand()%1571 + 4713;
-		direction += (randomNumber % 1000);
-		isReflection--;
+		direction += (randomNumber % 1000); // randomly change the bullet direction with a certain degree
+		isReflection--; //reflect time -1
 	}
 	
 	}
@@ -58,6 +59,7 @@ void EnemyKnife::Update() {
 
 
 void EnemyKnife::Render() {
+	// if bullet is in boudary, Render it
 	if (InBoundary(position)) {
 		D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &this->position);
 		sprite->SetTransform(&mat);

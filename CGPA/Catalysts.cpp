@@ -33,6 +33,7 @@ void Catalysts::Initialization(D3DXVECTOR2 catalystsPosition) {
 
 void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 	fokus = focus;
+	//If player didnt press C to focus their bullet, move catalysts to the specific position
 	if(focus==0){
 		if (position1.x != catalystsPosition.x - 27)
 			position1.x = position1.x - 10;
@@ -60,7 +61,7 @@ void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 		
 	}
 	
-	
+	//If player press C to focus their bullet, move catalysts to the specific position
 	else if (focus == 1) {
 		if(position1 != catalystsPosition + D3DXVECTOR2(-7, -30)){
 			position1 += D3DXVECTOR2{ 7.5,-12.5 };
@@ -80,6 +81,7 @@ void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 		}
 	
 	}
+	//make the catalysts turn around the player
 	direction += 0.075f;
 	direction2 -= 0.075f;
 	

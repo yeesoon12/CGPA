@@ -8,7 +8,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position, int 
 
 	textureWidth = 16;
 	textureHeight = 16;
-	increaseDir = directionInc;
+	increaseDir = directionInc; // set how much direction that will increase in every loop
 	spriteRow = 1;
 	spriteCol = 1;
 	spriteWidth = textureWidth / spriteCol;
@@ -21,7 +21,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position, int 
 	scaling = D3DXVECTOR2(1.f, 1.f);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 
-	this->speed = speed;
+	this->speed = speed;  //set the bullet direction speed and position
 	direction = Direction;
 	this->position = position;
 
@@ -35,7 +35,7 @@ void EnemySmallKnife::Initialization(float Direction, D3DXVECTOR2 position, int 
 
 void EnemySmallKnife::Update() {
 
-	if (InBoundary(position)) {
+	if (InBoundary(position)) { // update the bullet when it is in boundary
 
 
 		position.x += sin(direction) * speed;
@@ -57,7 +57,7 @@ void EnemySmallKnife::Update() {
 
 
 void EnemySmallKnife::Render() {
-	if (InBoundary(position)) {
+	if (InBoundary(position)) {// render the bullet when it is in boundary
 		D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &this->position);
 		sprite->SetTransform(&mat);
 		sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));

@@ -10,9 +10,9 @@ void HealthBar::Initialize(int bossHealth1, int bossHealthTime)
 	 hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/HP_Bar.png", &barTexture);
 	 hr = D3DXCreateFont(d3dDevice, 34, 0, FW_BOLD, 1, false,
 		 DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
-		 DEFAULT_PITCH | FF_DONTCARE, "Bradley Hand ITC", &font);
+		 DEFAULT_PITCH | FF_DONTCARE, "Bradley Hand ITC", &font); //set the font attribute like style,size etc.
 	if (FAILED(hr)) {
-		cout << "Failed to load texture123456789" << endl;
+		cout << "Failed to load texture" << endl;
 	}
 
 	spriteWidth = 500;
@@ -36,23 +36,22 @@ void HealthBar::Initialize(int bossHealth1, int bossHealthTime)
 	
 }
 
-void HealthBar::Update(float bossHealth1,int bossHealthTime)
+void HealthBar::Update(float bossHealth1,int bossHealthTime) // pass how many life the boss still have and how much health left
 {
 	bossHealthTimes = bossHealthTime;
 	cout << barScaling.x << endl;
-	barScaling.x = (float)bossHealth1/100;
-	if (barScaling.x < 0) {
+	barScaling.x = (float)bossHealth1/100; 
+	if (barScaling.x < 0) {// set the horizontal scaling cant be less than 0
 		barScaling.x = 0;
 		if (barScaling.x == 0) {
-			barScaling = D3DXVECTOR2(1, 1);
+			barScaling = D3DXVECTOR2(1, 1);  // if bossHealth = 0 , reset the hp to full
 		}
 	}
 	if (bossHealthTimes == 0) {
-		bossHealthTimes = 0;
-		barScaling.x = 0;
+		barScaling.x = 0;// if boss life is 0, health will not be render
 	}
 	
-	animRect.top = currentFrame * spriteHeight;
+	animRect.top = currentFrame * spriteHeight; //update animation 
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
@@ -70,7 +69,7 @@ void HealthBar::Render()
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-	switch (bossHealthTimes) {
+	switch (bossHealthTimes) { //render how much life boss still have
 	case 3:
 		font->DrawText(sprite, "x3", 2, &textRect, 0, D3DCOLOR_XRGB(255, 127, 80));
 		break;

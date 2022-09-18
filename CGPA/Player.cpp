@@ -1,6 +1,6 @@
 #include "Player.h"
 
-void Player::Initialize()
+void Player::Initialize() // initialize player 
 {
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/Player.png", &texture);
 
@@ -63,12 +63,11 @@ void Player::Initialize()
 
 void Player::Render()
 {
-	if (health <= 0) {
+	if (health <= 0) { // not to render when player is die
 		return;
 	}
-	if (isUlti)
+	if (isUlti) // render ulti when player press ulti button
 		ulti->Render();
-	counter++;
 	D3DXMATRIX mat;
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
@@ -86,14 +85,15 @@ void Player::Render()
 }
 
 void Player::Update() {
-	isUlti2 = false;
-	if (bulletAmount >= 5)
+
+	isUlti2 = false; 
+	if (bulletAmount >= 5) //bullet amount cant be more than 5
 		bulletAmount = 5;
 
-	catalysts->Update(position,focus);
+	catalysts->Update(position,focus); //update the catalyst according to the focus and position
 	if (!leftPressed && !rightPressed)
-		move = UPDOWN;
-	if (!cPressed) {
+		move = UPDOWN;// set the sprite animation when player is not moving left or right
+	if (!cPressed) { // reset the focus when c is not pressed
 		focus = 0;
 
 	}
@@ -101,32 +101,32 @@ void Player::Update() {
 
 		bullet[i]->Update();
 
-	}
+	} // update all the bullets that has been fire out
 	if (!zPressed) {
-		speed = 7.0f;
+		speed = 7.0f;// reset the speed when player didnt press z
 
 	}
 
 	if (zPressed) {
-		speed = 2.5f;
+		speed = 2.5f; // when z pressed, decrease the player speed
 		zPressed = false;
 		
 	}
 	if (xPressed) {
 		if (ultiCD < 0 and health>0){
 		
-			ulti = new Ultimate();
-		ulti->Initialization(position);
-		audioManager2->PlayUltiSound();
+			ulti = new Ultimate();	//create a new ulti
+		ulti->Initialization(position); // initialize player position to the ulti position
+		audioManager2->PlayUltiSound();// play ultimate sound
 		isUlti = true;
 		isUlti2 = true;
-		ultiCD = 350;
+		ultiCD = 300; // set the ulti cd
 		}
 		xPressed = false;
 
 	}
 	if (cPressed) {
-		focus = 1;
+		focus = 1; // focus the bullet infront of the player
 		cPressed = false;
 
 	}
@@ -146,17 +146,17 @@ void Player::Update() {
 	if (leftPressed) {
 		position.x -= speed;
 		leftPressed = false;
-		move = LEFT;
+		move = LEFT;// set the animation to second row
 	}
 
 	if (rightPressed) {
 		position.x += speed;
 		rightPressed = false;
-		move = RIGHT;
+		move = RIGHT;// set the animation to third row
 	}
 
 	if (F3Pressed) {
-		if (counter2 <= 0) {
+		if (counter2 <= 0) { //increase
 			audioManager->editSoundEffect(0.1);
 			audioManager2->editSoundEffect(0.1);
 			counter2 = 5;
@@ -164,7 +164,7 @@ void Player::Update() {
 		}
 			
 	}
-	if (F4Pressed) {
+	if (F4Pressed) { //decrease sound effect
 		if (counter2 <= 0) {
 			audioManager->editSoundEffect(-0.1);
 			audioManager2->editSoundEffect(-0.1);
@@ -175,8 +175,8 @@ void Player::Update() {
 	}
 	if (spacePressed) {
 		if(cd<0&&health>0){
-		audioManager->PlayGunShoot();
-		if(bulletAmount==1){
+		audioManager->PlayGunShoot();// play gun shoot sound when is fire
+		if(bulletAmount==1){ // render the bullets according to the bullets amount
 		shoot = new PlayerShoot();
 		shoot->Initialization(position, 0,focus);
 		bullet.push_back(shoot);
@@ -210,11 +210,11 @@ void Player::Update() {
 			bullet.push_back(shoot);
 		}
 		spacePressed = false;
-		cd = 6;
+		cd = 6; //set the cd of bullet shoot
 		}
 		
 	}
-	if (position.x < 0) {
+	if (position.x < 0) { //player cant move out the boundary
 		position.x = 0;
 	}
 
@@ -229,19 +229,19 @@ void Player::Update() {
 	if (position.y + spriteHeight / 2 > MyWindowHeight) {
 		position.y = MyWindowHeight - spriteHeight / 2;
 	}
-	animRect.top = move * spriteHeight;
+	animRect.top = move * spriteHeight; //update animation rect
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
 	
-	colRect.top = position.y;
+	colRect.top = position.y; //update col rect
 	colRect.bottom = colRect.top + 2;
 	colRect.left = position.x+10;
 	colRect.right = colRect.left +10;
-	spacePressed = false;
+	spacePressed = false; //set the key press back to false
 	if (isUlti)
-		ulti->Update();
-	if(counter>=fps){
+		ulti->Update(); //only update the ulti when there is a ulti
+	if(counter>=fps){ // adjust the animation speed of the player
 	currentFrame++;
 	if (currentFrame >= maxFrame)
 	{
@@ -250,13 +250,14 @@ void Player::Update() {
 	
 	counter = 0;
 	}
+	counter++;
 	cd--;
 	counter2--;
 	ultiCD--;
 }
 
-void Player::minusHealth() {
-	health--;
+void Player::minusHealth() { // decrease the health of the player
+	health--; 
 }
 void Player::Input() {
 	dInputKeyboardDevice->Acquire();
@@ -301,24 +302,24 @@ void Player::Input() {
 		F4Pressed = true;
 	}
 }
-vector<PlayerShoot*> Player::getBullet()
+vector<PlayerShoot*> Player::getBullet() // return all the bullet that shooted 
 {
 	return bullet;
 }
 
-void Player::addBullet(int bulletAmounts) {
+void Player::addBullet(int bulletAmounts) { // add the bullet amount of the player
 	bulletAmount += bulletAmounts;
 }
 RECT Player::getColRect() {
 	return colRect;
-}
+}// return collision rect
 
 boolean Player::IsUlti() {
 	if (isUlti2 == true)
 		return true;
 	if (isUlti2 == false)
 		return false;
-}
+} // return the is ulti function
 Player::~Player() {
 
 }

@@ -37,6 +37,7 @@ void Cursor::Initialize()
 
 void Cursor::Update()
 {
+	//if mouse is collide with something, change the mouse animation
 	if (isColl) {
 		currentFrame = 1;
 		isColl = false;
@@ -85,6 +86,7 @@ void Cursor::Input()
 	mouseposition.y += mouseState.lY;
 }
 
+// return the mouse collision rect
 RECT Cursor::GetCollision()
 {
 	return mouseColRect;

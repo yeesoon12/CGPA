@@ -9,14 +9,14 @@ void MagicBack::Initialize(D3DXVECTOR2 magicBackPosition)
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/CirleBack.png", &texture);
 
 	if (FAILED(hr)) {
-		cout << "Failed to load texture123456789" << endl;
+		cout << "Failed to load texture" << endl;
 	}
 	spriteWidth = 128;
 	spriteHeight = 128;
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction=0;
-	position = magicBackPosition;
+	position = magicBackPosition; // initialize the position of magic back to the center enemy position
 	red = 0;
 	animRect.top = currentFrame * spriteHeight;
 	animRect.bottom = animRect.top + spriteHeight;
@@ -26,9 +26,9 @@ void MagicBack::Initialize(D3DXVECTOR2 magicBackPosition)
 
 void MagicBack::Update(D3DXVECTOR2 playerPosition,int stage)
 {
-	position = playerPosition + D3DXVECTOR2(-32,-15);
-	direction += 0.05f;
-	red = stage * 85;
+	position = playerPosition + D3DXVECTOR2(-32,-15); // keep updating the position behind the boss
+	direction += 0.05f; // let the magic back turning behind the boss
+	red = stage * 85; // render the red color according to the boss life
 
 }
 
