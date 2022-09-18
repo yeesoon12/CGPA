@@ -8,7 +8,7 @@ void Ultimate::Initialization(D3DXVECTOR2 playerPosition) {
 
 	textureWidth = 32;
 	textureHeight = 32;
-
+	//to get the player position
 	position = playerPosition;
 	spriteRow = 1;
 	spriteCol = 1;
@@ -31,12 +31,13 @@ void Ultimate::Initialization(D3DXVECTOR2 playerPosition) {
 }
 
 void Ultimate::Update() {
-	
+	//to let texture more bigger
 	scaling+= D3DXVECTOR2(5,5);
 	
 }
 void Ultimate::Render() {
 	D3DXMATRIX mat;
+	//draw the ultimate texture 
 	D3DXMatrixTransformation2D(&mat, &centre, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(100, 100, 100));

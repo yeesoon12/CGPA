@@ -2,6 +2,7 @@
 #include "Header.h"
 void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, float direction,int focus)
 {
+	//draw the player bullet
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/PlayerBullet.png", &texture);
 
 	if (FAILED(hr)) {
@@ -11,7 +12,7 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, float direction,int
 	textureWidth = 16;
 	textureHeight = 16;
 	isHit = false;
-	fokus = focus;
+	fokus = focus;//focus the bullet shoot
 	spriteRow = 1;
 	spriteCol = 1;
 	spriteWidth = textureWidth / spriteCol;
@@ -24,8 +25,8 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, float direction,int
 
 	scaling = D3DXVECTOR2(2, 2);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
-	this->direction=direction;
-	position = bulletPosition;
+	this->direction=direction;//Initialize the player bullet position to player
+	position = bulletPosition;//get the bullet position
 
 
 	colRect.top = position.y;
@@ -37,9 +38,11 @@ void PlayerShoot::Initialization(D3DXVECTOR2 bulletPosition, float direction,int
 }
 
 void PlayerShoot::Update() {
+	//if the bullet is hit the collision become 0
 	if (isHit) {
 		colRect = { 0,0,0,0 };
 	}
+	//if the bullet is not hit the direct will change
 	if(!isHit){
 	if (fokus == 1) {
 		direction *= 0.90;
@@ -58,6 +61,7 @@ void PlayerShoot::Render() {
 	if(position.y>-10){
 	
 	D3DXMATRIX mat;
+	//draw the bullet texture
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
@@ -65,9 +69,9 @@ void PlayerShoot::Render() {
     }
 }
 
-RECT PlayerShoot::GetColRect() {
+RECT PlayerShoot::GetColRect() {//check collision
 	return colRect;
 }
-void PlayerShoot::SetIsHit() {
+void PlayerShoot::SetIsHit() {//check hit the enemy
 	isHit = true;
 }

@@ -11,6 +11,7 @@ void PowerUp::Initialization(D3DXVECTOR2 position) {
 	speed = 5.0f;
 	spriteRow = 1;
 	spriteCol = 1;
+	//Initialize power up position to enemy position
 	this->position = position;
 	spriteWidth = textureWidth / spriteCol;
 	spriteHeight = textureHeight / spriteRow;
@@ -30,6 +31,7 @@ void PowerUp::Initialization(D3DXVECTOR2 position) {
 }
 
 void PowerUp::Update() {
+	//let power up drop down from enemy
 	if(powerUpNum> 0){
 	position.y += speed;
 	colRect.top = position.y-10;
@@ -46,6 +48,7 @@ void PowerUp::Render() {
 
 	if (powerUpNum > 0) {
 	D3DXMATRIX mat;
+	//draw power up texture
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, 0, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));

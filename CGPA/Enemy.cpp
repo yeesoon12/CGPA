@@ -4,11 +4,13 @@
 
 void Enemy::Initialize()
 {
+	//display enemy texture
 	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/boss2.png", &texture);
-	hr = D3DXCreateLine(d3dDevice, &line);
-	if (FAILED(hr)) {
-		cout << "Failed to load texture123456789" << endl;
+	hr = D3DXCreateLine(d3dDevice, &line);//draw line
+	if (FAILED(hr)) {//fail to laod texture
+		cout << "Failed to load texture" << endl;
 	}
+	//audio enemy
 	audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
@@ -80,17 +82,17 @@ void Enemy::Initialize()
 
 void Enemy::Update()
 {   
+	//enemy walk position
 	switch (attackPattern) {
 	case 1: {
 		if(bossHealthTime==3){
-		if (bulletCD <= 0) {
+		if (bulletCD <= 0) {//to limit the bulllet amount
 			smallKnifeDirection = (rand()%1700+2000);
 			smallKnifeDirection /= 1000;
 			knifeDirection = rand();
 			
-			cout << smallKnifeDirection << endl;
 			
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 4; i++) {//set different types of bullet
 				bulletCom->smallKnife = new EnemySmallKnife();
 				bulletCom->smallKnife->Initialization(smallKnifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 7,0);
 				enemyBullets.push_back(bulletCom->smallKnife);
@@ -101,7 +103,7 @@ void Enemy::Update()
 			}
 		}
 		if (bulletCD2 <= 0) {
-			for (int i = 0; i < 40; i++) {
+			for (int i = 0; i < 40; i++) {//set different types of bullet
 				bulletCom->knife = new EnemyKnife();
 				bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 10, 0);
 				enemyBullets.push_back(bulletCom->knife);
@@ -116,7 +118,7 @@ void Enemy::Update()
 		else if (bossHealthTime == 2) {
 		
 			float positionX2 = (rand() % 50) +180;
-			if (bulletCD <= 0) {
+			if (bulletCD <= 0) {//set different types of bullet
 				for (int i = 0; i < 11; i++) {
 					bulletCom->smallKnife = new EnemySmallKnife();
 					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 7,0);
@@ -133,7 +135,7 @@ void Enemy::Update()
 
 			float positionX2 = (rand() % 50) + 180;
 			if (bulletCD <= 0) {
-				for (int i = 0; i < 11; i++) {
+				for (int i = 0; i < 11; i++) {//set different types of bullet
 					float directionInc = rand() % 60+(- 30);
 					directionInc /= 1000;
 					bulletCom->smallKnife = new EnemySmallKnife();
@@ -154,13 +156,12 @@ void Enemy::Update()
 
 			if (bulletCD2 == 0) {
 
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 6; i++) {//set different types of bullet
 					knifeDirection = (rand() % 2200 + 2000);
 
 					knifeDirection /= 1000;
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 0);
-					cout << rand() % 8 + 6 << endl;
 					enemyBullets.push_back(bulletCom->knife);
 					audioManager2->PlayEnemyBulletShoot1();
 					bulletCD2 = 5;
@@ -170,7 +171,7 @@ void Enemy::Update()
 	}
 		else if (bossHealthTime == 2) {
 			if (bulletCD2 <= 0) {
-				for (int i = 0; i < 15; i++) {
+				for (int i = 0; i < 15; i++) {//set different types of bullet
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 8, 2);
 					enemyBullets.push_back(bulletCom->knife);
@@ -184,7 +185,7 @@ void Enemy::Update()
 		else if (bossHealthTime == 1) {
 			float positionX2 = (rand() % 50) + 180;
 			if (bulletCD <= 0) {
-				for (int i = 0; i < 11; i++) {
+				for (int i = 0; i < 11; i++) {//set different types of bullet
 					float directionInc = rand() % 60 + (-30);
 					directionInc /= 1000;
 					bulletCom->smallKnife = new EnemySmallKnife();
@@ -199,13 +200,12 @@ void Enemy::Update()
 			}
 			if (bulletCD2 <= 0) {
 
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 6; i++) {//set different types of bullet
 					knifeDirection = (rand() % 6148);
 
 					knifeDirection /= 1000;
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 2);
-					cout << rand() % 8 + 6 << endl;
 					enemyBullets.push_back(bulletCom->knife);
 					audioManager2->PlayEnemyBulletShoot1();
 					bulletCD2 = 5;
@@ -219,7 +219,7 @@ void Enemy::Update()
 
 	}
 	}
-	
+	//update the bullet
 	for (int i = 0; i < enemyBullets.size(); i++)
 	{
 		enemyBullets[i]->Update();
@@ -241,6 +241,7 @@ void Enemy::Update()
 		
 		if (bossHealth < 0) {
 			bossHealth = 0;
+			//limit the ultimate of the player can use for one level
 			if (bossHealth == 0&& bossHealthTime==3) {
 				bossHealthTime--;
 				bossHealth = 200;
@@ -280,7 +281,7 @@ void Enemy::Update()
 		}
 		
 	
-
+		//set the hp of the boss to health bar
 		if(bossHealthTime==3){
 		healthBar->Update(bossHealth, bossHealthTime);
 		}
@@ -302,7 +303,7 @@ void Enemy::Update()
 	if (isUlti) {
 		ulti->Update();
 	}
-
+	//set the boss if boss hp drop
 	if (bossHealthTime==3&&bossHealth <= 60&&drop) {
 			
 			powerUp->Initialization(position);
@@ -330,6 +331,7 @@ void Enemy::Update()
 			drop = false;
 		
 	}
+	//let boss move down from up
 	if (attackPosition == 0) {
 		if (position.y < 120) {
 			velocity.y = 3.0f;
@@ -342,6 +344,7 @@ void Enemy::Update()
 			speed = 0;
 		}
 	}
+	//animation of the boss
 	if (speed != 0) {
 		checkMove = MOVE;
 	}
@@ -357,11 +360,13 @@ void Enemy::Update()
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = currentFrame * spriteWidth;
 	animRect.right = animRect.left + spriteWidth;
+	//enemy collision
 	colRect.top = position.y;
 	colRect.bottom = colRect.top + spriteHeight;
 	colRect.left = position.x - 10;
 	colRect.right = colRect.left + spriteWidth + 20;
 	
+	//edit sound effect
 	if (F3Pressed) {
 		if (counter2 <= 0) {
 			audioManager->editSoundEffect(0.1);
@@ -382,6 +387,7 @@ void Enemy::Update()
 		}
 
 	}
+	//reset enemy position
 	if (attackPosition == 0 and counter == 0) {
 		attackPattern = 1;
 	}
@@ -391,15 +397,16 @@ void Enemy::Update()
 		attackPosition = rand() % 4 + 1;
 		direction2 = 0;
 		abc = 0;
+		//limit position of the boss
 		if (position.y > 180) {
 			attackPosition = rand() % 2 + 3;
 		}
-
+		//limit time of boss standing 
 		if (attackPosition == 3 || attackPosition == 4) {
 			counter = 430;
 		}
 	}
-	if (attackPosition == 1) {
+	if (attackPosition == 1) {//pattern 1 walking of boss
 		speed == 0;
 		if (abc == 0) {
 			speed = 3;
@@ -422,7 +429,7 @@ void Enemy::Update()
 
 	}
 
-	if (attackPosition == 2) {
+	if (attackPosition == 2) {//pattern 2 walking of boss
 		speed == 0;
 
 		if (abc == 0) {
@@ -443,7 +450,7 @@ void Enemy::Update()
 		position.x += sin(direction2) * speed;
 		position.y += -cos(direction2) * speed;
 	}
-	if (attackPosition == 3) {
+	if (attackPosition == 3) {//pattern 3 walking of boss
 		if (abc == 0) {
 			speed = 3;
 			if (direction2 <= 4.713) {
@@ -493,7 +500,7 @@ void Enemy::Update()
 			}
 		}
 	}
-	if (attackPosition == 4) {
+	if (attackPosition == 4) {//pattern 4 walking of boss
 		speed = 0;
 		if (abc == 0) {
 			if (direction2 >= -4.713) {
@@ -553,53 +560,56 @@ void Enemy::Update()
 
 void Enemy::Render()
 {
+	//draw the magic back of the enemy
 	magicBack->Render();
 	D3DXMATRIX mat;
+	//draw the enemy texture
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, &animRect, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-
+	//draw the health bar of the enemy
 	healthBar->Render();
+	//draw the power up if hp lower than 50%
 	if (isPower) {
 		powerUp->Render();
 	}
-	if (isUlti) {
+	if (isUlti) {//draw the ultimate texture
 		ulti->Render();
 	}
+	//draw the bullet
 	for (int i = 0; i < enemyBullets.size(); i++)
 	{
 		enemyBullets[i]->Render();
 	}
 
 }
-RECT Enemy::GetCollisionRect() {
+RECT Enemy::GetCollisionRect() {//ckeck collision
 	return colRect;
 }
-void Enemy::minusHealth() {
+void Enemy::minusHealth() {//minus hp of the boss
 	bossHealth -= 2;
 }
-void Enemy::clearBullet() {
+void Enemy::clearBullet() {//clear the bullet
 	enemyBullets.clear();
 }
 Enemy::~Enemy()
 {
 }
 
-vector<EnemyBullet*> Enemy::getBullet() {
+vector<EnemyBullet*> Enemy::getBullet() {//get bullet
 	return enemyBullets;
 }
-void Enemy::Input() {
+void Enemy::Input() {//get input for user
 	dInputKeyboardDevice->Acquire();
 	dInputKeyboardDevice->GetDeviceState(256, diKeys);
 	if (diKeys[DIK_F3] & 0x80) {
 		F3Pressed = true;
-		cout << "abc" << endl;
 	}
 	if (diKeys[DIK_F4] & 0x80) {
 		F4Pressed = true;
 	}
 }
 
-int Enemy::GetHealthTime() {
+int Enemy::GetHealthTime() {//get how many time left of boss health
 	return bossHealthTime;
 }
