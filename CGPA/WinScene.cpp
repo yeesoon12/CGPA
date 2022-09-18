@@ -43,10 +43,9 @@ void WinScene::Update(vector<Game*>* game)
 	if (CollisionDetection(text1ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		cout << "Collied!   1" << endl;
 		if (cursor->mouseLeftClick) {
 			game->pop_back();
-			game->pop_back();
+			
 		}
 	}
 

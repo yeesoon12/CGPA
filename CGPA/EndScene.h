@@ -2,16 +2,13 @@
 #include "Game.h"
 #include "Cursor.h"
 
-
 class EndScene : public Game
 {
 	// Font Type
 	LPD3DXFONT font;
 	LPD3DXFONT font2;
-	
 	// Line
 	LPD3DXLINE line;
-
 	// Text Settings
 	int textWidth;
 	int textHeight;
@@ -22,8 +19,6 @@ class EndScene : public Game
 	RECT text2Rect;
 	RECT text1ColRect;
 	RECT text2ColRect;
-
-
 	Cursor* cursor;
 
 public:

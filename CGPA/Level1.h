@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "WinScene.h"
 #include "EndScene.h"
+
 class Level1 : public Game
 {
 protected:
@@ -38,7 +39,7 @@ protected:
 
 public:
 	Level1() : Game() {
-		
+		this->Initialize();
 	}
 	~Level1();
 	void Initialize();

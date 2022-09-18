@@ -21,8 +21,7 @@ int gameFPS;
 FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
 MainMenu* mainMenu = new MainMenu();
-LevelEx* levelEx = new LevelEx();
-Level1* level1 = new Level1();
+
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
 

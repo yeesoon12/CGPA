@@ -23,11 +23,16 @@ void Level1::Initialize()
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
+	audioManager = new AudioManager();
+	audioManager->InitializeAudio();
+	audioManager->LoadSounds();
+
 	position = D3DXVECTOR2(0,0);
 	audioManager2 = new AudioManager();
 	audioManager2->InitializeAudio();
 	audioManager2->LoadSounds();
-	audioManager2->PlayLevel1BGM();
+
+	
 	bgm = 1;
 
 	endCounter = 100;
@@ -35,22 +40,27 @@ void Level1::Initialize()
 }
 
 void Level1::Update(vector<Game*>* game){
+	
 	if(isStart){
+		
 	if(bgm==1)
 	{
-		
+		audioManager->PlayLevel1BGM();
 		bgm--;
 	}
 	if (isEnd ) {
 		endCounter--;
+		audioManager->stopBackGround2();
 		if (endCounter == 0 and isWin) {
 			winScene = new WinScene();
 			winScene->Initialize();
+			game->pop_back();
 			game->push_back(winScene);
 		}
 		else if (endCounter == 0 and isDie) {
 			endScene = new EndScene();
 			endScene->Initialize();
+			game->pop_back();
 			game->push_back(endScene);
 		}
 	}
@@ -169,14 +179,12 @@ void Level1::Input(){
 	dInputKeyboardDevice->GetDeviceState(256, diKeys);
 	if (diKeys[DIK_F1] & 0x80) {
 		F1Pressed = true;
-		cout << "abc" << endl;
 	}
 	if (diKeys[DIK_F2] & 0x80) {
 		F2Pressed = true;
 	}
 	if (diKeys[DIK_F3] & 0x80) {
 		F3Pressed = true;
-		cout << "abc" << endl;
 	}
 	if (diKeys[DIK_F4] & 0x80) {
 		F4Pressed = true;

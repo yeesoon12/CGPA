@@ -576,7 +576,7 @@ RECT Enemy::GetCollisionRect() {
 	return colRect;
 }
 void Enemy::minusHealth() {
-	bossHealth -= 100;
+	bossHealth -= 2;
 }
 void Enemy::clearBullet() {
 	enemyBullets.clear();

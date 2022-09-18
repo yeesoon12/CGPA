@@ -1,5 +1,5 @@
 #include "EndScene.h"
-
+#include "Level1.h"
 EndScene::~EndScene()
 {
 }
@@ -60,7 +60,9 @@ void EndScene::Update(vector<Game*>* game)
 		cursor->isColl = true;
 		cout << "Collied!   1" << endl;
 		if (cursor->mouseLeftClick) {
+		
 			game->pop_back();
+			game->push_back(new Level1());
 		}
 	}
 
@@ -69,7 +71,6 @@ void EndScene::Update(vector<Game*>* game)
 		cursor->isColl = true;
 		cout << "Collied!   2" << endl;
 		if (cursor->mouseLeftClick) {
-			game->pop_back();
 			game->pop_back();
 		}
 		

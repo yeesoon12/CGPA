@@ -35,25 +35,25 @@ void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 	fokus = focus;
 	if(focus==0){
 		if (position1.x != catalystsPosition.x - 27)
-			position1.x = position1.x - 7.5;
+			position1.x = position1.x - 10;
 
 		if (position1.x <= catalystsPosition.x - 27)
 			position1.x = catalystsPosition.x - 27;
 
 		if (position1.y != catalystsPosition.y + 10)
-			position1.y = position1.y + 12.5;
+			position1.y = position1.y + 15;
 
 		if (position1.y >= catalystsPosition.y + 10)
 			position1.y = catalystsPosition.y + 10;
 
 		if (position2.x != catalystsPosition.x + 46)
-			position2.x = position2.x - 7.5;
+			position2.x = position2.x - 10;
 
 		if (position2.x <= catalystsPosition.x + 46)
 			position2.x = catalystsPosition.x + 46;
 
 		if (position2.y != catalystsPosition.y + 10)
-			position2.y = position2.y + 25;
+			position2.y = position2.y + 27.5;
 
 		if (position2.y >= catalystsPosition.y + 10)
 			position2.y = catalystsPosition.y + 10;
@@ -65,7 +65,7 @@ void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 		if(position1 != catalystsPosition + D3DXVECTOR2(-7, -30)){
 			position1 += D3DXVECTOR2{ 7.5,-12.5 };
 			if (position1.x >= catalystsPosition.x - 7)
-				position1.x = catalystsPosition.x - 7;
+				position1.x = catalystsPosition.x - 10;
 			if (position1.y <= catalystsPosition.y - 30)
 				position1.y = catalystsPosition.y - 30;
 			
@@ -73,7 +73,7 @@ void Catalysts::Update(D3DXVECTOR2 catalystsPosition, int focus) {
 		if (position2 != catalystsPosition + D3DXVECTOR2(+26, -30)) {
 			position2 += D3DXVECTOR2{ -7.5,-12.5 };
 			if (position2.x <= catalystsPosition.x +26)
-				position2.x = catalystsPosition.x +26;
+				position2.x = catalystsPosition.x +30;
 			if (position2.y <= catalystsPosition.y - 30)
 				position2.y = catalystsPosition.y - 30;
 
