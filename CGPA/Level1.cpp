@@ -47,8 +47,6 @@ void Level1::Initialize()
 
 void Level1::Update(vector<Game*>* game){
 	
-	if(isStart)
-	{
 		if (bgm == 1)
 		{
 			audioManager->PlayLevel1BGM();
@@ -58,13 +56,13 @@ void Level1::Update(vector<Game*>* game){
 		{
 			endCounter--;
 			audioManager->stopBackGround2();
-			if (endCounter == 0 and isWin) {
+			if (endCounter == 0 and isWin) { // if game is end and player is win, push win scene to the vector
 				winScene = new WinScene();
 				winScene->Initialize();
 				game->pop_back();
 				game->push_back(winScene);
 			}
-			else if (endCounter == 0 and isDie) {
+			else if (endCounter == 0 and isDie) { // if game is end and player is die, push end scene to the vector
 				endScene = new EndScene();
 				endScene->Initialize();
 				game->pop_back();
@@ -72,19 +70,19 @@ void Level1::Update(vector<Game*>* game){
 			}
 		}
 		bullets = player->getBullet();
-		for (int w = 0; w < bullets.size(); w++) {
+		for (int w = 0; w < bullets.size(); w++) { // check the enemy is collide with player's bullets
 			bullet = bullets[w];
 			if (CollisionDetection(bullet->GetColRect(), enemy->GetCollisionRect())) {
-				enemy->minusHealth();
-				bullet->SetIsHit();
+				enemy->minusHealth();// minus enemy health 
+				bullet->SetIsHit(); //bullet is hit
 			}
 		}
 
-		if (CollisionDetection(player->getColRect(), enemy->powerUp->getColRect())) {
+		if (CollisionDetection(player->getColRect(), enemy->powerUp->getColRect())) { // check the player is collide with power up
 			if (enemy->powerUp->getPowerUpNum() > 0) {
-				player->addBullet(2);
-				enemy->powerUp->setPowerUpNum(0);
-				audioManager2->PlayPowerUp();
+				player->addBullet(2); // add the bullet by 2
+				enemy->powerUp->setPowerUpNum(0); 
+				audioManager2->PlayPowerUp(); // player power up sound effect
 
 			}
 		}
@@ -93,8 +91,8 @@ void Level1::Update(vector<Game*>* game){
 		for (int i = 0; i < enemyBullets.size(); i++) {
 			if (CollisionDetection(player->getColRect(), enemyBullets[i]->GetColRect())) {
 				if (j < 0) {
-					audioManager2->PlayDeathSound();
-					player->minusHealth();
+					audioManager->PlayDeathSound(); // play death sound effect
+					player->minusHealth(); // minus the player health by 1
 					isEnd = true;
 					isDie = true;
 					j = 9999;
@@ -105,7 +103,7 @@ void Level1::Update(vector<Game*>* game){
 		if (F1Pressed) {
 			if (counter <= 0) {
 
-				audioManager2->editBGM(0.1);
+				audioManager2->editBGM(0.1); // increase the volume of bgm
 				counter = 5;
 				F1Pressed = false;
 			}
@@ -113,14 +111,14 @@ void Level1::Update(vector<Game*>* game){
 		if (F2Pressed) {
 			if (counter <= 0) {
 
-				audioManager2->editBGM(-0.1);
+				audioManager2->editBGM(-0.1); // decrease the volume of bgm
 				counter = 5;
 				F2Pressed = false;
 			}
 		}
 		if (F3Pressed) {
 			if (counter <= 0) {
-				audioManager2->editSoundEffect(0.1);
+				audioManager2->editSoundEffect(0.1); // increase the volume of sound effect
 
 				counter = 5;
 				F3Pressed = false;
@@ -128,7 +126,7 @@ void Level1::Update(vector<Game*>* game){
 		}
 		if (F4Pressed) {
 			if (counter <= 0) {
-				audioManager2->editSoundEffect(-0.1);
+				audioManager2->editSoundEffect(-0.1); // decrease the volume of sound effect
 
 				counter = 5;
 				F4Pressed = false;
@@ -138,20 +136,17 @@ void Level1::Update(vector<Game*>* game){
 		enemy->Update();
 		audioManager2->UpdateSound();
 		if (player->IsUlti()) {
-			enemy->clearBullet();
+			enemy->clearBullet(); // if player press ulti, clear all the bullet on screen
 		}
 		bossHealth = enemy->GetHealthTime();
-		if (bossHealth == 0)
+		if (bossHealth == 0) // when boss die, game end and win
 		{
-			audioManager->~AudioManager();
-			audioManager2->~AudioManager();
 			isEnd = true;
 			isWin = true;
 		}
 		bulletCD++;
 		j--;
 		counter--;
-	}
 }
    
 void Level1::Render() {
@@ -195,7 +190,7 @@ void Level1::Input(){
 	}
 }
 
-bool Level1::CollisionDetection(RECT A, RECT B)
+bool Level1::CollisionDetection(RECT A, RECT B) // collision detection of two object with rect collision
 {
 	if (A.top > B.bottom)
 		return false;
