@@ -43,6 +43,7 @@ void LevelExBall::Render()
 
 void LevelExBall::Update()
 {
+	// Always make sure the ball position and collision rect is updated
 	velocity *= 1 - friction;
 	position += velocity;
 

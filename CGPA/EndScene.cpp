@@ -1,8 +1,6 @@
 #include "EndScene.h"
 #include "Level1.h"
-EndScene::~EndScene()
-{
-}
+EndScene::~EndScene() {}
 
 void EndScene::Initialize()
 {
@@ -55,12 +53,12 @@ void EndScene::Update(vector<Game*>* game)
 {
 	cursor->Update();
 
+	// Detect the cursor collide with the text
 	if (CollisionDetection(text1ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		cout << "Collied!   1" << endl;
-		if (cursor->mouseLeftClick) {
-		
+		if (cursor->mouseLeftClick) 
+		{
 			game->pop_back();
 			game->push_back(new Level1());
 		}
@@ -69,13 +67,11 @@ void EndScene::Update(vector<Game*>* game)
 	if (CollisionDetection(text2ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		cout << "Collied!   2" << endl;
-		if (cursor->mouseLeftClick) {
+		if (cursor->mouseLeftClick)
+		{
 			game->pop_back();
 		}
-		
 	}
-
 }
 
 void EndScene::Render()
@@ -83,8 +79,6 @@ void EndScene::Render()
 	// Background
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3dDevice->BeginScene();
-
-
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 

@@ -1,8 +1,6 @@
 #include "WinScene.h"
 
-WinScene::~WinScene()
-{
-}
+WinScene::~WinScene() {}
 
 void WinScene::Initialize()
 {
@@ -33,22 +31,21 @@ void WinScene::Initialize()
 	text1ColRect.bottom = text1Rect.top + textHeight + textBorder;
 	text1ColRect.left = text1Position.x - textBorder;
 	text1ColRect.right = text1Rect.left + textWidth + textBorder;
-
 }
 
 void WinScene::Update(vector<Game*>* game)
 {
 	cursor->Update();
 
+	// Detect if the mouse collide with the text collider
 	if (CollisionDetection(text1ColRect, cursor->GetCollision()))
 	{
 		cursor->isColl = true;
-		if (cursor->mouseLeftClick) {
+		if (cursor->mouseLeftClick)
+		{
 			game->pop_back();
-			
 		}
 	}
-
 }
 
 void WinScene::Render()
@@ -56,8 +53,6 @@ void WinScene::Render()
 	// Background
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3dDevice->BeginScene();
-
-
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -67,6 +62,7 @@ void WinScene::Render()
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, 0, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
 
+	// Print text
 	font->DrawText(sprite, "Continue Game", 13, &text1Rect, 0, D3DCOLOR_XRGB(255, 200, 200));
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);

@@ -101,6 +101,7 @@ void Spaceship2::Update()
 			currentFrame = 0;
 	}
 
+	// Set the key press to false
 	upKeyPressed = false;
 	downKeyPressed = false;
 	leftKeyPressed = false;

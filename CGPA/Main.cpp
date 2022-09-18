@@ -4,6 +4,7 @@
 #include "LevelEx.h"
 #include "Level1.h"
 #include <stack>
+
 //Window's Global
 HWND g_hWnd = NULL;
 WNDCLASS wndClass;
@@ -22,12 +23,11 @@ FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
 MainMenu* mainMenu = new MainMenu();
 
-
-LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-
+LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
 	switch (message)
 	{
-		//	The message is post when we destroy the window.
+	//	The message is post when we destroy the window.
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -38,7 +38,9 @@ LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM 
 	return 0;
 }
 
-void CreateMyWindow() {
+void CreateMyWindow()
+{
+	// Reset the wndClass
 	ZeroMemory(&wndClass, sizeof(wndClass));
 
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
@@ -54,7 +56,8 @@ void CreateMyWindow() {
 	ShowWindow(g_hWnd, 1);
 }
 
-int CreateMy3D() {
+int CreateMy3D()
+{
 	IDirect3D9* direct3D9 = Direct3DCreate9(D3D_SDK_VERSION);
 
 	D3DPRESENT_PARAMETERS d3dPP;
@@ -74,21 +77,21 @@ int CreateMy3D() {
 
 	hr = D3DXCreateLine(d3dDevice, &line);
 
-
-	if (FAILED(hr)) {
-		cout << "sprite creation error" << endl;
+	if (FAILED(hr))
+	{
+		cout << "Sprite creation error." << endl;
 		return 0;
 	}
 
 	return 1;
 }
 
-void CreateMyDirectInput() {
-
+void CreateMyDirectInput()
+{
 	hr = DirectInput8Create(GetModuleHandle(NULL), 0x0800, IID_IDirectInput8, (void**)&dInput, NULL);
 
+	// Create virtual mouse and keyboard device
 	hr = dInput->CreateDevice(GUID_SysKeyboard, &dInputKeyboardDevice, NULL);
-
 	hr = dInput->CreateDevice(GUID_SysMouse, &dInputMouseDevice, NULL);
 
 	dInputKeyboardDevice->SetDataFormat(&c_dfDIKeyboard);
@@ -98,18 +101,19 @@ void CreateMyDirectInput() {
 	dInputMouseDevice->SetCooperativeLevel(g_hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 }
 
-void InitializeLevel() {
-
+void InitializeLevel()
+{
+	// Create random seed with time
 	srand(time(0));
 	mainMenu->Initialize();
-	if (FAILED(hr)) {
+	if (FAILED(hr))
+	{
 		cout << "Failed to create player texture." << endl;
 	}
 }
 
-
-int IfMyWindowIsRunning() {
-
+int IfMyWindowIsRunning()
+{
 	MSG msg;
 	ZeroMemory(&msg, sizeof(msg));
 
@@ -124,21 +128,25 @@ int IfMyWindowIsRunning() {
 			DispatchMessage(&msg);
 		}
 	}
-	else {
+	else
+	{
 		return false;
 	}
 	return true;
 }
 
-void CleanUpMyWindow() {
+void CleanUpMyWindow()
+{
 	UnregisterClass(wndClass.lpszClassName, GetModuleHandle(NULL));
 }
 
-void CleanUpLevel() {
+void CleanUpLevel()
+{
 
 }
 
-void CleanUpMyDirectX() {
+void CleanUpMyDirectX()
+{
 	sprite->Release();
 	sprite = NULL;
 
@@ -149,7 +157,8 @@ void CleanUpMyDirectX() {
 	line = NULL;
 }
 
-void CleanUpMyDirectInput() {
+void CleanUpMyDirectInput()
+{
 	dInputKeyboardDevice->Unacquire();
 	dInputKeyboardDevice->Release();
 	dInputKeyboardDevice = NULL;
@@ -162,34 +171,38 @@ void CleanUpMyDirectInput() {
 	dInput = NULL;
 
 }
-void Update(int FrameToUpdate) {
-	for (int i = 0; i < FrameToUpdate; i++) {
+
+void Update(int FrameToUpdate)
+{
+	for (int i = 0; i < FrameToUpdate; i++)
+	{
 		game.back()->Update(&game);
 	}
-	
-
 }
 
-int main() {
+int main()
+{
 	CreateMyWindow();
 	CreateMy3D();
 	CreateMyDirectInput();
 	InitializeLevel();
 	
+	// Set main menu as default starting level
 	game.push_back(mainMenu);
+	// Set the FPS for the game
 	timer->Init(60);
+	// This loop will keep running until window is closed
 	while (IfMyWindowIsRunning())
 	{
 		game.back()->Input();
 		Update(timer->FramesToUpdate());
 		game.back()->Render();
-
 	}
+
 	CleanUpMyDirectInput();
 	CleanUpMyDirectX();
 	CleanUpLevel();
 	CleanUpMyWindow();
 
 	return 0;
-
 }

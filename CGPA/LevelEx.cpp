@@ -54,6 +54,16 @@ void LevelEx::Initialize()
 	counter = 300;
 	isEnd = false;
 
+	textPosition = D3DXVECTOR2(201, 370);
+
+	textWidth = 220;
+	textHeight = 40;
+
+	textRect.top = textPosition.y;
+	textRect.bottom = textRect.top + textHeight;
+	textRect.left = textPosition.x;
+	textRect.right = textRect.left + textWidth;
+
 	audioManager = new AudioManager();
 	winner = 0;
 	audioManager->InitializeAudio();
@@ -67,20 +77,12 @@ void LevelEx::Update(vector<Game*>* game)
 	spaceship2->Update();
 	ball->Update();
 
+	// Collision Detection for all objects
 	CheckPlayerCollide();
 	CheckPlayerCollideWithBall();
 	CheckWinner();
 
-	textPosition = D3DXVECTOR2(201, 370);
-
-	textWidth = 220;
-	textHeight = 40;
-
-	textRect.top = textPosition.y;
-	textRect.bottom = textRect.top + textHeight;
-	textRect.left = textPosition.x;
-	textRect.right = textRect.left + textWidth;
-
+	// Use to check if any player wins then show the text on screen
 	if (winner == 1)
 	{
 		textString = "Player 1 Win!";
@@ -93,14 +95,15 @@ void LevelEx::Update(vector<Game*>* game)
 	if (isEnd) {
 		counter--;
 		audioManager->stopBackGround2();
-		if (counter == 0){
-			
+		if (counter == 0)
+		{
 			game->pop_back();
 		}
 	}
 }
 
-void LevelEx::Render() {
+void LevelEx::Render()
+{
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3dDevice->BeginScene();
 
@@ -233,6 +236,7 @@ void LevelEx::CheckPlayerCollideWithBall()
 
 void LevelEx::CheckWinner()
 {
+	// If the ball touches the player's base, opponent wins.
 	if (CollisionDetection(ball->getColRect(), box1))
 	{
 		winner = 2;

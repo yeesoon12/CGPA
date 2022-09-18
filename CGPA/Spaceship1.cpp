@@ -79,6 +79,7 @@ void Spaceship1::Update()
 		currentFrame = 0;
 	}
 
+	// Always update the rect position
 	animRect.top = currentFrame * spriteHeight;
 	animRect.bottom = animRect.top + spriteHeight;
 	animRect.left = 0;
@@ -100,6 +101,7 @@ void Spaceship1::Update()
 			currentFrame = 0;
 	}
 
+	// Set the key press back to false
 	upKeyPressed = false;
 	downKeyPressed = false;
 	leftKeyPressed = false;
@@ -149,6 +151,7 @@ void Spaceship1::CheckBoundary()
 			position.y = 0;
 		if (position.y > MyWindowHeight - spriteHeight)
 			position.y = MyWindowHeight - spriteHeight;
+
 		velocity.y *= -1;
 	}
 }

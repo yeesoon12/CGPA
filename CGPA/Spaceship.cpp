@@ -6,7 +6,7 @@ void Spaceship::Initialize()
 
 	if (FAILED(hr))
 	{
-		cout << "Failed to load texture123456789" << endl;
+		cout << "Failed to load spaceship texture." << endl;
 	}
 
 	textureWidth = 64;
