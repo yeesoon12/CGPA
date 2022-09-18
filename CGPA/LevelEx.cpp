@@ -55,6 +55,7 @@ void LevelEx::Initialize()
 	isEnd = false;
 
 	audioManager = new AudioManager();
+	winner = 0;
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
 	audioManager->PlayLevelExBGM();
