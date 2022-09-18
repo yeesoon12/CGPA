@@ -11,10 +11,6 @@ private:
 
 
 public:
-	PowerUp() : Game() {
-
-	}
-	~PowerUp(); 
 	void setPowerUpNum(int num);
 	void Initialization(D3DXVECTOR2);
 	void Update();

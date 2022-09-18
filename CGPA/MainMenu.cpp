@@ -22,7 +22,7 @@ MainMenu::~MainMenu() {
 void MainMenu::Initialize()
 {
 	// Background Image
-	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.jpg", &texture);
+	HRESULT hr = D3DXCreateTextureFromFile(d3dDevice, "Asset/mainMenuBG.png", &texture);
 
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
@@ -145,29 +145,37 @@ void MainMenu::Render()
 	d3dDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 	d3dDevice->BeginScene();
 
+
+
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
-	// Draw Background
+
 	D3DXMATRIX mat;
+
+	// Draw Background
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
 	sprite->Draw(texture, 0, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-	
+
+
+
 	// Draw Text
 	font->DrawText(sprite, "Start Game", 10, &text1Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
-	// font->DrawText(sprite, "Settings", 8, &text2Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font->DrawText(sprite, "Quit Game", 9, &text3Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font2->DrawText(sprite, "Extra Game", 10, &text4Rect, 0, D3DCOLOR_XRGB(0, 0, 0));
+	sprite->End();
+
 
 	line->Begin();
-	// Draw two times to make the frame thicker
 	line->Draw(lineVertices, 5, D3DCOLOR_XRGB(0, 0, 0));
 	line->Draw(lineVertices2, 5, D3DCOLOR_XRGB(0, 0, 0));
 	line->End();
 
+
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 	cursor->Render();
 	sprite->End();
+
 
 	d3dDevice->EndScene();
 	d3dDevice->Present(NULL, NULL, NULL, NULL);

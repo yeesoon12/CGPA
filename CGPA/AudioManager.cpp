@@ -116,6 +116,21 @@ void AudioManager::UpdateSound()
 
 }
 
+void AudioManager::stopBackGround1()
+{
+    result = system->playSound(levelExBGM, 0, true, &channel);
+    channel->setVolume(0.6);
+}
+
+void AudioManager::stopBackGround2()
+{
+    result = system->playSound(Level1BGM, 0, true, &channel);
+
+    backgroundSound = CheckSoundVolume(backgroundSound);
+
+    channel->setVolume(backgroundSound);
+}
+
 AudioManager::AudioManager() {
 
 }

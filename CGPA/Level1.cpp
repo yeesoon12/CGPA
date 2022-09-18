@@ -27,18 +27,18 @@ void Level1::Initialize()
 	audioManager2 = new AudioManager();
 	audioManager2->InitializeAudio();
 	audioManager2->LoadSounds();
-
+	audioManager2->PlayLevel1BGM();
 	bgm = 1;
 
 	endCounter = 100;
-
+	isStart=true;
 }
 
 void Level1::Update(vector<Game*>* game){
-
+	if(isStart){
 	if(bgm==1)
 	{
-		audioManager2->PlayLevel1BGM();
+		
 		bgm--;
 	}
 	if (isEnd ) {
@@ -138,6 +138,7 @@ void Level1::Update(vector<Game*>* game){
 	bulletCD++;
 	j--;
 	counter--;
+	}
 }
    
 

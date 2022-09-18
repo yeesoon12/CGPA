@@ -13,7 +13,7 @@ protected:
 	Spaceship1* spaceship1;
 	Spaceship2* spaceship2;
 	LevelExBall* ball;
-
+	AudioManager* audioManager;
 	// Line
 	LPD3DXLINE line;
 

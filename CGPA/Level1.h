@@ -19,6 +19,7 @@ protected:
 	PlayerShoot* bullet;
 	int bulletCD;
 	int j;
+	boolean isStart;
 	float direction2;
 	vector<EnemyBullet*> enemyBullets;
 	AudioManager* audioManager2;

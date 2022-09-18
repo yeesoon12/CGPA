@@ -27,6 +27,7 @@ void LevelEx::Initialize()
 		DEFAULT_CHARSET, OUT_TT_ONLY_PRECIS, DEFAULT_QUALITY,
 		DEFAULT_PITCH | FF_DONTCARE, "MV Boli", &font);
 
+	winner = 0;
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
@@ -53,7 +54,7 @@ void LevelEx::Initialize()
 	counter = 300;
 	isEnd = false;
 
-	AudioManager* audioManager = new AudioManager();
+	audioManager = new AudioManager();
 	audioManager->InitializeAudio();
 	audioManager->LoadSounds();
 	audioManager->PlayLevelExBGM();
@@ -69,7 +70,6 @@ void LevelEx::Update(vector<Game*>* game)
 	CheckPlayerCollideWithBall();
 	CheckWinner();
 
-	winner = 0;
 	textPosition = D3DXVECTOR2(201, 370);
 
 	textWidth = 220;
@@ -88,11 +88,14 @@ void LevelEx::Update(vector<Game*>* game)
 	{
 		textString = "Player 2 Win!";
 	}
-
+	
 	if (isEnd) {
 		counter--;
-		if (counter == 0)
+		audioManager->stopBackGround2();
+		if (counter == 0){
+			
 			game->pop_back();
+		}
 	}
 }
 
@@ -231,13 +234,13 @@ void LevelEx::CheckWinner()
 {
 	if (CollisionDetection(ball->getColRect(), box1))
 	{
-		winner = 1;
+		winner = 2;
 		isEnd = true;
 	}
 
 	if (CollisionDetection(ball->getColRect(), box2))
 	{
-		winner = 2;
+		winner = 1;
 		isEnd = true;
 	}
 }

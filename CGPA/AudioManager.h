@@ -27,6 +27,8 @@ public:
 	void PlayExploSound();
 	void LoadSounds();
 	void UpdateSound();
+	void stopBackGround1();
+	void stopBackGround2();
 	float CheckSoundVolume(float);
 	void editSoundEffect(float);
 	void editBGM(float);

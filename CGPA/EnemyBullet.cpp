@@ -20,7 +20,7 @@ BOOLEAN EnemyBullet::InBoundary(D3DXVECTOR2 position) {
 	return true;
 }
 boolean EnemyBullet::Reflection(D3DXVECTOR2 position){
-	
+
 	if (position.x < -20)
 		return  true;
 	if (position.x > MyWindowWidth)

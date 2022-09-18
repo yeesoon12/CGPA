@@ -32,7 +32,7 @@ protected:
     D3DXVECTOR2 mouseposition;
     LPDIRECT3DTEXTURE9 cursor;
     LPDIRECT3DTEXTURE9 texture;
-    float soundVolume;
+
 
 public:
     Game();
