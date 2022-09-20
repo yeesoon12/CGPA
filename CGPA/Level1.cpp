@@ -72,9 +72,11 @@ void Level1::Update(vector<Game*>* game){
 		bullets = player->getBullet();
 		for (int w = 0; w < bullets.size(); w++) { // check the enemy is collide with player's bullets
 			bullet = bullets[w];
+			if(enemy->GetHealthTime() != 0){
 			if (CollisionDetection(bullet->GetColRect(), enemy->GetCollisionRect())) {
 				enemy->minusHealth();// minus enemy health 
 				bullet->SetIsHit(); //bullet is hit
+			}
 			}
 		}
 
@@ -134,7 +136,7 @@ void Level1::Update(vector<Game*>* game){
 		}
 		player->Update();
 		enemy->Update();
-		audioManager2->UpdateSound();
+		
 		if (player->IsUlti()) {
 			enemy->clearBullet(); // if player press ulti, clear all the bullet on screen
 		}

@@ -21,7 +21,7 @@ int counter;
 int gameFPS;
 FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
-MainMenu* mainMenu = new MainMenu();
+
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -105,7 +105,6 @@ void InitializeLevel()
 {
 	// Create random seed with time
 	srand(time(0));
-	mainMenu->Initialize();
 	if (FAILED(hr))
 	{
 		cout << "Failed to create player texture." << endl;
@@ -188,7 +187,7 @@ int main()
 	InitializeLevel();
 	
 	// Set main menu as default starting level
-	game.push_back(mainMenu);
+	game.push_back(new MainMenu());
 	// Set the FPS for the game
 	timer->Init(60);
 	// This loop will keep running until window is closed

@@ -276,7 +276,6 @@ void Enemy::Update()
 				audioManager->PlayExploSound();
 				ulti->Initialization(position + centre);
 				enemyBullets.clear();
-				this->~Enemy();
 			}
 		}
 		
@@ -559,7 +558,7 @@ void Enemy::Update()
 }
 
 void Enemy::Render()
-{
+{ if(bossHealthTime!=0){
 	//draw the magic back of the enemy
 	magicBack->Render();
 	D3DXMATRIX mat;
@@ -581,7 +580,7 @@ void Enemy::Render()
 	{
 		enemyBullets[i]->Render();
 	}
-
+}
 }
 RECT Enemy::GetCollisionRect() {//ckeck collision
 	return colRect;

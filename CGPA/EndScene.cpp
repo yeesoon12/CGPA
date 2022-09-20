@@ -1,5 +1,6 @@
 #include "EndScene.h"
 #include "Level1.h"
+#include "MainMenu.h"
 EndScene::~EndScene() {}
 
 void EndScene::Initialize()
@@ -70,6 +71,8 @@ void EndScene::Update(vector<Game*>* game)
 		if (cursor->mouseLeftClick)
 		{
 			game->pop_back();
+			game->pop_back();
+			game->push_back(new MainMenu());
 		}
 	}
 }
