@@ -166,7 +166,6 @@ void Player::Update() {
 	}
 	if (spacePressed) {
 		if(cd<0&&health>0){
-		audioManager->PlayGunShoot();// play gun shoot sound when is fire
 		if(bulletAmount==1){ // render the bullets according to the bullets amount
 		shoot = new PlayerShoot();
 		shoot->Initialization(position, 0,focus);
@@ -200,6 +199,7 @@ void Player::Update() {
 			shoot->Initialization(position, -0.3, focus);
 			bullet.push_back(shoot);
 		}
+		audioManager->PlayPlayerShoot();// play gun shoot sound when is fire
 		spacePressed = false;
 		cd = 6; //set the cd of bullet shoot
 		}

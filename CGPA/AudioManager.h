@@ -9,7 +9,7 @@ private:
 
 public:
 	FMOD::System* system;
-	FMOD::Sound* levelExBGM, * Level1BGM, * GunShoot, * UltiSound, * deathSound, * exploSound, * enemyBulletShoot1, * enemyBulletShoot2, * PowerUpSound, * EvoSound;
+	FMOD::Sound* levelExBGM, * Level1BGM, * GunShoot, * UltiSound, * deathSound, * exploSound, * enemyBulletShoot1, * enemyBulletShoot2, * PowerUpSound, * EvoSound, *playerShoot;
 	FMOD::Channel* channel = 0;
 	char* channelGroup;
 	FMOD::ChannelGroup* bgmGroup = 0;
@@ -23,6 +23,7 @@ public:
 	void setSeVolume(float);
 	void PlayLevel1BGM();
 	void PlayEvoSound();
+	void PlayPlayerShoot();
 	void PlayGunShoot();
 	void PlayPowerUp();
 	void PlayEnemyBulletShoot1();

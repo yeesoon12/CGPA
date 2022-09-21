@@ -11,11 +11,13 @@ void AudioManager::InitializeAudio()
     LoadSounds();
 }
 
-void AudioManager::setBgmVolume(float) {
+void AudioManager::setBgmVolume(float volume) {
+    backgroundSound = volume;
     bgmGroup->setVolume(backgroundSound);
 }
 
-void AudioManager::setSeVolume(float) {
+void AudioManager::setSeVolume(float volume) {
+    soundEffect = volume;
     seGroup->setVolume(soundEffect);
 }
 
@@ -56,6 +58,13 @@ void AudioManager::PlayEnemyBulletShoot1()
 void AudioManager::PlayEnemyBulletShoot2()
 {
     result = system->playSound(enemyBulletShoot2, seGroup, false, &channel);
+
+    channel->setVolume(soundEffect);
+}
+
+void AudioManager::PlayPlayerShoot()
+{
+    result = system->playSound(playerShoot, seGroup, false, &channel);
 
     channel->setVolume(soundEffect);
 }
@@ -115,7 +124,10 @@ void AudioManager::LoadSounds()
     result = system->createStream("Asset/PowerUpSound.mp3", FMOD_DEFAULT, 0, &PowerUpSound);
     result = PowerUpSound->setMode(FMOD_DEFAULT);
     result = system->createStream("Asset/Evo.mp3", FMOD_DEFAULT, 0, &EvoSound);
-    result = PowerUpSound->setMode(FMOD_DEFAULT);
+    result = EvoSound->setMode(FMOD_DEFAULT);
+
+    result = system->createStream("Asset/GunShoot.mp3", FMOD_DEFAULT, 0, &playerShoot);
+    result = playerShoot->setMode(FMOD_DEFAULT);
 }
 
 void AudioManager::UpdateSound()

@@ -157,10 +157,8 @@ void MainMenu::Render()
 	// Draw Background
 	D3DXMatrixTransformation2D(&mat, NULL, 0.0, &scaling, &centre, direction, &position);
 	sprite->SetTransform(&mat);
+
 	sprite->Draw(texture, 0, NULL, NULL, D3DCOLOR_XRGB(255, 255, 255));
-
-
-
 	// Draw Text
 	font->DrawText(sprite, "Start Game", 10, &text1Rect, 0, D3DCOLOR_XRGB(255, 255, 255));
 	font->DrawText(sprite, "Quit Game", 9, &text3Rect, 0, D3DCOLOR_XRGB(255, 255, 255));

@@ -98,6 +98,9 @@ void Level1::Update(vector<Game*>* game){
 		if (F1Pressed) {
 			if (counter <= 0) {
 				bgmVolume += 0.1;
+				if (bgmVolume >= 1)
+					bgmVolume = 1;
+			
 				audioManager->setBgmVolume(bgmVolume);
 				counter = 5;
 				F1Pressed = false;
@@ -106,6 +109,9 @@ void Level1::Update(vector<Game*>* game){
 		if (F2Pressed) {
 			if (counter <= 0) {
 				bgmVolume -= 0.1;
+				if (bgmVolume <= 0)
+					bgmVolume = 0;
+				cout << bgmVolume << endl;
 				audioManager->setBgmVolume(bgmVolume);
 				counter = 5;
 				F2Pressed = false;
@@ -114,6 +120,8 @@ void Level1::Update(vector<Game*>* game){
 		if (F3Pressed) {
 			if (counter <= 0) {
 				soundEffectVolume += 0.1;
+				if (soundEffectVolume >= 1)
+					soundEffectVolume = 1;
 				audioManager->setSeVolume(soundEffectVolume);
 				counter = 5;
 				F3Pressed = false;
@@ -122,6 +130,8 @@ void Level1::Update(vector<Game*>* game){
 		if (F4Pressed) {
 			if (counter <= 0) {
 				soundEffectVolume -= 0.1;
+				if (soundEffectVolume <= 0)
+					soundEffectVolume = 0;
 				audioManager->setSeVolume(soundEffectVolume);
 				counter = 5;
 				F4Pressed = false;
