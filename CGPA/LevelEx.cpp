@@ -156,39 +156,30 @@ bool LevelEx::CircleCollisionDetection(float radiusA, float radiusB, D3DXVECTOR2
 
 void LevelEx::CheckPlayerCollide()
 {
-	/*
-	* Website Reference:
-	* https://gamedevelopment.tutsplus.com/tutorials/when-worlds-collide-simulating-circle-circle-collisions--gamedev-769
-	*/
-
 	if (CircleCollisionDetection(spaceship1->getRadius(), spaceship2->getRadius(),
 		spaceship1->getPosition() + spaceship1->getCentre(), spaceship2->getPosition() + spaceship2->getCentre()))
 	{
-		/*
-		// Calculate the collision point
-		D3DXVECTOR2 colPoint;
-		colPoint.x = ((spaceship1->getPosition().x * spaceship2->getRadius()) + (spaceship2->getPosition().x * spaceship1->getRadius()))
-			/ (spaceship1->getRadius() + spaceship1->getRadius());
-		colPoint.y = ((spaceship1->getPosition().y * spaceship2->getRadius()) + (spaceship2->getPosition().y * spaceship1->getRadius()))
-			/ (spaceship1->getRadius() + spaceship1->getRadius());
+		double d = sqrt(pow(spaceship1->getPosition().x - spaceship1->getPosition().y, 2) + pow(spaceship2->getPosition().x - spaceship2->getPosition().y, 2));
+		double nx = (spaceship1->getPosition().y - spaceship1->getPosition().x) / d;
+		double ny = (spaceship2->getPosition().y - spaceship2->getPosition().x) / d;
 
-		// Used to show collision point
-		// cout << "Collision point: " << colPoint.x << ", " << colPoint.y << endl;
-		*/
+		double p1 = 2 * (spaceship1->getVelocity().x * nx + spaceship1->getVelocity().y * ny -
+			spaceship2->getVelocity().x * nx - spaceship2->getVelocity().y * ny) /
+			(spaceship1->getMass() + spaceship2->getMass());
 
-		// Calculate new velocity
-		float newVelX1 = (spaceship1->getVelocity().x * (spaceship1->getMass() - spaceship2->getMass()) +
-			(2 * spaceship2->getMass() * spaceship2->getVelocity().x)) / (spaceship1->getMass() + spaceship2->getMass());
-		float newVelY1 = (spaceship1->getVelocity().y * (spaceship1->getMass() - spaceship2->getMass()) +
-			(2 * spaceship2->getMass() * spaceship2->getVelocity().y)) / (spaceship1->getMass() + spaceship2->getMass());
-		float newVelX2 = (spaceship2->getVelocity().x * (spaceship2->getMass() - spaceship1->getMass()) +
-			(2 * spaceship1->getMass() * spaceship1->getVelocity().x)) / (spaceship1->getMass() + spaceship2->getMass());
-		float newVelY2 = (spaceship2->getVelocity().y * (spaceship2->getMass() - spaceship1->getMass()) +
-			(2 * spaceship1->getMass() * spaceship1->getVelocity().y)) / (spaceship1->getMass() + spaceship2->getMass());
+		double p2 = 2 * (spaceship2->getVelocity().x * nx + spaceship2->getVelocity().y * ny -
+			spaceship1->getVelocity().x * nx - spaceship1->getVelocity().y * ny) /
+			(spaceship2->getMass() + spaceship1->getMass());
 
-		// Set the velocity
-		spaceship1->setVelocity(D3DXVECTOR2(newVelX1, newVelY1));
-		spaceship2->setVelocity(D3DXVECTOR2(newVelX2, newVelY2));
+		spaceship1->setVelocity(D3DXVECTOR2(
+			(spaceship1->getVelocity().x - p1 * spaceship1->getMass() * spaceship2->getMass()),
+			(spaceship1->getVelocity().y - p1 * spaceship1->getMass() * spaceship2->getMass())
+		));
+
+		spaceship2->setVelocity(D3DXVECTOR2(
+			(spaceship2->getVelocity().x - p2 * spaceship2->getMass() * spaceship1->getMass()),
+			(spaceship2->getVelocity().y - p2 * spaceship2->getMass() * spaceship1->getMass())
+		));
 	}
 }
 
