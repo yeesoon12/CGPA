@@ -23,11 +23,11 @@ protected:
 	boolean isStart;
 	float direction2;
 	vector<EnemyBullet*> enemyBullets;
-	AudioManager* audioManager2;
-	AudioManager* audioManager;
 	int bgm;
 	int counter;
 	int bossHealth;
+	float soundEffectVolume;
+	float bgmVolume;
 	boolean isEnd;
 	boolean isWin;
 	boolean isDie;

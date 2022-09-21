@@ -11,11 +11,16 @@ public:
 	FMOD::System* system;
 	FMOD::Sound* levelExBGM, * Level1BGM, * GunShoot, * UltiSound, * deathSound, * exploSound, * enemyBulletShoot1, * enemyBulletShoot2, * PowerUpSound, * EvoSound;
 	FMOD::Channel* channel = 0;
+	char* channelGroup;
+	FMOD::ChannelGroup* bgmGroup = 0;
+	FMOD::ChannelGroup* seGroup = 0;
 	FMOD_RESULT result;
 	void* extraDriverData = 0;
 
 	void InitializeAudio();
 	void PlayLevelExBGM();
+	void setBgmVolume(float);
+	void setSeVolume(float);
 	void PlayLevel1BGM();
 	void PlayEvoSound();
 	void PlayGunShoot();
@@ -25,13 +30,11 @@ public:
 	void PlayUltiSound();
 	void PlayDeathSound();
 	void PlayExploSound();
+	float getBgmVolume();
+	float getSeVolume();
 	void LoadSounds();
 	void UpdateSound();
-	void stopBackGround1();
-	void stopBackGround2();
-	float CheckSoundVolume(float);
-	void editSoundEffect(float);
-	void editBGM(float);
+	void stopBGM();
 	AudioManager();
 	~AudioManager();
 };

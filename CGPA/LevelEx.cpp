@@ -64,10 +64,7 @@ void LevelEx::Initialize()
 	textRect.left = textPosition.x;
 	textRect.right = textRect.left + textWidth;
 
-	audioManager = new AudioManager();
 	winner = 0;
-	audioManager->InitializeAudio();
-	audioManager->LoadSounds();
 	audioManager->PlayLevelExBGM();
 }
 
@@ -94,7 +91,7 @@ void LevelEx::Update(vector<Game*>* game)
 	
 	if (isEnd) {
 		counter--;
-		audioManager->stopBackGround2();
+		audioManager->stopBGM();
 		if (counter == 0)
 		{
 			game->pop_back();

@@ -10,8 +10,6 @@ class Player : public Game {
 private:
 	PlayerShoot* shoot;
 	Catalysts* catalysts;
-	AudioManager* audioManager;
-	AudioManager* audioManager2;
 	Ultimate* ulti;
 	boolean upPressed;
 	boolean downPressed;

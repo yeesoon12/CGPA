@@ -39,8 +39,8 @@ private:
 	Level1* level1;
 	LevelEx* levelEx;
 	Cursor* cursor;
-	boolean doneLoading;
-	int counter;
+
+
 
 public:
 	MainMenu() : Game()

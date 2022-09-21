@@ -28,19 +28,12 @@ void Level1::Initialize()
 	scaling = D3DXVECTOR2(1, 1);
 	centre = D3DXVECTOR2(spriteWidth / 2, spriteHeight / 2);
 	direction = 0;
-
-	audioManager = new AudioManager();
-	audioManager->InitializeAudio();
-	audioManager->LoadSounds();
-
-	position = D3DXVECTOR2(0,0);
-	audioManager2 = new AudioManager();
-	audioManager2->InitializeAudio();
-	audioManager2->LoadSounds();
+	position = D3DXVECTOR2(0, 0);
 
 	// Use to on/off bgm
 	bgm = 1;
-
+	soundEffectVolume = audioManager->getSeVolume();
+	bgmVolume = audioManager->getBgmVolume();
 	endCounter = 100;
 	isStart=true;
 }
@@ -55,7 +48,7 @@ void Level1::Update(vector<Game*>* game){
 		if (isEnd)
 		{
 			endCounter--;
-			audioManager->stopBackGround2();
+			audioManager->stopBGM();
 			if (endCounter == 0 and isWin) { // if game is end and player is win, push win scene to the vector
 				winScene = new WinScene();
 				winScene->Initialize();
@@ -84,7 +77,7 @@ void Level1::Update(vector<Game*>* game){
 			if (enemy->powerUp->getPowerUpNum() > 0) {
 				player->addBullet(2); // add the bullet by 2
 				enemy->powerUp->setPowerUpNum(0); 
-				audioManager2->PlayPowerUp(); // player power up sound effect
+				audioManager->PlayPowerUp(); // player power up sound effect
 
 			}
 		}
@@ -104,32 +97,32 @@ void Level1::Update(vector<Game*>* game){
 
 		if (F1Pressed) {
 			if (counter <= 0) {
-
-				audioManager2->editBGM(0.1); // increase the volume of bgm
+				bgmVolume += 0.1;
+				audioManager->setBgmVolume(bgmVolume);
 				counter = 5;
 				F1Pressed = false;
 			}
 		}
 		if (F2Pressed) {
 			if (counter <= 0) {
-
-				audioManager2->editBGM(-0.1); // decrease the volume of bgm
+				bgmVolume -= 0.1;
+				audioManager->setBgmVolume(bgmVolume);
 				counter = 5;
 				F2Pressed = false;
 			}
 		}
 		if (F3Pressed) {
 			if (counter <= 0) {
-				audioManager2->editSoundEffect(0.1); // increase the volume of sound effect
-
+				soundEffectVolume += 0.1;
+				audioManager->setSeVolume(soundEffectVolume);
 				counter = 5;
 				F3Pressed = false;
 			}
 		}
 		if (F4Pressed) {
 			if (counter <= 0) {
-				audioManager2->editSoundEffect(-0.1); // decrease the volume of sound effect
-
+				soundEffectVolume -= 0.1;
+				audioManager->setSeVolume(soundEffectVolume);
 				counter = 5;
 				F4Pressed = false;
 			}

@@ -30,9 +30,6 @@ public:
 private:
 	EnemyBulletCombination* bulletCom;
 	vector<EnemyBullet*> enemyBullets;
-	AudioManager* audioManager;
-	AudioManager* audioManager2;
-	AudioManager* audioManager3;
 	int fps;
 	Ultimate* ulti;
 	boolean isUlti;

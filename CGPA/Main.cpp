@@ -21,7 +21,7 @@ int counter;
 int gameFPS;
 FrameTimer* timer = new FrameTimer();
 vector<Game*> game;
-
+AudioManager* audioManager;
 
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -105,6 +105,8 @@ void InitializeLevel()
 {
 	// Create random seed with time
 	srand(time(0));
+	audioManager = new AudioManager();
+	audioManager->InitializeAudio();
 	if (FAILED(hr))
 	{
 		cout << "Failed to create player texture." << endl;

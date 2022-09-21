@@ -3,36 +3,45 @@ void AudioManager::InitializeAudio()
 {
     result = FMOD::System_Create(&system);
     result = system->init(32, FMOD_INIT_NORMAL, extraDriverData);
+    result = system->createChannelGroup(channelGroup, &bgmGroup);
+    result = system->createChannelGroup(channelGroup, &seGroup);
     backgroundSound=1.f;
     soundEffect=1.f;
+    bgmGroup->setVolume(backgroundSound);
+    LoadSounds();
+}
+
+void AudioManager::setBgmVolume(float) {
+    bgmGroup->setVolume(backgroundSound);
+}
+
+void AudioManager::setSeVolume(float) {
+    seGroup->setVolume(soundEffect);
 }
 
 void AudioManager::PlayLevelExBGM()
 {
-    result = system->playSound(levelExBGM, 0, false, &channel);
-    channel->setVolume(0.6);
+    result = system->playSound(levelExBGM, bgmGroup, false, &channel);
+   
 }
 
 void AudioManager::PlayLevel1BGM()
 {
-    result = system->playSound(Level1BGM, 0, false, &channel);
+    result = system->playSound(Level1BGM, bgmGroup, false, &channel);
     
-    backgroundSound = CheckSoundVolume(backgroundSound);
-  
-    channel->setVolume(backgroundSound);
+
 }
 
 void AudioManager::PlayEvoSound()
 {
-    result = system->playSound(EvoSound, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(EvoSound, seGroup, false, &channel);
     channel->setVolume(soundEffect);
 }
 
 void AudioManager::PlayPowerUp()
 {
-    result = system->playSound(PowerUpSound, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(PowerUpSound, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
   
 }
@@ -40,41 +49,40 @@ void AudioManager::PlayPowerUp()
 
 void AudioManager::PlayEnemyBulletShoot1()
 {
-    result = system->playSound(enemyBulletShoot1, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(enemyBulletShoot1, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
 }
 void AudioManager::PlayEnemyBulletShoot2()
 {
-    result = system->playSound(enemyBulletShoot2, 0, false, &channel);
-        soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(enemyBulletShoot2, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
 }
 void AudioManager::PlayGunShoot()
 {
-    result = system->playSound(GunShoot, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(GunShoot, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
 }
 
 void AudioManager::PlayUltiSound()
 {
-    result = system->playSound(UltiSound, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(UltiSound, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
 
 }
 
 void AudioManager::PlayDeathSound()
 {
-    result = system->playSound(deathSound, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(deathSound, seGroup, false, &channel);
     channel->setVolume(soundEffect);
 
 }
 void AudioManager::PlayExploSound() {
-    result = system->playSound(exploSound, 0, false, &channel);
-    soundEffect = CheckSoundVolume(soundEffect);
+    result = system->playSound(exploSound, seGroup, false, &channel);
+
     channel->setVolume(soundEffect);
 }
 void AudioManager::LoadSounds()
@@ -115,20 +123,15 @@ void AudioManager::UpdateSound()
     result = system->update();
 
 }
-
-void AudioManager::stopBackGround1()
-{
-    result = system->playSound(levelExBGM, 0, true, &channel);
-    channel->setVolume(0.6);
+void AudioManager::stopBGM() {
+    bgmGroup->stop();
 }
 
-void AudioManager::stopBackGround2()
-{
-    result = system->playSound(Level1BGM, 0, true, &channel);
-
-    backgroundSound = CheckSoundVolume(backgroundSound);
-
-    channel->setVolume(backgroundSound);
+float AudioManager::getBgmVolume() {
+    return backgroundSound;
+}
+float AudioManager::getSeVolume() {
+    return soundEffect;
 }
 
 AudioManager::AudioManager() {
@@ -139,18 +142,3 @@ AudioManager::~AudioManager() {
 
 }
 // The value of sound volume should not be more than 1 and less than 0
-float AudioManager::CheckSoundVolume(float soundVolume) {
-    if (soundVolume <= 0)
-        return 0;
-    if (soundVolume >= 1)
-        return 1;
-    return soundVolume;
-}
-
-void AudioManager:: editSoundEffect(float soundVolume) {
-    soundEffect += soundVolume;
-}
-
-void AudioManager::editBGM(float soundVolume) {
-    backgroundSound += soundVolume;
-}

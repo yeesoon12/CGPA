@@ -8,12 +8,6 @@ void Player::Initialize() // initialize player
 		cout << "Failed to load texture" << endl;
 	}
 	
-	audioManager = new AudioManager();
-	audioManager2 = new AudioManager();
-	audioManager->InitializeAudio();
-	audioManager->LoadSounds();
-	audioManager2->InitializeAudio();
-	audioManager2->LoadSounds();
 	catalysts = new Catalysts();
 	
 	cd = 0;
@@ -117,7 +111,7 @@ void Player::Update() {
 		
 			ulti = new Ultimate();	//create a new ulti
 		ulti->Initialization(position); // initialize player position to the ulti position
-		audioManager2->PlayUltiSound();// play ultimate sound
+		audioManager->PlayUltiSound();// play ultimate sound
 		isUlti = true;
 		isUlti2 = true;
 		ultiCD = 300; // set the ulti cd
@@ -157,8 +151,7 @@ void Player::Update() {
 
 	if (F3Pressed) {
 		if (counter2 <= 0) { //increase
-			audioManager->editSoundEffect(0.1);
-			audioManager2->editSoundEffect(0.1);
+
 			counter2 = 5;
 			F3Pressed = false;
 		}
@@ -166,8 +159,6 @@ void Player::Update() {
 	}
 	if (F4Pressed) { //decrease sound effect
 		if (counter2 <= 0) {
-			audioManager->editSoundEffect(-0.1);
-			audioManager2->editSoundEffect(-0.1);
 			counter2 = 5;
 			F4Pressed = false;
 		}

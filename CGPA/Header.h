@@ -37,6 +37,7 @@ extern LPDIRECTINPUTDEVICE8 dInputKeyboardDevice;
 extern LPDIRECTINPUTDEVICE8 dInputMouseDevice;
 extern DIMOUSESTATE mouseState;
 extern BYTE diKeys[256];
+extern AudioManager* audioManager;
 
 
 

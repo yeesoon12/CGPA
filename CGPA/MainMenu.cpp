@@ -52,7 +52,6 @@ void MainMenu::Initialize()
 	textWidth = 200;
 	textHeight = 30;
 	textBorder = 5;
-	counter = 500;
 	text1Position = D3DXVECTOR2(400, 280);
 	// text2Position = D3DXVECTOR2(400, 320);
 	text3Position = D3DXVECTOR2(400, 360);
@@ -107,14 +106,8 @@ void MainMenu::Update(vector<Game*>* game)
 {
 	cursor->Update();
 
-	if (doneLoading) {
-		counter--;
-	}
-	if (counter <= 0) {
-		doneLoading = false;
-		game->push_back(level1);
-		counter = 50;
-	}
+
+	
 	
 	if (CollisionDetection(text1ColRect, cursor->GetCollision()))
 	{
@@ -122,7 +115,8 @@ void MainMenu::Update(vector<Game*>* game)
 		
 		if (cursor->mouseLeftClick) {
 			level1 = new Level1();
-			doneLoading = true;
+			game->push_back(level1);
+
 		}
 	}
 

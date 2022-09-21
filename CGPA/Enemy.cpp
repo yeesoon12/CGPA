@@ -11,15 +11,6 @@ void Enemy::Initialize()
 		cout << "Failed to load texture" << endl;
 	}
 	//audio enemy
-	audioManager = new AudioManager();
-	audioManager->InitializeAudio();
-	audioManager->LoadSounds();
-	audioManager2 = new AudioManager();
-	audioManager2->InitializeAudio();
-	audioManager2->LoadSounds();
-	audioManager3 = new AudioManager();
-	audioManager3->InitializeAudio();
-	audioManager3->LoadSounds();
 	powerUp = new PowerUp();
 	magicBack = new MagicBack();
 	healthBar = new HealthBar();
@@ -90,17 +81,16 @@ void Enemy::Update()
 			smallKnifeDirection = (rand()%1700+2000);
 			smallKnifeDirection /= 1000;
 			knifeDirection = rand();
-			
-			
 			for (int i = 0; i < 4; i++) {//set different types of bullet
 				bulletCom->smallKnife = new EnemySmallKnife();
 				bulletCom->smallKnife->Initialization(smallKnifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 7,0);
 				enemyBullets.push_back(bulletCom->smallKnife);
 				smallKnifeDirection += 0.08f;
 				
-				audioManager3->PlayEnemyBulletShoot2();
+			
 				bulletCD = 20;
 			}
+			audioManager->PlayEnemyBulletShoot2();
 		}
 		if (bulletCD2 <= 0) {
 			for (int i = 0; i < 40; i++) {//set different types of bullet
@@ -109,9 +99,8 @@ void Enemy::Update()
 				enemyBullets.push_back(bulletCom->knife);
 				knifeDirection += 0.1571;
 				bulletCD2 = 20;
-				audioManager2->PlayEnemyBulletShoot1();;
-
 			}
+			audioManager->PlayEnemyBulletShoot1();;
 		}
 	
 	}
@@ -122,13 +111,12 @@ void Enemy::Update()
 				for (int i = 0; i < 11; i++) {
 					bulletCom->smallKnife = new EnemySmallKnife();
 					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 7,0);
-					enemyBullets.push_back(bulletCom->smallKnife);
-					audioManager2->PlayEnemyBulletShoot2();
+					enemyBullets.push_back(bulletCom->smallKnife);				
 					smallKnifeDirection += 0.08f;
-
 					bulletCD = 30;
 					positionX2 -=40;
 				}
+				audioManager->PlayEnemyBulletShoot2();
 			}
 		}
 		else if (bossHealthTime == 1) {
@@ -140,13 +128,12 @@ void Enemy::Update()
 					directionInc /= 1000;
 					bulletCom->smallKnife = new EnemySmallKnife();
 					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 10,directionInc);
-					enemyBullets.push_back(bulletCom->smallKnife);
-					audioManager2->PlayEnemyBulletShoot2();
+					enemyBullets.push_back(bulletCom->smallKnife);				
 					smallKnifeDirection += 0.08f;
-
 					bulletCD = 20;
 					positionX2 -= 40;
 				}
+				audioManager->PlayEnemyBulletShoot2();
 			}
 		}
 		break;
@@ -158,15 +145,13 @@ void Enemy::Update()
 
 				for (int i = 0; i < 6; i++) {//set different types of bullet
 					knifeDirection = (rand() % 2200 + 2000);
-
 					knifeDirection /= 1000;
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 0);
-					enemyBullets.push_back(bulletCom->knife);
-					audioManager2->PlayEnemyBulletShoot1();
+					enemyBullets.push_back(bulletCom->knife);	
 					bulletCD2 = 5;
-
 				}
+				audioManager->PlayEnemyBulletShoot1();
 			}
 	}
 		else if (bossHealthTime == 2) {
@@ -175,11 +160,10 @@ void Enemy::Update()
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, 8, 2);
 					enemyBullets.push_back(bulletCom->knife);
-					knifeDirection += 0.419;
-					audioManager2->PlayEnemyBulletShoot1();
+					knifeDirection += 0.419;	
 					bulletCD2 = 20;
-
 				}
+				audioManager->PlayEnemyBulletShoot1();
 			}
 		}
 		else if (bossHealthTime == 1) {
@@ -190,27 +174,24 @@ void Enemy::Update()
 					directionInc /= 1000;
 					bulletCom->smallKnife = new EnemySmallKnife();
 					bulletCom->smallKnife->Initialization(3.142, position + centre - D3DXVECTOR2{ positionX2,-10 }, 10, directionInc);
-					enemyBullets.push_back(bulletCom->smallKnife);
-					audioManager2->PlayEnemyBulletShoot2();
+					enemyBullets.push_back(bulletCom->smallKnife);		
 					smallKnifeDirection += 0.08f;
-
 					bulletCD = 20;
 					positionX2 -= 40;
 				}
+				audioManager->PlayEnemyBulletShoot2();
 			}
 			if (bulletCD2 <= 0) {
 
 				for (int i = 0; i < 6; i++) {//set different types of bullet
 					knifeDirection = (rand() % 6148);
-
 					knifeDirection /= 1000;
 					bulletCom->knife = new EnemyKnife();
 					bulletCom->knife->Initialization(knifeDirection, position + centre - D3DXVECTOR2{ 10,0 }, rand() % 8 + 6, 2);
-					enemyBullets.push_back(bulletCom->knife);
-					audioManager2->PlayEnemyBulletShoot1();
+					enemyBullets.push_back(bulletCom->knife);				
 					bulletCD2 = 5;
-
 				}
+				audioManager->PlayEnemyBulletShoot1();
 			}
 		}
 		break;
@@ -368,9 +349,6 @@ void Enemy::Update()
 	//edit sound effect
 	if (F3Pressed) {
 		if (counter2 <= 0) {
-			audioManager->editSoundEffect(0.1);
-			audioManager2->editSoundEffect(0.1);
-			audioManager3->editSoundEffect(0.1);
 			counter2 = 5;
 			F3Pressed = false;
 		}
@@ -378,9 +356,6 @@ void Enemy::Update()
 	}
 	if (F4Pressed) {
 		if (counter2 <= 0) {
-			audioManager->editSoundEffect(-0.1);
-			audioManager2->editSoundEffect(-0.1);
-			audioManager3->editSoundEffect(-0.1);
 			counter2 = 5;
 			F4Pressed = false;
 		}
