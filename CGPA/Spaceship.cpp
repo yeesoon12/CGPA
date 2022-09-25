@@ -44,6 +44,11 @@ void Spaceship::setVelocity(D3DXVECTOR2 velocity)
 	this->velocity = velocity;
 }
 
+void Spaceship::addVelocity(D3DXVECTOR2 velocity)
+{
+	this->velocity += velocity;
+}
+
 float Spaceship::getMass()
 {
 	return mass;

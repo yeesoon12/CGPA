@@ -158,28 +158,24 @@ void LevelEx::CheckPlayerCollide()
 {
 	if (CircleCollisionDetection(spaceship1->getRadius(), spaceship2->getRadius(),
 		spaceship1->getPosition() + spaceship1->getCentre(), spaceship2->getPosition() + spaceship2->getCentre()))
-	{
-		double d = sqrt(pow(spaceship1->getPosition().x - spaceship1->getPosition().y, 2) + pow(spaceship2->getPosition().x - spaceship2->getPosition().y, 2));
-		double nx = (spaceship1->getPosition().y - spaceship1->getPosition().x) / d;
-		double ny = (spaceship2->getPosition().y - spaceship2->getPosition().x) / d;
+	{	
+		//get necessary data for calculate the vector
+		D3DXVECTOR2 ss1Pos = spaceship1->getPosition();
+		D3DXVECTOR2 ss2Pos = spaceship2->getPosition();
+		D3DXVECTOR2 ss1Vel = spaceship1->getVelocity();
+		D3DXVECTOR2 ss2Vel = spaceship2->getVelocity();
+		int ss1Mass = spaceship1->getMass();
+		int ss2Mass = spaceship2->getMass();
+		//calculate the distance
+		double distance = sqrt(pow(ss1Pos.x - ss2Pos.x, 2) + pow(ss1Pos.y - ss2Pos.y, 2));
+		//calculate the normal of between the two ball
+		D3DXVECTOR2  normal = D3DXVECTOR2((ss2Pos-ss1Pos)/distance);
+		//calculate how far should the ball move
+		double p = 2 * (ss1Vel.x * normal.x + ss1Vel.y * normal.y - ss2Vel.x * normal.x - ss2Vel.y * normal.y) / (ss1Mass + ss2Mass);
+		//apply the force to the velocity
+		spaceship1->addVelocity(D3DXVECTOR2(-(p * ss2Mass * normal)));
+		spaceship2->addVelocity(D3DXVECTOR2(+(p * ss1Mass * normal)));
 
-		double p1 = 2 * (spaceship1->getVelocity().x * nx + spaceship1->getVelocity().y * ny -
-			spaceship2->getVelocity().x * nx - spaceship2->getVelocity().y * ny) /
-			(spaceship1->getMass() + spaceship2->getMass());
-
-		double p2 = 2 * (spaceship2->getVelocity().x * nx + spaceship2->getVelocity().y * ny -
-			spaceship1->getVelocity().x * nx - spaceship1->getVelocity().y * ny) /
-			(spaceship2->getMass() + spaceship1->getMass());
-
-		spaceship1->setVelocity(D3DXVECTOR2(
-			(spaceship1->getVelocity().x - p1 * spaceship1->getMass() * spaceship2->getMass()),
-			(spaceship1->getVelocity().y - p1 * spaceship1->getMass() * spaceship2->getMass())
-		));
-
-		spaceship2->setVelocity(D3DXVECTOR2(
-			(spaceship2->getVelocity().x - p2 * spaceship2->getMass() * spaceship1->getMass()),
-			(spaceship2->getVelocity().y - p2 * spaceship2->getMass() * spaceship1->getMass())
-		));
 	}
 }
 

@@ -40,6 +40,7 @@ public:
 
 	D3DXVECTOR2 getVelocity();
 	void setVelocity(D3DXVECTOR2 velocity);
+	void addVelocity(D3DXVECTOR2 velocity);
 	float getMass();
 	float getRadius();
 	RECT getColRect();

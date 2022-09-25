@@ -68,13 +68,6 @@ void AudioManager::PlayPlayerShoot()
 
     channel->setVolume(soundEffect);
 }
-void AudioManager::PlayGunShoot()
-{
-    result = system->playSound(GunShoot, seGroup, false, &channel);
-
-    channel->setVolume(soundEffect);
-}
-
 void AudioManager::PlayUltiSound()
 {
     result = system->playSound(UltiSound, seGroup, false, &channel);
@@ -101,10 +94,6 @@ void AudioManager::LoadSounds()
 
     result = system->createSound("Asset/Level1BGM.mp3", FMOD_DEFAULT, 0, &Level1BGM);
     result = Level1BGM->setMode(FMOD_LOOP_NORMAL);
-
-    result = system->createSound("Asset/GunShoot.mp3", FMOD_DEFAULT, 0, &GunShoot);
-    result = GunShoot->setMode(FMOD_DEFAULT);
-
 
     result = system->createStream("Asset/UltiSound.mp3", FMOD_DEFAULT, 0, &UltiSound);
     result = UltiSound->setMode(FMOD_DEFAULT);

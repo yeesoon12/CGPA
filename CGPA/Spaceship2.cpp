@@ -21,7 +21,7 @@ void Spaceship2::Initialize()
 	acceleration = D3DXVECTOR2(0, 0);
 
 	rotationSpeed = 0.07f;
-	mass = 1.0f;
+	mass = 2.0f;
 	enginePower = 1.0f;
 
 	gravity = 2;
